@@ -1,0 +1,81 @@
+一.分支结构
+if
+	1.if(){
+	
+	}
+
+	2.if(){
+	
+	}else{
+	
+	}
+
+	3.
+	if(表达式1){
+
+		执行语句1
+
+	}else if(表达式2){
+
+		执行语句2
+
+	}else if(表达式3){
+
+		执行语句3
+
+	}else{
+		执行语句4
+	}
+
+	执行流程:首先计算表达式1 看其返回的结果是true 还是 false 
+		如果是true 就执行 语句1
+		如果是false 向下到 else if中 计算表达式2 结果是true 还是false
+		如果是true 就执行 语句2 ......
+	注意: 最后一个 else 可以省略 但是不建议省略 可以对范围外的错误值进行提示 补充
+
+	多重if 嵌套
+switch
+	格式:
+		switch(表达式){
+			case 值1:
+				语句体1;
+				break;
+			case 值2:
+				语句体2
+				break;
+			......
+			default:
+				break; //可以不写
+		}
+		执行流程:
+			先计算表达式的值
+			然后和case后面的常量匹配,如果相同,就执行对应的语句 否则执行default控制的语句
+
+		switch(表达式)
+			java1.6(包括) 之前 类型 byte short int char 枚举
+			java1.7之后 多了一个 String类型
+
+		switch分支 有两种情况结束分支
+			1.遇到break;就结束 
+			2.遇到switch的 } 花括号 结束
+		注意事项:
+			a.case后面只能是常量,不能是变量,而且多个case后面的值不能出现相同的
+			b.default可以省略 但是不建议省略 因为它的作用是对不正确的情况给出提示 补充
+			c.break可以省略码?
+				最后一个可以省略,其他的最好不要省略
+				会出现一个现象较 case穿透(多个答案对应同一个结果)
+			//switch case 小情况
+		/*
+			1.switch default:可以写在 case前面 先走case 最后才是default
+			 default在case前面 没有break;的时候 执行default之后 向下继续执行 将不再判断case值是否匹配 
+			 直到碰到break; 或者}结束
+		*/
+	if - else
+	switch - case 区别:
+		1.适用场景
+			要判断区间范围 用 if else   --> 0<x<18
+			要判断单个的定值 用 switch-case (值不多的时候 switch比if快 效率略高)
+
+		2.语句的表达式值类型不同
+			if(表达式) --> boolean  true false
+			switch(表达式) --> byte short int char 枚举 String 

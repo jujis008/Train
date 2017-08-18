@@ -1,0 +1,37 @@
+一到三题为练习题
+
+一、字节流。
+	1．已知电脑D盘有iotest文件夹[没有的话自己手动建一个]在里面新建一个Stream.txt文件
+	2．用输出流FileOutputStream向Stream.txt文件中写入"I love you!"
+	3．用输入流FileInputStream读取获Stream.txt这个文件内容并打印到控制台
+
+二、字符流
+	1．已知电脑D盘有iotest2文件夹[没有的话自己手动建一个]在里面新建一个Stream.txt文件
+	2．用输出流FileWriter 向Stream.txt文件中写入"I love you!"
+	3．用输入流FileReader 读取获Stream.txt这个文件内容并打印到控制台
+	4．用FileWriter和FileReader完成文件的复制[把Stream.txt复制到C盘的根目录下]
+
+三、缓冲字符流
+	1．已知电脑D盘有iotest3文件夹在里面新建一个Stream.txt文件
+	2．用输出流BufferedWriter 向Stream.txt文件中写入"我叫XXX,性别:男,出生年月:XXXXX''"
+	3．用输入流BufferdeReader 读取获Stream.txt这个文件内容并打印到控制台
+	4．用BufferedWriter 和BufferdeReader 完成文件的复制
+
+四、在C：下创建一个名为Letter的目录，用BufferedReader/BufferedWriter编写一个程序来显示下列选项：
+ 	1：撰写请假条
+ 	2：查看请假条
+	根据用户的选择执行以下操作。
+	如果所选的选项是“撰写请假条”，则应显示下列选项。
+ 	1、病假
+	2、事假
+	根据用户的选择，在所创建的当前工程Letter目录下创建一个名为Letter.txt的文件，其内容如下：	
+	病假 我因发烧，请假一天
+	事假 参见婚礼，于6.10请假一天
+	请假人   用户输入
+	请假日期 用户输入
+	要求：根据不同的选择加入不同的请假理由/也可以自己手动加入理由 
+              只需要手动加入请假人和请假日期（输入时使用转换流录入）
+
+五、自定义一个文档里面内容为（十句话）	
+    要求：将文档里的十句话取出存入到集合中	    
+	  再随机的取出一句话打印到控制台上（输出使用转换流输出）

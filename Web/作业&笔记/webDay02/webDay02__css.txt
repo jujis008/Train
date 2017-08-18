@@ -1,0 +1,163 @@
+CSS
+一.CSS介绍
+	层叠样式表(Cascading Style Sheets)
+	样式表用来将HTML页面变得更加美观 网站的整体样式通常都存放在.css文件中 作为该网站中所有网页的通用样式来使用
+	这样做可以大大的提高工作效率
+	多个样式可以层叠为一
+
+	基本语法
+		主要由两部分组成
+			1.选择器 2.一条或者多条的声明
+			选择器主要是为了确定需要改变样式的HTML元素
+			每一条声明由属性和一个值组成 使用花括号来包围 属性和值之间使用冒号分开
+			例如:
+				h1{
+					color:red;
+					font-size:12px;
+				}
+	CSS样式表中值的单位
+		px:像素
+		%:百分比
+		cm:厘米
+		in:英寸
+		em:等于当前字体的尺寸
+		pt:磅 1pt扥体育1/72英寸
+	css样式表中的颜色
+		rgb
+		rgb(x%,y%,z%)
+		#ff0000 十六进制
+		饱和度
+二.导入CSS
+	1内联样式表 在html标签中使用style属性
+	2内部样式表 写在style标签中 通常写在head中 可以写在任何地方
+	3外部样式表 在外部写一个后缀名为css的样式表文件 将css样式单独写在里面 在html页面中使用link标签来引用
+
+	三种导入CSS的方式互不冲突
+	优先级
+		内联样式表>内部样式表>外部样式表
+		在实际开发中推荐使用外部样式表
+三.CSS选择器
+	在CSS中有三种选择器
+	1.类选择器 . html标签用 class属性来引用
+	2.id选择器 # html标签用 id属性来引用
+	3.标签选择器 以html标签为选择器 让所有的html中该标签的样式都符合这一个标准
+
+	优先级
+		id选择器>类选择器>标签选择器
+	类选择器和id选择器区别
+		id 在html页面只能使用一次    js中要使用
+		class 在html页面可以使用多次
+	html标签中 name 用于表单提交 只有加了name属性的标签 才会提交到服务器
+	html标签中 id 用于javascript的操作 可以确定操作的是哪一个具体的标签项
+四.CSS常用属性
+	1.字体
+		css字体属性定义文本的字体类型 大小 加粗 风格(斜体) 和 变形
+		常用属性
+			font 简写属性 作用是把所有的针对字体的属性设置在一个声明中
+			font-family 字体表 宋体 微软雅黑 华文新魏....
+			font-style 字体样式 normal正常 italic 斜体 oblique 倾斜
+			font-weight 浓淡 normal正常 bold 加粗 有些浏览器还支持100到900之间的数字 以百为单位
+			font-size:字体大小 12xp 12pt 120%
+			line-height:行高
+			text-align:对齐方式
+			letter-spacing 字符间距
+			text-decoration 文本修饰
+
+			font简写形式
+			顺序 font-style | font-variant | font-weight | font-size | line-height | font-family
+			注意事项
+				1.简写的时候 font-size和line-height只能通过斜杠/组成一个值 不能分开写
+				2.顺序不能改变 这种写法只有同时制定font-size和font-family属性是才起作用
+	2.背景
+		css允许应用纯色作为背景 也允许使用背景图像创建相当复杂的背景效果
+		常用属性
+			background 简写属性
+			background-color:定义背景颜色
+			background-image:背景图片
+			background-position:定义背景图片的起始位置
+			background-repeat: 定义背景图片是否以及如何重复
+		background-position x y
+			如果把一个div区域解释为一个坐标轴 左顶点 就是 x=0 y=0
+			图片 向左 向上 移动 则为负值
+			图片 向由 向下 移动 则为正值
+	3.定位
+		position 属性允许你对元素进行定位
+		position:absolute 绝对定位
+		position:relative 相对定位
+		常用属性
+			position 把元素放到一个静态的/ 相对的 /绝对的位置 或者固定位置
+			top 元素的上外边距边界与其包含块边界之间的偏移值
+			right 右
+			left 左
+			bottom 下边
+	4.列表
+		列表属性允许你设置 改变列表项标志 或者将图像作为列表项
+		常用属性
+			list-style 简写属性
+			list-style-image 定义列表项标志位图像
+			list-style-position 定义列表项标志的位置
+			list-style-type 定义列表项标志的类型
+五.CSS框模型(盒子模型)
+	box model 规定了元素的内容 边框 内边距 外边距 浮动
+
+	1.border 边框 是围绕元素内容和内边距的一条或多条线
+		常用属性
+			border简写属性
+			border-width 边框宽度
+			border-style 边框样式
+			border-color 边框颜色
+			border-top 上
+			border-right 右
+			border-bottom 下
+			border-left 左
+	box-shadow 阴影
+				h-shadow 水平阴影的位置 允许负值 必须
+				v-shadow 垂直阴影的位置 允许负值 必须
+				blur 模糊距离 可选
+				spread 阴影的尺寸 可选
+				color 阴影的颜色 可选
+				inset 外部阴影改为内部阴影 可选
+
+	2.margin外边距 围绕在元素边框外的空白区域 设置外边距 会在元素边框外创建额外的"空白"
+		常用属性
+			margin 简写属性 在一个声明中 设置所有的外边距属性 四个值 上右下左
+			margin-top	上外边距	
+			margin-right	右外边距
+			margin-bottom	下外边距
+			margin-left	左外边距
+
+	3.padding内边距 元素到边框之间距离 会在元素外创建额外的"空白"
+		常用属性
+			padding 简写属性 上右下左
+			padding-top
+			padding-right
+			paddint-bottom
+			padding-left
+
+	4.float 浮动 控制元素如何显示 设置图像显示于另一个元素中的何处 相对于正常位置来说
+		使用绝对值来定位元素 以及元素的可见度
+		常用属性
+			float 定义元素在哪个方向浮动
+			clear 清除浮动
+	5.a 超链接
+		css伪类 用于向某些选择器添加特殊效果
+		选定 / 鼠标悬浮 / 已访问 / 未访问 
+
+			#nav li a:link{/*未访问的链接样式*/
+				color: red;
+				text-decoration: none;
+			}
+			#nav li a:hover{/*鼠标经过 链接发生改变*/
+				color:yellow;
+				text-decoration: underline;
+				/*background-color: yellowgreen;*/
+				
+			}
+			#nav li a:active{/*选定的链接*/
+				color:blueviolet;
+				text-decoration: overline;
+			}
+			#nav li a:visited{/*已经访问过的*/
+				color: deeppink;
+				text-decoration: underline;
+			}

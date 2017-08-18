@@ -1,0 +1,106 @@
+一.正则表达式
+	符合一定规则的表达式
+	作用:用于专门操作字符串 是一个特殊的字符串 用于验证其他字符串是否合法
+1.字符类
+	[abc] a,b或者c 其中的任意一个 但不能是全部
+2.预定义字符
+	\d 数字[0-9]
+	\D 非数字 [^0-9]
+	\s 空白字符
+	\S 非空白字符
+	\w 单词字符 [a-zA-Z 0-9]
+	\W 非单词字符
+3.数量词
+	+:一次或多次
+	?:一次或0次
+	*:0次或多次
+	{n}: 出现的次数 正好是n次
+	{n,}: 出现的次数 至少是n次
+	{n,m}: 出现的次数至少是n次 最多是m次 >n <=m
+
+	 1.匹配 boolean matches(String regex) 
+		  告知此字符串是否匹配给定的正则表达式。 
+
+	 2.切割  String[] split(String regex) 
+		  根据给定正则表达式的匹配拆分此字符串。 
+
+	 3.替换 String replaceAll(String regex, String replacement) 
+		  使用给定的 replacement 替换此字符串所有匹配给定的正则表达式的子字符串。
+
+4.分组	(.)\\1(.)\\2
+
+
+/*替换 切割 匹配 获取
+ * 1.如果只想知道该字符是对是错 使用匹配
+ * 2.想要将已有的字符串变成另一个字符串 替换
+ * 3.想要按照自定的方式将字符串变成多个字符串 切割 获取规则以外的子串
+ * 4.想要拿到符合要求的字符串子串 获取 获取符合规则的子串
+ * */
+
+好处:简化对字符串的复杂操作
+弊端:符号定义越多,正则越长,阅读性越差
+
+二 
+StringBuffer JDK1.0 
+
+	字符串组成的原理就是通过该类实现的
+	字符串缓冲区 是一个容器 可以增删改查
+	很多方法和String是一样的
+	StringBuffer 是可变长度的
+
+	C U R D 
+	create
+	update
+	read
+	delete
+	1.存储
+		在结尾插入
+		StringBuffer append(int i) 将指定的数据作为参数添加到已有的数据的结尾处
+			没有byte 和 short
+		在指定位置插入
+		StringBuffer insert(int offset, char c) 
+	2.删除
+		StringBuffer delete(int start, int end) 包含头 不包含尾 删除缓冲区中的数据
+		StringBuffer deleteCharAt(int index) 删除指定位置的字符
+	3.获取
+		char charAt(int index) 
+		int indexOf(String str) 
+		int lastIndexOf(String str) 
+		int length() 
+		String substring(int start, int end) 
+	4.修改
+		StringBuffer replace(int start, int end, String str) 
+	5.反转
+		StringBuffer reverse() 
+特点:
+	1.长度是可变的
+	2.可以直接操作多个数据类型
+	3.最终会通过toString() 方法变成字符串
+String , StringBuffer 
+	同:都是操作字符串的
+	异:String效率低 String每拼接一次都会新创建一个字符串 大批量占用内存
+	   StringBuffer的效率高 在原有字符串的基础上进行拼接,占用内存小
+
+基本数据类型是值传递 不改变其值
+引用数据类型是址传递,改变其值
+
+String 类虽然是引用数据类型 但是他当做参数传递时和基本数据类型一样
+基本数据类型包装类当做参数传递时和基本数据类型一样
+
+
+StringBuilder JDK1.5
+	和StringBuffer一样 StringBuffer怎么调用 StringBuilder就怎么调
+
+StringBuffer 和 StringBuilder 的区别
+	同:都是操作字符串 
+	异:StringBuffer是线程同步的 线程安全的 效率低
+		(在多线程并发访问的前提下,访问当前方法 只有一个线程能进行访问 只有操作完毕,其他线程才能执行)
+	   StringBuilder是线程不同步的 线程不安全的 效率高
+		(在多线程并发访问的前提下,访问当前方法,所有线程都能执行当前方法)
+
+操作字符串的效率 StringBuilder > StringBuffer > String	
+
+升级的三个因素:
+	1.提高效率
+	2.简化书写
+	3.提高安全性

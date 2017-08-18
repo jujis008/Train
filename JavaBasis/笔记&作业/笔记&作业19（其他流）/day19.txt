@@ -1,0 +1,145 @@
+其他流对象
+
+一.打印流
+	PrintWriter 与 PrintStream 可以直接操作输入流和文件
+	该流提供了打印方法 可以对基本数据类型进行直接操作 保持数据的原样性 打印出去
+	PrintStream 字节打印流
+	构造函数可以接收的参数类型
+		1.File对象
+		2.字符串路径
+		3.字节输出流 OutputStream
+	PrintWriter 字符打印流
+		在web阶段常用 web阶段都是用它将数据打到客户端 让客户端对他解析执行
+			B/S
+			C/S
+	构造函数可以接收的参数类型
+		1.File对象
+		2.字符串路径
+		3.字节输出流 OutputStream
+		4.字符输出流 Writer
+
+		PrintWriter(OutputStream out, boolean autoFlush) 
+		autoFlush - boolean 变量；如果为 true，则 println、printf 或 format 方法将刷新输出缓冲区
+		PrintWriter(Writer out, boolean autoFlush) 
+		此类中的方法不会抛出 I/O 异常
+
+二.标准输入输出流
+	System.in是 inputStream 标准输入流 默认可以从键盘输入读取字节数据 
+	System.out是 PrintStream 标准输出流 默认可以向控制台中输出字符和字节数据
+
+	修改标准输入输出流 
+		修改输入流: System.setIn(InputStream)
+		修改输出流: System.setOut(PrintStream)
+	修改标准输入输出流的源和目的地 这样可以实现拷贝的功能
+
+三.序列流
+	什么是序列流?
+		序列流可以把多个字节输入流整合成一个 
+		从序列流中读取数据时,将从被整合的第一个流开始读,读完一个读下一个 以此类推
+		把最后一个小流的 -1 作为 大流的结束
+		(就是将多个流对象 拼接成一个流对象 逻辑串联)
+
+		N vs 1  --> 1 vs 1
+	SequenceInputStream 将多个 源 合并 将多个源头 变成一个源头  没有 outPut的!!!!
+
+	SequenceInputStream(InputStream s1, InputStream s2) 
+	SequenceInputStream(Enumeration<? extends InputStream> e) 
+
+
+四.对象操作流
+	什么是对象操作流?
+		该流可以将一个对象写出 或者 读取一个对象到程序中 也就是执行了序列化和反序列化的操作
+		ObjectInputStream
+		ObjectOutputStream
+
+	Serializable 这种接口 没有方法 称为 标记接口 给你的类打了个戳
+		其实就是给类加了一个 serialVersionUID 号 就证明你的类具备了序列化
+	持久化/序列化: 找一个介质 长期保存数据
+		对象存储在堆内存中 想要将对象存储在物理介质中 ---> 对象的序列化/持久化
+
+		数据随着对象 存入到硬盘上 如果下次想要使用 只要读取该文件 就可以再次使用
+		
+		序列化 是将 堆内存中的数据 序列化 被static修饰的成员 无法序列化
+
+		如果想要非静态的成员还是存在堆内存中 又不想被序列化 
+		就添加一个关键字 transient
+
+	transient使用小结:
+		当类实现了Serializable接口 那么类中属性就是默认能被序列化的
+		为了让某些数据 即能使用 又不被序列化 用一次就消亡 就可以使用当前关键字
+	
+		1.一旦被transient修饰 变量将不再是对象序列化的一部分 该变量内容在序列化后 无法获得访问
+		2.transient关键字只能修饰变量 不能修饰方法和类
+		3.被transient关键字修饰的变量不再被序列化 和 static修饰的一样 
+			但是 在内存中的存储区域不一样 不可混淆
+			一个被static的修饰的变量 是不能被序列化的
+		例如:
+			网吧登录 密码 银行卡号 这些 敏感信息 不希望被序列化 用一次就可以了
+	对象操作流注意事项:
+		1.ObjectInputStream和ObjectOutputStream所读写的对象 必须实现Serializable接口
+		2.对象中被static 或者 transient 修饰的成员变量 不能被序列化
+		3.自己写serialVersionUID 号
+五.数据输入输出流
+	
+	DataInputStream
+	DataOutputStream
+	可以按照基本数据类型大小读写数据
+	例如: 按Long大小写出一个数字 写出时该数据占8个字节 读取的时候也可以按照Long来读取 一次读8个
+		仅为了操作基本数据类型 是 流 和 数据相结合的功能 分别存储对应的字节数
+	构造函数
+		DataOutputStream(OutputStream out) 
+			void write(int b) 
+				1 int = 4 byte = 32 bit  将指定字节（参数 b 的八个低位）写入基础输出流。
+			void writeUTF(String str) 
+				以与机器无关方式使用 UTF-8 修改版编码将一个字符串写入基础输出流。
+		gbk 一个中文俩字节
+		utf-8 一个中文仨字节
+		writeUTF 一个中文四个字节
+
+六.内存流ByteArrayStream
+	可以直接操作字节数组中数据的流对象 
+	字节流内部本来就可以操作字节数组 这个流有和意义呢?
+	该输出流可以向内存中写数据 把内存当做一个缓冲区 写出之后可以一次性获取出所有数据
+	ByteArrayInputStream
+		在构造的时候 需要接收数据源 而且数据源是一个字节数组
+	ByteArrayOutputStream
+		在构造的时候 不用定义数据的目的地 因为该对象中已经内部封装了可变长度的字节数组 这就是目的地
+	因为这两个流都操作的数组 并没有使用系统资源 所以不用进行close关闭
+
+	ByteArrayInputStream(byte[] buf) 
+	ByteArrayOutputStream() 
+		//写出到文件中
+		bos.writeTo(new FileOutputStream("x.txt"));
+		//将内存缓冲区中所有的字节存储到数组中
+		byte[] newArr = bos.toByteArray();
+
+七.RandomAccessFile
+	java.io 
+	类 RandomAccessFile 不属于流 是 Object类的子类,
+	但是它融合了InputStream和 OutputStream的功能
+	支持对随机访问文件的读取和写入
+
+	这个对象内部封装了一个byte数组 可以通过指针对数组的元素进行操作
+	可以通过 
+	getFilePointer方法获取指针位置 
+	seek方法 改变指针的位置
+	构造函数
+		public RandomAccessFile(File file,String mode)
+		mode 参数指定用以打开文件的访问模式。
+		值	含意
+ 
+		"r" 以只读方式打开。调用结果对象的任何 write 方法都将导致抛出 IOException。  
+		"rw" 打开以便读取和写入。如果该文件尚不存在，则尝试创建该文件。  
+		"rws" 打开以便读取和写入，对于 "rw"，还要求对文件的内容或元数据的每个更新都同步写入到底层存储设备。  
+		"rwd"   打开以便读取和写入，对于 "rw"，还要求对文件内容的每个更新都同步写入到底层存储设备。
+		
+		void seek(long pos) 
+	例如:有一个文件 这个流可以分段写入数据
+	我们用一个线程负责文件的其中一段 多线程可以同时向文件中写入内容
+	互不冲突 这就是多线程下载
+
+	如果用其他的流 都是从头向后写 那么第一个线程写个数据 第二个线程接着写另一个数据
+	以此类推 虽然数据存完了 但是 这样会导致读出来的都是错误的 不是完整的文件 解码错误
+	io中 只有这个可以实现多线程下载 seek方法
+ 
+

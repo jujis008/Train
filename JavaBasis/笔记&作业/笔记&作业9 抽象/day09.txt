@@ -1,0 +1,97 @@
+一.继承
+	继承中的构造方法的关系
+	 1.子类的构造函数第一行 默认有一条隐式的语句 super();
+	 super(); 调用的是父类的无参构造
+	 2.而且子类中所有的构造函数默认第一条都是super(); 
+	 
+	 --->最上层 Object
+
+	 为什么?
+		因为子类会继承父类中的数据,可能还会使用父类的数据
+		所以,子类初始化之前,一定要先完成对父类数据的初始化
+	当父类中没有无参构造 怎么办?
+		1.在子类的构造函数中 调用父类的有参构造 super(x,x)解决
+		2.在子类的构造函数中 调用子类其他的构造函数 从其他的构造函数在调父类 this() 解决
+
+		this() super()都要在构造函数第一行 那么只能用一个 只能二选一
+this和super区别
+	调用成员变量:
+		this. 调用的本类的 也可以调用父类的
+		super.调用的是父类的
+	调用成员方法:
+		this. 调用的本类的 也可以调用父类的
+		super.调用的是父类的
+	调用构造函数:
+		this() 调用本类的
+		super() 调用父类的
+	this 代表当前对象的引用 谁来调用我 我就代表谁
+	super 代表当前对象的父类的引用
+
+二.final
+	最终的
+
+	final 可以修饰 类 方法 变量
+	final 修饰的类不可以被继承
+	final 修饰的方法不可以被覆盖
+	final 修饰的变量 是一个常量 只能被赋值一次 命名规则 单词全部大写 多个单词之间用下划线分割
+
+三.权限修饰符
+	包 package
+	为什么有包?
+		将字节码(.class)文件 进行分类存放
+		包其实就是文件夹
+	包
+	   1.按照功能分
+		删除
+		修改
+		查询
+		增加
+	   2.按照模块分
+	定义包的格式
+		package 包名; 
+		多级包用.分开即可
+	将字节码文件生成到 类中package指定的目录中
+		javac -d . Demo_1.java
+	注意:
+		1.package必须写在程序的第一条可执行代码
+		2.package语句在一个java文件中只能有一个
+		3.如果没有package 默认表示无包名
+
+	不同包下的类之间如何访问?
+		import 包名
+		import java.util.Scanner; -->这种方式导入是到类的名称 具体到哪个类
+		import java.util.*;
+
+		* :通配符 util包下的所有类 都被导入
+访问权限修饰符
+	四个
+	private 私有的
+	default(什么也不写) 默认的
+	protected 保护的
+	public  公有的
+
+	访问权限修饰符    本类    同包(子类和无关类)   不同包下(子类)     不同包(无关类)
+
+	private           √
+	default           √              √
+	protected         √              √                  √
+	public            √              √                  √                 √
+ 
+修饰符:
+	权限修饰符: private 默认 protected public
+	状态修饰符: static final
+	抽象修饰符: abstract
+   类:
+	权限修饰符: 默认 public
+	状态修饰符: final
+	抽象修饰符: abstract
+  成员:
+	权限修饰符: private 默认 protected public
+	状态修饰符: static final
+
+	用的最多的是 private
+
+  构造方法:
+	权限修饰符: private 默认 protected public
+	
+	用的最多的是 public

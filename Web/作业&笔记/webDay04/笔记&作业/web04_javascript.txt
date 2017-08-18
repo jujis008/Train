@@ -1,0 +1,108 @@
+DOM 和 BOM区别
+
+	因为document对象可以使用window.document来调用 那么同理可证明 BOM包含DOM 浏览器提供出给予访问的BOM对象
+	从BOM对象再访问到DOM对象 从而js可以操作浏览器以及浏览器读到的文档 (先要有窗口 然后才会有窗口内的内容)
+	document 对象是DOM模型的根节点
+	window 对象是BOM模型的根节点
+一浏览器对象
+	1.事件
+		发生并得到处理的操作
+
+		onClick 鼠标单击
+		onSubmit 表单提交事件
+
+		onChange 文本内容或者下拉列表中的选项发生改变
+
+		onFocus 获得焦点 表示 文本框等 获得鼠标光标
+		onBlur 失去焦点 表示文本框等失去光标
+
+		onMouseOver 鼠标悬停 即鼠标停留在 图片 等等的上方
+		onMouseOut 鼠标移出 即离开图片等所在的区域
+		onMouseMove 鼠标移动 表示在div 层等上方移动
+		onMouseDown 鼠标按下
+		onMouseUp   鼠标弹起
+
+		onLoad 网页文件加载事件
+
+	2.常用浏览器对象
+		window
+			属性: 
+				document(html部分) 
+				history(客户访问过的url信息)
+				location(当前url的信息)
+				name(窗口或框架的名字) 
+				status(底部状态栏) 
+				screen(有关客户端的屏幕和显示性能)
+			方法:
+				alert("提示信息") 显示包含消息的提示框
+				prompt("提示信息",0) 弹出一个带输入框的消息提示框
+				confirm("提示信息")显示一个带有确认 和 取消按钮的窗口 true false
+				open("url","name") 打开具有指定名称的新窗口 并加载给定url的页面
+				close() 关闭open打开的窗口
+				setTimeout("函数",毫秒数) 设置定时器 经过指定毫秒数 调用某个函数
+				clearTimeout(定时器对象) 清除定时
+
+			window.方法名调用 window 在调用方法的时候可省略
+
+		document
+			属性:
+				alinkColor 设置或检索文档中所有活动链接的颜色
+				bgColor 设置Document对象的背景颜色
+				linkColor 设置或检索文档链接的颜色
+				location 关于当前url的信息
+				vlinkColor 设置或检索用户访问过的链接颜色
+				fgColor 设置文档中文本的颜色
+		history
+			方法:
+				back() 相当于后退按钮
+				forward() 相当于前进按钮
+				go(url or number) 加载history列表中的一个url 或者跳到要求的页面数
+
+				go(1) <---> foward()
+				go(-1) <---> back()
+		location
+			包含有关当前URL的信息
+			Location对象是Window对象的一个部分 可以通过window.location属性来访问到
+			属性:
+				host url的主机名及端口号
+				hostname 主机名部分
+				href 完整的url字符串
+			方法:
+				assign("url") 加载url指定的新的html文档 不会覆盖
+				reload() 重新加载当前页 刷新
+				replace("url") 通过加载url指定的文档来替换当前文档 覆盖掉原来的历史记录
+		
+二表单处理(DOM) 文档对象模型
+	功能 使用DOM技术 可以控制页面中html标签和css标签
+		一句话 把页面中的所有内容都封装成了对象
+	web标准下可通过
+		getElementById() 根据元素id获取元素对象
+		getElementsByName() 根据元素name 获取
+		getElementsByTagName() 根据html元素名获取 例如 p标签 input标签 img标签
+
+		innerHTML属性 >内容< 几乎所有的元素 都有这个属性 它是一个字符串
+			用来设置和获取位于对象起始标签和结束标签内的HTML
+		获取HTML当前标签中的内容
+	1.下拉列表
+		省市二级联动
+		var op = new Option(值,值);--> 显示的文本,值
+		下拉元素.add(op) 方法 将 下拉菜单项添加到下拉菜单中
+	2.文本框
+		onFocus() 获得焦点
+		onBlur() 失去焦点 火狐有问题
+
+		focus() 获得焦点 火狐有问题
+		select() 选中文本内容 突出显示输入区域
+		readonly 只读 文本框中的内容不能改变
+	3.按钮
+		onclick() 单击
+		onsubmit() 表单提交事件 点击"提交"按钮时产生,但是此事件属于form表单元素
+		不属于提交按钮 一定要有返回 true-->action 提交  false
+	4.复选框 单选框
+		数组 获取元素 
+		.checked 返回 true false
+	5.表单验证
+		结合getElement...方法 和 innerHTML方法 来将提示信息显示在当前页面的指定位置
+		document.getElementById("").innerHTML
+	6.文本区域 
+		textarea

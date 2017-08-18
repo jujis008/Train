@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>定时器</title>
+		<!--
+			setTimeout("方法名",毫秒) 每隔毫秒 执行该方法
+			clearTimeout(某一个) 关闭定时器
+		-->
+	</head>
+	<body>
+		<form action="" name="myform">
+			<input type="text" name="time" /><br />
+			<input type="button" value="开始" onclick="start1()"/>
+			<input type="button" value="停止" onclick="stop1()"/>
+		</form>
+		<script>
+			var t;
+			function start1(){
+				var d = new Date();
+				var hour = d.getHours();
+				var minute = d.getMinutes();
+				var second = d.getSeconds();
+				document.myform.time.value = hour+":"+minute+":"+second;
+				t = setTimeout("start1()",1000);//每隔1秒调用start1()方法
+			}
+			function stop1(){
+				clearTimeout(t);//关闭定时器
+			}
+		</script>
+	</body>
+</html>

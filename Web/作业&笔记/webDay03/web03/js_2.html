@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>竞拍页面</title>
+		
+	</head>
+	<body>
+		<form action="" name="myform">
+			价格<input type="text" name="price" /><br />
+			数量<input type="text" name="count"/><br />
+			支付方式
+			<select name="pay">
+				<option value="1">微信九折</option>
+				<option value="2">支付宝八折</option>
+				<option value="3">京东白条七折</option>
+				<option value="4">百度钱包六折</option>
+			</select><br />
+			总价<input type="text" name="total" readonly="readonly" /><br />
+			<!--onclick 点击事件 当点击按钮 触发一个javascript脚本方法-->
+			<input type="button" value="计算看看" onclick="jisuan()" />
+		</form>
+		<script>
+			//定义方法
+			function jisuan(){
+				//获取文本框中的值 表单名.标签name属性.value
+				var price = document.myform.price.value;
+				var count = document.myform.count.value;
+				//求总价
+				var total = parseFloat(price) * parseInt(count);
+				//获得下拉列表的值 计算打折
+				var pay = document.myform.pay.value;
+				var grade;
+				switch(pay){
+					case "1":
+						grade = 0.9;
+						break;
+					case "2":
+						grade = 0.8;
+						break;
+					case "3":
+						grade = 0.7;
+						break;
+					case "4":
+						grade = 0.6;
+						break;
+				}
+				total = total * grade;
+				document.myform.total.value = total;
+				if(total>500 && total<1000){
+					alert("总价是:"+total+",已超过500 赠送q币2枚");
+				}else if(total>=1000 && total<2000){
+					alert("总价是:"+total);
+				}else if(total>=2000){
+					alert("总价是:"+total);
+				}
+				var a = 100;
+				var b = 50;
+				var c = a>b?a:b;
+				alert(c);
+			
+			}
+			
+		</script>
+	</body>
+</html>

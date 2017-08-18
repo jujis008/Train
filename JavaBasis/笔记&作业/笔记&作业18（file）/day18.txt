@@ -1,0 +1,111 @@
+一.转换流的设计目的
+	InputStreamReader(InputStream in, Charset cs) 
+	InputStreamReader(InputStream in, String charsetName) 
+
+	OutputStreamWriter(OutputStream out, Charset cs) 
+	OutputStreamWriter(OutputStream out, String charsetName) 
+
+	字符编码
+		字符流的出现为了方便操作字符
+		更重要的是加入了编码转换 就是通过子类转换流来完成
+		在两个对象构造的时候 可以加入字符集
+	编码表的由来
+		计算机只能识别二进制数据 早期由来是电信号
+		为了方便计算机的应用 让它可以识别多国的文字 就将各个国家的文字用数字来表示 并一一对应 形成一张表 就叫编码表
+	常见的编码表
+		ASCII 美国标准信息交换码
+			用一个字节的7位可以表示
+		ISO8859-1 拉丁码表 欧洲码表
+			用一个字节的8位表示
+		GB2312 中国的中文编码表 
+			一个中文两个字节 16位 中国的码表兼容ASCII码表 汉字高位都是1
+		GBK 中国的中文编码表升级 融合了更多的中文文字符号
+		Unicode 国际标准码 融合了多种文字
+			所有文字都用两个字节来表示 java语言使用的就是unicode
+		UTF-8 最多用三个字节来表示一个字符
+	编码的转换
+		编码:字符串变成字节数组
+			String --> byte[] 即 str.getBytes(charsetName);
+		解码:字节数组变成字符串
+			byte[]--> String 即 new String(byte[],charsetName);
+	转换流的好处
+	1.操作文本文件时,将字节流转换成字符流 便于操作
+	2.可以解决字符集乱码问题
+	在读取的过程中 读和写都是设置同一个字符集 就不会出现乱码 但是要保证 
+		读的时候 就是对的 原文件是什么编码集 你就需要设置相同的编码集去读 去写
+
+二.File
+	概念
+		用来将文件或者文件夹封装成对象
+	好处
+		方便对文件或文件夹的属性信息进行操作
+		File对象可以作为参数传递给流的构造器
+	路径
+		绝对路径和相对路径
+		绝对路径:固定的一个路径 从盘符开始
+		相对路径:相对于某个位置 在eclipse下是指当前项目下
+	流只能操作数据 想要操作数据封装成的文件信息 必须用File
+
+	构造方法
+		File(String pathname) 
+		File(File parent, String child) 
+		File(String parent, String child) 
+		
+	创建功能
+		public boolean createNewFile() 创建文件 如果存在这样的文件 就不创建了
+		public boolean mkdir() 创建文件夹 如果存在 就不创建了
+		public boolean mkdirs() 创建文件夹 如果父文件夹不存在 会帮你创建出来
+	重命名和删除功能
+		public boolean renameTo(File dest) 把文件重命名为制定的文件路径
+			重命名注意事项:
+				如果路径名相同 就是改名
+				如果路径名不同 就是改名并剪切
+		public boolean delete() 删除文件或文件夹 
+			删除注意事项:
+				如果删除一个文件夹 那么文件夹必须是空的
+				java中的删除不走回收站
+	判断功能
+		public boolean isDirectory() 判断是否是目录
+		public boolean isFile() 判断是否是文件
+		public boolean exists() 判断文件或者文件夹是否存在
+		public boolean canRead() 判断是否可读
+		public boolean canWrite() 判断是否可写
+		public boolean isHidden() 判断是否隐藏
+
+	Linux 
+		u: User 即文件或者目录的拥有者
+		g: Group 即文件或目录的所属群组
+		o: other 除了文件或目录拥有者或群组之外的 其他用户都属于这个范围
+		
+		r:读取权限 数字代表 4
+		w:写入权限 数字代表 2
+		x:执行或切换权限 数字代表 1
+
+		chmod 777  
+	获取功能
+		public String getAbsolutePath() 获取绝对路径
+		public String getPath() 获取路径
+		public String getName() 获取名字
+		public long length()  获取长度 字节数
+		public long lastModified() 最后一次修改时间 毫秒值
+		public String[] list() 获取指定目录下的所有文件或文件夹的名称数组
+		public File[] listFile() 获取指定目录下的所有文件或文件夹的File数组
+
+	static String separator 跨平台分隔符 File.separator 
+
+三.Properties
+	Properties 是HashTable的子类
+	也就是说它具备Map集合的特点 而且它里面存储的键值对都是字符串 不需要泛型
+	是集合中和IO技术相结合的集合容器
+	主要适用于键值对形式的配置文件
+	配置文件:将配置信息进行持久化存储
+
+		配置文件中以#开头 都是注释
+	特殊功能:
+		public Object setProperties(String key,String value);
+		public String getProperties(String key);
+
+	 void load(InputStream inStream) 将流中的数据加载进集合
+	 void store(OutputStream out, String comments) 将内存中的结果 存入到流中 并存到文件上
+		commets : 是注释信息 可不写 不要写中文 解析不出来 爱加不加 #注释信息 不会被加载
+ 

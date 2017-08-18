@@ -1,0 +1,71 @@
+一.java中的常用类使用
+	1.System类
+		System类包含一些有用的类字段和方法,它不能被实例化
+		常用的属性
+			System.in -->InputStream 标准输入流
+			System.out -->PrintStream 标准输出流
+		常用的方法
+			static void gc() //运行垃圾回收器 相当于呼叫保洁阿姨
+				//当垃圾回收器将要释放无用的对象内存时,先调用Object类中该对象的finalize()方法
+			static void exit(int status) //无条件终止jvm的执行
+			static long currentTimeMillis() //以毫秒值返回的系统当前时间
+			static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length) 
+				第一个:要复制的数组 
+				第二个:从要复制的数组的第几个开始
+				第三个:复制到哪
+				第四个:复制到的数组第几个开始
+				第五个:复制长度
+			Arrays工具类中的 复制数组
+			static int[] copyOf(int[] original, int newLength) 
+			
+	2.Runtime类
+		每个java应用程序都有一个Runtime类实例 使应用程序能够与其运行环境相连接
+		可以通过 getRuntime()方法获取到当前运行时
+		应用程序不能创建自己的Runtime类实体
+
+		//获取java程序关联的运行时对象
+		Runtime rt = Runtime.getRuntime();
+		System.out.println("处理器数量:"+rt.availableProcessors());
+		System.out.println("空闲内存数:"+rt.freeMemory());
+		System.out.println("总内存数:"+rt.totalMemory());
+		System.out.println("可用最大内存数:"+rt.maxMemory());
+	3.Math类
+		Math类包含用于执行基于数学运算的方法
+			平方根 三角函数
+		常用方法:
+			pow 次方 
+			random() 随机数 生成double 0.0>= x <1.0 
+				 伪随机数 底层就是算法 只要是算法 就有可能有规律
+			max()
+			min()
+			abs() 绝对值
+			sqrt() 开平方
+	4.Random类
+		util包下的
+		此类的实例是用于生成伪随机数流
+		int nextInt(int n) 返回一个伪随机数，它是取自此随机数生成器序列的、在 0（包括）和指定值（不包括）之间均匀分布的 int 值。
+ 
+
+	5.Date类
+		util包下的 还有一个Date是sql包下的 所以注意别导错包了
+		Date类是一个时间的抽取与封装 精确到 毫秒
+		构造函数
+			Date() 
+			Date(long date) 
+		成员方法
+			long getTime() 
+			void setTime(long time) 
+ 
+	SimpleDateFormat 类 实现日期和字符串的相互转换 text包
+		构造函数:
+			SimpleDateFormat()
+			SimpleDateFormat(String pattern)
+		成员方法:
+			public final String format(Date date)
+			public Date parse(String source)
+
+	6.Calender类
+		util 包 抽象类
+		Calendar rightNow = Calendar.getInstance();
+		getInstance();使用默认时区和语言环境获得一个日历
+

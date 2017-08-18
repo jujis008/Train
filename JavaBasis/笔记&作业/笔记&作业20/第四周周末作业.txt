@@ -1,0 +1,77 @@
+一、练习面向对象编程（选做一个）
+1.
+    模拟学生找枪手代考
+
+2.以面向对象的思想来作者道题
+    
+    我想做燕子 
+    只需简单思想 
+    只求风中流浪 
+    我想做树 
+    不长六脏五腑 
+    不会寸断肝肠 
+
+    我做不了燕子 
+    所以我 
+    躲不开感情的墙 
+    我做不了树 
+    因此我 
+    撑不破伤心的网 
+
+    来生做燕子吧 
+    随意找棵树休息翅膀 
+    淡然地飞向远方 
+    来生做树吧 
+    当枝头的燕子飞走时 
+    不去留恋地张望 
+
+二、练习集合
+	
+	使用List集合装对象
+	使用Set集合装对象
+	使用Map集合装对象
+
+
+三、练习流
+
+	模拟文件拷贝
+
+四、已知文件a.txt文件中的内容为“AAbcdea22dferwplkCC321ou1”,请编写程序读取该文件内容，要求去掉重复字母(区分大小写字母)并按照自然排序顺序后输出到b.txt文件中。即b.txt文件内容应为"abc......123..."这样的顺序输出
+
+五、把指定目录下(包含子目录)的所有图片，复制到另一个指定目录下
+
+六、线程练习
+
+	编写多线程应用程序，模拟多个人通过一个山洞的模拟。
+	这个山洞每次只能通过一个人，每个人通过山洞的时间为5秒，随机生成10个人，
+	同时准备过此山洞，显示一下每次通过山洞人的姓名。
+
+
+六、拓展JFrame
+	在窗口上随机输出一句话（鼠标点击窗口内部就换一句话）
+
+	MyFrameWeek4类要继承JFrame
+	MyFrameWeek4的构造器如下：
+
+	public MyFrameWeek4() {
+//		loadData();		
+		setTitle("每日一句");
+		setSize(350, 120);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	
+		contentLabel = new JLabel(randomContent(), JLabel.CENTER);
+		add(contentLabel);
+		
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				contentLabel.setText(randomContent());
+			}
+		});
+	}
+
+
+
+

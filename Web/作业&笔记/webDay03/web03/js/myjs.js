@@ -1,0 +1,1 @@
+document.write("外链的js代码<br />");

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>邮箱格式验证</title>
+	</head>
+	<body>
+		<form name="myform">
+			email<input type="text" name="email" /><br />
+			<input type="button" value="check" onclick="check()" />
+		</form>
+		<script>
+			function check(){
+				var email = document.myform.email.value;
+				if(email.length==0){
+					alert("email 不能为空");
+					return;
+				}
+				//判断是否包含@ 和 . @是否在.前面
+				if(email.indexOf("@")==-1){
+					alert("email 不包含@");
+					return;
+				}
+				if(email.indexOf(".")==-1){
+					alert("email 不包含.");
+					return;
+				}
+				if(email.indexOf("@")>email.indexOf(".")){
+					alert("@应该在.前面");
+					return;
+				}
+				alert("注册成功,邮箱是:"+email);
+			}
+		</script>
+	</body>
+</html>

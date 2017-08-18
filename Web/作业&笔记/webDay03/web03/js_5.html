@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>金字塔练习</title>
+	</head>
+	<body>
+		<script>
+			for(var i=1;i<100;i+=5){
+				document.write("<hr align='center' width='"+i+"' />");
+			}
+		</script>
+		<style>
+			.myfont{
+				font-size:150px;
+				color:blueviolet;
+				font-family:webdings;/*产生特殊字体*/
+			}
+		</style>
+		<script>
+			document.write("<h3>每个字符都对应一个漂亮的特殊字体</h3>");
+			do{
+				var c = prompt("请输入一个字符 输入n或者N停止","A");
+				document.write("<font class='myfont'>"+c+"</font>");
+			}while(c!="N" && c!="n");
+		</script>
+	</body>
+</html>

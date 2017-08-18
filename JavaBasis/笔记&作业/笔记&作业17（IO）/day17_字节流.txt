@@ -1,0 +1,53 @@
+一.字节流
+	InputStream :字节输入流 从磁盘到内存   -->Reader
+	OutputStream :字节输出流 从内存到磁盘  -->Writer
+
+	FileInputStream
+	FileOutputStream
+
+	//根据文件大小做一个字节数组
+		byte[] arr = new byte[fis.available()];//弊端 有可能会造成内存溢出
+字节流缓冲区
+	BufferedInputStream(InputStream in) 
+	BufferedOutputStream(OutputStream in) 
+	字节流一次读写一个数组的速度明显比一次读一个字节速度快
+	java本身在设计的时候 就加入了这样的功能 就是缓冲区
+
+	BufferedInputStream会一次性从文件中读取8192个 存在缓冲区中,返回给程序一个
+	程序再次读取的时候 就不用找文件了 直接从缓冲区中获取
+
+	BufferedOutputStream程序向流中写出字节时,不会直接写到文件中,先写到缓冲区中
+	直到缓冲区装满 才会把缓冲区中的数据异型性写到文件里
+
+	/*数组的读写和带Buffered的读写哪个更快?
+	 * 如果数组定义8192个字节大小 和 Buffered比较的话
+	 * 数组会略胜一筹 因为 读和谐 操作的都是同一个数组
+	 * 而Buffered操作的是两个数组
+	 * */
+二.转换流
+	Reader 类 字节转字符 输入流 InputStreamReader 是字节流通向字符流的桥梁：
+	InputStreamReader(InputStream in) 创建一个使用默认字符集的InputStreamReader
+	InputStreamReader(InputStream in, Charset cs) 创建使用给定字符集的InputStreamReader
+	InputStreamReader(InputStream in, String charsetName) 创建使用指定字符集的InputStreamReader
+
+	Writer 类 字节转字符 输出流 OutputStreamWriter 是字节流通向字符流的桥梁
+	OutputStreamWriter(OutputStream out) 创建使用默认字符编码的OutputStreamWriter
+	OutputStreamWriter(OutputStream in, Charset cs) 创建使用给定字符集的OutputStreamWriter
+	OutputStreamWriter(OutputStream in, String charsetName) 创建使用指定字符集的OutputStreamWriter
+
+流操作的基本规律
+	流对象有很多 不知道用哪一个
+
+	通过三个明确来完成
+		1.明确源和目的地
+			源:输入流 InputStream Reader
+			目的: 输出流 OutputStream Writer
+		2.明确操作的数据是否是纯文本
+			是:字符流
+			否:字节流
+		3.当体系明确后,再明确要使用哪个具体的对象
+			通过设备来进行划分
+			源设备:内存,硬盘,键盘
+			目的设备:内存,硬盘,控制台
+
+

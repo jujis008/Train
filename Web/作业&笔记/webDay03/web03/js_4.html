@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Array 对象</title>
+	</head>
+	<body>
+		<script>
+			//创建数组的方式1 创建一个数组并初始化值 
+				var arr1 = [2,6,3,4,5];
+			//创建数组的方式2 同方式1
+				var arr2 = new Array(2,3,4,5);
+			//创建数组的方式3 长度
+				var arr3 = new Array(4);
+				arr3[0] = 1;
+				arr3[1] = "abc";
+				arr3[2] = true;
+			//数组的长度 length
+				alert(arr1.length);
+				alert(arr2.length);
+				alert(arr3.length);
+			//遍历
+				for(var i=0;i<arr3.length;i++){
+					document.write(arr3[i]+"<br />");
+				}
+			//join 将数组中的元素 组成字符串 默认以,分割
+			alert(arr3.join("-"));//StringBuffer
+			//reverse 反转
+			arr3.reverse();
+			alert(arr3.join("-"));
+			//sort 排序
+			arr1.sort();
+			alert(arr1.join("-"));
+			
+		</script>
+	</body>
+</html>

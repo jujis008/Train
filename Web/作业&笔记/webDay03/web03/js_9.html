@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>2秒自动刷新图片 随机图片</title>
+		<meta http-equiv="refresh" content="2" /><!--2秒自动刷新-->
+	</head>
+	<body>
+		<script>
+			/*
+			 	随机取1-9数字 ?
+			 	var m = Math.random(); //(0-1)
+			 	document.write(m+"<br>");
+			 	document.write(m*10+"<br>");// (0-10)
+			 	document.write(Math.round(m*10));// [0-10]
+			 * */
+			 	//1-9 1+[0-8]
+			 	var b = Math.round(Math.random()*8+1);
+			 	document.write("<img src='img/"+b+".jpg' width='200' height='200' />");
+		</script>
+	</body>
+</html>

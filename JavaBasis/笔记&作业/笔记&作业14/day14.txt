@@ -1,0 +1,38 @@
+集合
+	集合的由来?
+		数组长度是固定的,添加的元素类型也是固定的,操作起来很不方便
+		java给我们提供了一个集合类 
+		能够存储任意对象,
+		长度是可变的 随着元素的增加而增加 随着元素的减少而减少
+	数组和集合的区别
+		区别1:
+			数组可以存储基本数据类型/引用数据类型
+				基本数据类型存的是值 引用数据类型存的是地址
+			数组在创建的时候 就会定义存储的数据类型 也就是只能存储一种数据类型
+
+			集合只能存储引用数据类型(对象)
+			集合中也可以存储基本数据类型(装箱)最终存储的还是 Object
+			如果没有泛型限定 默认存储的都是 Object类型的数据 也就是任意类型
+		区别2
+			数组长度是固定的,不能自动增长
+			集合是长度可变的,根据元素的多少来决定长度
+1.Collection
+	//Collection 是个接口 接口不能创建对象 需要找接口的实现类
+		Collection 对象名 = new 接口的实现类();
+	基本功能演示
+		boolean add(E e)
+		boolean remove(Object obj) 删除指定元素 删除第一个出现的元素
+		void clear() 清空集合
+		boolean contains(Object obj) 判断集合是否包含指定元素 底层调用equals 判断值是否相同
+		boolean isEmpty() 判断集合是否为空
+		int size() 获取元素的个数
+	带all方法
+		boolean addAll(Collection c);
+		boolean removeAll(Collection c);
+		boolean containsAll(Collection c);
+		boolean retainAll(Collection c);
+
+	迭代器 Iterator 接口
+			Iterator<E> iterator() 返回在此 collection 的元素上进行迭代的迭代器
+		迭代器是对集合的遍历,就是把取出方式定义在集合的内部 这样取出方式就可以直接访问集合内部的元素
+		iterator()

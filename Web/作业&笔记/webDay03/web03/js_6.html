@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>计算器</title>
+	</head>
+	<body>
+		<form action="" name="myform">
+			第一个数<input type="text" name="n1" /><br />
+			第二个数<input type="text" name="n2"  /><br />
+			<input type="button" value="+" onclick="fun('+')" />&nbsp;
+			<input type="button" value="-" onclick="fun('-')"  />&nbsp;
+			<input type="button" value="x" onclick="fun('*')"  />&nbsp;
+			<input type="button" value="÷" onclick="fun('/')"  /><br />
+			
+			结果<input type="text" name="n3" readonly="readonly" style="background-color: yellowgreen;"/>
+		</form>
+		<script>
+			function fun(op){
+				var n1 = parseFloat(document.myform.n1.value);
+				var n2 = parseFloat(document.myform.n2.value);
+				var result;
+				if(op=="+"){
+					result = n1 + n2;
+				}
+				if(op=="-"){
+					result = n1 - n2;
+				}
+				if(op=="*"){
+					result = n1 * n2;
+				}
+				if(op=="/" && n2!=0){
+					result = n1 / n2;
+				}
+				document.myform.n3.value = result;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,70 @@
+Collection
+	|--List 元素是有序的(存取顺序一致) 元素可以重复 因为该集合体系有索引
+	|--Set  元素是无序的(存取顺序不一致) 元素不可以重复 
+List
+	特有方法 凡是可以操作角标的方法都是该体系特有的方法
+	List集合 是以线性方式存储的
+
+	增加
+		void add(index,element)
+		boolean addAll(int index, Collection<? extends E> c) 
+ 
+	删除
+		remove(index)
+	修改
+		set(index,element)
+	查询
+		get(index)
+		subList(from,to)
+		listIterator() list集合特有的迭代器
+
+List集合中的三个常用子类
+	|--Vector
+		底层数据结构是数组 查询快 增删慢 线程安全 效率低
+			默认长度是10 超过就会100%延长 变成20 浪费空间
+	|--ArrayList
+		底层数据结构是数组 查询快 增删慢 线程不安全 效率高
+			默认长度是10 超过就会new一个新的数组 50%延长 节省空间
+	|--LinkedList
+		底层数据结构是链表(双向链表) 查询慢 增删快 线程不安全 效率高
+到底用谁呢?
+	查询多 ArrayList
+	增删多 LinkedList
+	如果都多 ArrayList
+
+ArrayList集合
+	特点:
+	1.底层是数组实现的
+	2.有序(存取顺序一致)
+	3.可重复
+	4.查询快 增删慢 
+linkedList集合
+	特点:
+	1.底层是双向链表
+	2.有序(存取顺序一致)
+	3.可重复
+	4.查询慢 增删快
+
+	特有方法
+		void addFirst(E e) 
+		void addLast(E e) 
+		 E getFirst() 
+		 E getLast() 
+		 E removeFirst() 
+		 E removeLast() 
+Vector
+	Vector 的方法 和 ArrayList 一样
+java.util 
+接口 Enumeration<E>
+	此接口的功能与 Iterator 接口的功能是重复的。
+
+ 
+List 集合的特点
+	其元素是以线性方式存储 集合中可存储 重复 对象 有序(存取一致)
+
+	ArrayList
+		长度可变的数组 增删慢 查找快
+	LinkedList
+		双向链表 增删快 查找慢
+ 
+ 

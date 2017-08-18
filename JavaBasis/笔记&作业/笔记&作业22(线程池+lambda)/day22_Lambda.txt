@@ -1,0 +1,64 @@
+二.Lambda表达式(java8的新特性 重要*****)
+
+	语法糖 (Syntactic Sugar)也叫糖衣语法
+	 java语法糖:
+		1.泛型
+		2.自动装箱拆箱
+		3.forEach循环(增强for循环)
+		4.内部类
+		5.枚举
+		6.switch支持 枚举 和 字符串
+	在计算机语言中添加某种语法,这种语法使程序员使用更方便,同时增强程序代码的可读性
+	避免出错的机会,这种语法对语言本身的功能并没有影响
+什么是Lambda表达式
+	允许你通过表达式来代替功能接口,其就和方法一样,提供了一个正常的参数列表和一个使用这些参数的主体
+	Lambda表达式还增强了集合库
+
+	功能接口:只包含一个方法的接口 叫做功能接口
+		例如 Runnable	Comparator 
+
+	Lambda表达式 匿名函数 即没有函数名的函数
+使用场景
+	1.Lambda表达式用来实现单一的行为 并且该行为要被传递给其他的代码
+	2.当只需要一个功能接口的简单实例,而不需要类型,构造方法和一些相关的类内容
+	3.只在需要新的字段和功能的时候使用匿名内部类
+语法格式
+	(parameters)-> expression 或者(parameters)-> {expression;}
+	1.->:表示"转到"或"成为" 左边指定输入参数 右边是Lambda的主体
+		一个参数 param->expr
+		两个参数 (param1,param2)->expr
+		参数列表 用括号包裹 以逗号分隔
+	例如:
+		public int add(int x,int y){
+			return  x+y;
+		}
+		Lambda写法
+			(int x,int y)->x+y;
+			(x,y)->x+y  编译器会根据上下文自动推理出来
+			(x,y)->{return x+y;} 显式指明返回值
+
+	语法由三部分组成:参数列表,箭头,以及一个表达式或者语句块
+	语法有如下特征
+		[可选] 类型声明
+		[可选] 小括号 单个参数可以不写
+		[可选] 花括号 如果只有一条语句 可以不写
+		[可选] return关键字 如果表达式主体是单一 return可以不写 编译器可以自动返回
+			当然 如果写了return 就必须加上花括号
+基本的Lambda表达式应用案例
+
+1.线程中的使用
+	用 Lambda来实现Runnable接口 
+		//基本版
+			Thread td = new Thread(new Runnable(){
+				public void run() {
+					System.out.println("基本");
+				}
+			});
+			td.start();
+		//Lambda版本
+			Thread td2 = new Thread(()->System.out.println("Lambda版本"));
+			td2.start();
+2.自定义(仿照线程)
+3.forEach
+4.集合的排序
+5.数组的排序

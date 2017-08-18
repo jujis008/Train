@@ -1,0 +1,92 @@
+一.Map
+	将键映射到值的对象。一个映射不能包含重复的键；每个键最多只能映射到一个值。 
+
+	Map接口和Collection接口的不同
+		1.Map是双列的(夫妻 有结婚证这个联系)
+		  Collection是单列的(单身狗)
+		2.Map的键是唯一的
+		  Collection的子体系 Set是唯一的
+		3.Map集合的数据结构是针对键有效的 跟值无关
+		  Collection集合的数据结构是针对元素有效
+  特点:
+	1.根据键来排重 也就是相同键的元素存储在同一个Map集合中 后添加的键值元素会将之前存储的相同的键值元素替代
+	2.键和值 都需要是引用数据类型
+
+  实现类:
+	1.HashTable
+		底层是哈希表 不可以存入null键null值 线程同步的 jdk1.0 效率低
+	2.HashMap
+		底层是哈希表 可以存入null键null值 线程不同步的 jdk1.2 效率高
+	3.TreeMap
+		底层是二叉树 线程不同步的 可以用于给Map集合中的键进行排序
+	
+	和Set很像 其实 Set底层就是用了Map集合 
+
+Map集合中的方法
+	增
+		V put(K key, V value) 添加元素
+		 如果键是第一次存储 就直接存储元素 返回 null
+		 如果键不是第一次存储 就用值把以前的值替换掉 返回被覆盖的值
+		
+		void putAll(Map<? extends K,? extends V> m) 
+ 
+	删
+		void clear() 
+		 V remove(Object key) 
+		 根据键删除键值对元素 并把值返回
+		 如果删除的是不存在的key 那么 返回值是一个null
+	判断
+		boolean containsKey(Object key) 判断集合是否包含指定的键
+		boolean containsValue(Object value) 判断集合是否包含指定的值
+		boolean isEmpty() 判断集合是否为空
+	查
+		Set<K> keySet() 
+		Set<Map.Entry<K,V>> entrySet() 
+		V get(Object key) 
+		Collection<V> values() 
+	长度
+		int size() 
+ 
+ Map集合的两种取出方式
+ 
+	1.Set<K> keySet() 
+	2.Set<Map.Entry<K,V>> entrySet() 
+
+	interface Map{
+	
+		public static interface Entry{
+			public abstract Object getKey();
+			public abstract Object getValue();
+		}
+	}
+HashMap
+	特点:
+		1.无序(存取顺序不一致) 无序不等于随机
+		2.底层是哈希表
+		3.允许存入null键null值
+	LinkedHashMap<K,V>
+		1.底层存储是有序的(存取一致)
+		2.底层实现采用双层链表
+TreeMap
+	特点:
+		1.排序的(根据键来排序) 前提 键必须具备可比性
+		2.底层是二叉树
+		3.无序(存取顺序不一致)
+
+		TreeMap 和 TreeSet一样 需要实现两个接口
+		Comparable 或 Comparator 如果两个都存在以Comparator比较器为准
+
+二.Collections
+	此类完全在Collection上进行操作或返回 由静态方法组成 专门用来操作集合使用
+	排序
+		sort(List<T> list) 
+		static <T> int binarySearch(List<? extends Comparable<? super T>> list, T key) 
+		static T max(Collection<? extends T> coll) 
+		static void reverse(List<?> list) 
+		static <T> Comparator<T>  reverseOrder() 
+		static void shuffle(List<?> list) 
+		static void swap(List<?> list, int i, int j) 
+ 
+ 
+ 
+ 

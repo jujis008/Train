@@ -1,0 +1,27 @@
+IO流
+	用来处理设备之间的数据传输
+	java对数据的操作是通过流的方式
+	java用于操作流的对象都在IO包中
+IO的种类
+	流向分:
+		输入流:从磁盘等物理介质到当前内存中
+			InputStream(字节流) Reader(字符流)
+		输出流:将程序处理好的数据 从 内存中输出到磁盘等存储介质中
+			OutputStream(字节流) Writer(字符流)
+	数据类型不同分:
+		字节流:流中的数据以字节为单位流动
+			InputStream OutputStream
+		字符流:流中的数据以字符为单位流动
+			Reader Writer
+字符流
+	字符流就是可以直接读写字符的IO流
+	底层 也是字节流
+	ASCII 美国信息标准交换码
+	GB2312 -->扩容 GBK(2万多)-->18030
+	unicode --->UTF-8 国际编码表
+	为了处理乱码问题 字符流可以在内部融合不同的编码表(由开发人员指定)
+	方便处理字符类文件
+Writer
+	FileWriter
+Reader
+	FileReader

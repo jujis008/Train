@@ -1,0 +1,91 @@
+一.线程池
+	假设一个服务器完成一项任务 
+	需要是时间为 T1 创建线程时间 T2在线程中执行任务的时间 T3销毁线程时间
+	如果 T1+T3 远大于 T2 则可以采用线程池 以提高服务器的性能
+		如果并发的线程数量很多 并且每个线程都是执行一个时间很短的任务就结束了
+		这样频繁创建线程 就会大大降低系统的效率 因为频繁创建/销毁线程都需要时间
+	为了提高线程的复用性 就是执行完一个任务 并不销毁 而是继续执行其他任务
+
+	线程池概述:
+		线程池是一种多线程处理形式,处理过程中将任务添加到队列,然后再创建线程后
+		自动启动这些任务,线程池线程都是后台线程.每个线程都有默认的堆栈大小,
+		以默认的优先级运行 并处于多线程单元中
+		线程池中的线程并不会死亡,而是再次回到线程池中成为空闲状态,等待下一个对象来使用
+		ThreadPoolExecutor(
+			int corePoolSize, 核心线程池大小
+			int maximumPoolSize,  线程池最大容量大小
+			long keepAliveTime, 线程池空闲时,线程存活的时间
+			TimeUnit unit, 时间单位 keepAliveTime存活时间的时间单位
+			BlockingQueue<Runnable> workQueue, 任务队列
+			ThreadFactory threadFactory, 线程工厂
+			RejectedExecutionHandler handler 线程拒绝策略
+		) 
+
+		void execute(Runnable command) 将线程提交到线程池中
+
+		第一步:
+			调用execute方法提交线程 首先检查CorePool
+			如果corePool内的线程小于corePoolSize 就新创建线程执行任务
+		第二步:
+			如果当前corePool内的线程大于等于corePoolSize 那么将线程加入到
+			BlockingQueue 等待队列中
+		第三步:
+			如果不能加入BlockingQueue 在小于maximumPoolSize的情况下创建线程执行任务
+		第四步:
+			如果线程数大于maximumPoolSize 那么执行拒绝策略
+ 
+		一个 ExecutorService，它使用可能的几个池线程之一执行每个提交的任务，
+		通常使用 Executors 工厂方法配置。 
+		强烈建议程序员使用较为方便的 Executors 工厂方法
+
+Executors 四种线程池
+	static ExecutorService newCachedThreadPool() 
+		创建一个可缓存线程池 如果线程池长度超过处理需要,可灵活回收空闲线程 
+		若无可回收 则新建线程
+	static ExecutorService newFixedThreadPool(int nThreads) 
+		创建一个定长线程池,可以控制线程的最大并发数,超出的线程会在队列中等待
+	static ScheduledExecutorService newScheduledThreadPool(int corePoolSize) 
+		创建一个定长线程池 支持定时及周期性 延迟
+	static ExecutorService newSingleThreadExecutor() 
+		创建一个单线程化的线程池 它只会用唯一的工作线程来执行任务
+		此线程保证所有的任务执行顺序按照任务的提交顺序执行
+		这个线程池可以在线程死后(或发生异常时)重新启动一个线程来替代原来的线程继续执行下去
+	
+	FIFO:first input first output 先进先出队列
+	LIFO:last in first out 后进先出队列
+	优先级
+
+static ExecutorService newCachedThreadPool() 
+	execute 向线程池中提交任务
+	submit(Runnable task) 提交一个 Runnable 任务用于执行，并返回一个表示该任务的 Future。 
+	shutdown();
+	/*
+	 * 线程池为无限大 当执行第二个任务时 第一个任务如果已经完成 会复用执行第一个任务的线程
+	 * 而不会每次创建新线程
+	 * 如果现有线程没有可用的,则创建一个新的线程并添加到池中
+	 * 终止并从缓存中移除那些已有 60 秒钟未被使用的线程。
+	 * */
+static ExecutorService newFixedThreadPool(int nThreads)  
+ 	/*
+	 * 因为线程池大小设置为3 每个任务输出index后 sleep2秒 所以每次两秒打印3个数字
+	 * 注意:
+	 * 	定长的线程池大小最好根据系统资源进行设置 
+	 * 如: Runtime.getRuntime().availableProcessors()
+	 * 此方法放回到虚拟机的最大可用处理器数量 cpu核数
+	 * */
+static ScheduledExecutorService newScheduledThreadPool(int corePoolSize) 
+	ScheduledExecutorService
+	一个 ExecutorService，可安排在给定的延迟后运行或定期执行的命令。 
+	ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit) 延迟 执行
+		command - 要执行的任务
+		delay - 从现在开始延迟执行的时间
+		unit - 延迟参数的时间单位 
+
+	ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit) 
+ 
+		command - 要执行的任务
+		initialDelay - 首次执行的延迟时间
+		period - 连续执行之间的周期
+		unit - initialDelay 和 period 参数的时间单位
+static ExecutorService newSingleThreadExecutor() 
+

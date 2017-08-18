@@ -1,0 +1,126 @@
+
+1、设计一个交通工具抽象类，提供抽象方法--驾驶
+	   汽车作为交通工具的一种，实现了驾驶的方法(在马路上驾驶)
+	   火车作为交通工具的一种，实现了驾驶的方法(在铁路上驾驶)
+	   飞机作为交通工具的一种，实现了驾驶的方法(在天上驾驶)
+	   需求：做一个测试类，在测试类的main函数中，分别实例化一个汽车的对象，火车的对象和飞机的对象，并分别描述驾驶行为
+
+class  Day10Homework01
+{
+	public static void main(String[] args) 
+	{
+		/*
+		设计一个交通工具抽象类，提供抽象方法--驾驶
+	   汽车作为交通工具的一种，实现了驾驶的方法(在马路上驾驶)
+	   火车作为交通工具的一种，实现了驾驶的方法(在铁路上驾驶)
+	   飞机作为交通工具的一种，实现了驾驶的方法(在天上驾驶)
+	   需求：做一个测试类，在测试类的main函数中，
+	   分别实例化一个汽车的对象，火车的对象和飞机的对象，并分别描述驾驶行为
+		*/
+
+		//实例化对象
+		Bus bus = new Bus();
+		bus.drive();
+
+		Train train = new Train();
+		train.drive();
+
+		Aircraft air = new Aircraft();
+		air.drive();
+	}
+}
+
+/**
+*交通工具抽象类
+*/
+abstract class TrafficTool
+{
+	//抽象方法
+	abstract void drive();
+}
+
+/**
+*汽车、火车、飞机类
+*/
+class Bus extends TrafficTool
+{
+	@Override
+	public void drive() {
+		System.out.println("在马路上行驶");
+	}
+}
+
+class Train extends TrafficTool
+{
+	@Override
+	public void drive() {
+		System.out.println("在铁路上行驶");
+	}
+}
+
+class Aircraft extends TrafficTool
+{
+	@Override
+	public void drive() {
+		System.out.println("在天上驾驶");
+	}
+}
+
+2、设计一个家政服务规范: 洗衣服, 扫地, 买菜, 做饭
+		设计一个保姆类, 保姆需要遵循这些规范
+		需求：在测试类中，实例化一个保姆的对象，然后让保姆买菜，做饭，扫地
+
+Day10Homework02
+{
+	public static void main(String[] args)
+	{
+		/*
+		设计一个家政服务规范: 洗衣服, 扫地, 买菜, 做饭
+		设计一个保姆类, 保姆需要遵循这些规范
+		需求：在测试类中，实例化一个保姆的对象，
+		然后让保姆买菜，做饭，扫地
+		*/
+
+		//实例化一个对象
+		HouseKeeper houseKeeper = new HouseKeeper();
+		houseKeeper.wash();
+		houseKeeper.clean();
+		houseKeeper.buy();
+		houseKeeper.cook();
+	}
+}
+
+/**
+*家政服务接口
+*/
+interface Service
+{
+	//抽象方法
+	public void wash();
+	public void clean();
+	public void buy();
+	public void cook();
+}
+
+/**
+*接口的实现类
+*/
+class HouseKeeper implements Service
+{
+	@Override
+	public void wash() {
+		System.out.println("做饭");
+	}
+	public void clean() {
+		System.out.println("扫地");
+	}
+	public void buy() {
+		System.out.println("买菜");
+	}
+	public void cook() {
+		System.out.println("做饭");
+	}
+
+
+}
+

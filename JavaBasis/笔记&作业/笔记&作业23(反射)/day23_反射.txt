@@ -1,0 +1,118 @@
+类的加载和加载时机
+	当程序要使用某个类的时候
+	如果该类还未加载进入内存中 则系统会通过 加载,连接,初始化三步骤 将类加载入内存
+
+	加载
+		就是指将class文件读入到内存中 并为之创建一个Class对象
+		任何类被使用 系统都会创建一个Class对象
+
+		就是将硬盘上.class字节码文件加载到内存中 变成Class对象
+	连接
+
+		验证 是否有正确的内部结构 
+		准备 负责为类的静态成员分配内存 并设置默认初始化值
+			static 随着类的加载而加载
+		解析 将类的二进制数据中的符号替换为直接引用
+	初始化	就是我们以前讲过的初始化的步骤
+
+一反射 reflect
+	简介
+		java反射机制 在运行状态中 对于任意一个类 都能够知道这个类的所有属性和方法
+		对于任意一个对象 都能够调用它的任意一个方法和属性
+		这种动态获取信息以及动态调用对象的方法 称为 java语言的 反射
+		想要解剖一个类 必须先要得到这个类的字节码对象
+
+		"正" 先知道类 然后去创建对象 调用类中的方法或者属性
+		"反" 通过对象找到类
+		这个功能 就是编译工具 自动去审查这个类
+
+		获取每一个字节码文件对应的Class类型对象 有三种方式
+		 * A Object类的getClass() 方法 获取Class类型对象 多用于判断字节码文件是否是同一个
+		 * B 静态属性 class 多用于静态方法 同步 的锁
+		 * C Class类中的forName()方法  多用于读取配置文件
+	应用 
+	获取配置文件中的内容
+		创建对象的方式2 通过Class类中的newInstance()方法 创建对象
+			 public T newInstance()创建此 Class 对象所表示的类的一个新实例。
+
+	反射的四个类
+	java.lang
+		Class 代表的类 对象
+	java.lang.reflect
+		Constructor	构造函数
+		Field		属性
+		Method		方法
+	
+	Constructor	构造函数
+		获取空参构造
+			public T newInstance()throws InstantiationException,IllegalAccessException
+			创建此 Class 对象所表示的类的一个新实例。
+			如同用一个带有一个空参数列表的 new 表达式实例化该类。
+			如果该类尚未初始化，则初始化这个类。 
+			(就是用类的空参构造方法 来创建对象 只是把原来的创建对象方式 封装到一个方法里了)
+		获取有参构造
+			Constructor<T> getConstructor(Class<?>... parameterTypes) 
+			返回一个 Constructor 对象，它反映此 Class 对象所表示的类的指定公共构造方法。 
+			T newInstance(Object... initargs) 
+			使用此 Constructor 对象表示的构造方法来创建该构造方法的声明类的新实例，
+			并用指定的初始化参数初始化该实例。
+	Field	属性
+		
+		非私有
+			Class 类中 Field getField(String name) 
+			Field 类中
+			 Object get(Object obj) 
+			 void set(Object obj, Object value) 
+ 
+		私有
+			Class 类中 public Field getDeclaredField(String name)暴力反射
+			java.lang.reflect.AccessibleObject 
+				public void setAccessible(boolean flag)去除私有权限
+
+	Method	方法
+		无参方法
+			Method getMethod(String name, Class<?>... parameterTypes) 
+			返回一个 Method 对象，它反映此 Class 对象所表示的类或接口的指定公共成员方法。
+			Class<?>... parameterTypes 可写可不写 按照方法来选择是否要写
+		有参方法
+			Method getMethod(String name, Class<?>... parameterTypes) 
+
+		调用方法 使用 Method类中的invoke方法
+			Object invoke(Object obj, Object... args) 
+ 
+ 
+	练习
+	动态代理
+
+		代理:中介租房/黄牛
+	概念:自己不去处理 让其他类去处理 这就是代理
+	java.lang.reflect.Proxy
+	Proxy 提供用于创建动态代理类和实例的静态方法，它还是由这些方法创建的所有动态代理类的超类。 
+
+实现动态代理步骤
+
+	第一步:创建某一接口的代理：
+		static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h) 
+		返回一个指定接口的代理类实例，该接口可以将方法调用指派到指定的调用处理程序。 
+		/*
+		 * ClassLoader loader, 类加载器 固定写法 xx类.getClass().getClassLoader()
+		 * Class<?>[] interfaces, 这个类实现的所有接口 固定写法 xx类.getClass().getInterfaces()
+		 * InvocationHandler h 动态代理接口
+		 * */
+		 想要创建一个代理类 必须实现InvocationHandler接口
+	第二步:创建代理类 实现InvocationHandler
+
+		public interface InvocationHandler
+		InvocationHandler 是代理实例的调用处理程序 实现的接口。
+		Object invoke(Object proxy, Method method, Object[] args) 
+
+        第三步:在代理实例上处理方法调用并返回结果。 
+
+
+通过使用这个类和接口就可以生成动态代理对象
+JDK 提供的代理只能针对接口做代理 我们以后会用到更强大的代理cglib
+
+ 
+
+
+		

@@ -1,0 +1,44 @@
+一.字符流缓冲区
+	BufferedReader
+	BufferedWriter
+	缓冲区的出现提高了对数据的读写效率
+	缓冲区要结合流在可以使用
+	在流的基础上 对流的功能进行了增强
+	BufferedReader
+		|-----LineNumberReader
+
+什么情况下使用字符流
+	文本文件 读取一段文本 或者是写出一段文本
+	不可以拷贝非纯文本文件
+	因为在读的时候 会将字节转换成字符 在转换的过程中 可能找不到对应的字符
+	就会用?替代 写出的时候 将字符转换成字节写出 如果是? 直接写出 这样写出之后的文件就乱了
+
+	图片,音频,视频 这些不要使用当前的字符流
+
+二.装饰设计模式
+	IO流部分
+	read()一次读一个
+	readLine()一次读一行 其实就是在增强了 read方法的功能
+	BufferedReader 就是 对 FileReader的增强
+	这种模式 我们叫做 装饰设计模式
+概念:
+	装饰类 通常会通过构造方法 去接收被装饰对象
+	并给予被装饰类的功能 提供更强的功能
+	
+
+装饰和继承的区别
+	例如:
+		MyReader //专门用于读取数据的类
+			|---MyTextReader
+				|--- MyBufferedTextReader
+			|---MyMediaReader
+				|--- MyBufferedMediaReader
+			|--MyDataReader
+				|--- MyBufferedDataReader
+		弊端:如果再出现其他子类 又要给一个Buffered 体系臃肿且复杂 需要记忆的类太多了
+	装饰设计模式
+		MyReader
+			|--MyBufferedReader(MyReader reader)
+		你是读 那么我增强完之后 还是读 所以 继承于MyReader
+		好处:比继承要更灵活,避免了继承体系的臃肿,而且降低了类与类之间的关系
+

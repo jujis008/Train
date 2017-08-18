@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>js基本语法格式</title>
+		<script src="js/myjs.js"></script>
+	</head>
+	<body>
+		<script>
+			document.write("欢迎来到javascript的世界");/*将内容写到文档区域 (白色区域)*/
+			document.write("<br /><font color='red'>可以加html标签</font>");
+		</script>
+		<br />
+		这就是第一个javascript
+		<br />
+		<script>
+			var y = 100;
+			y = "abc"
+			y = true
+			y = 3.14
+			document.write(y)
+			/*
+			 	alert("信息") -->弹窗
+			 	prompt("弹窗上显示的文字","默认初始化值"); -->带输入框弹窗
+			 * */
+			var x = 100;
+			var z = window.prompt("淘宝竞价,请出一口价",100);
+			document.write("<br />输入的价格是"+z);
+			var sum = x + parseFloat(z);//将字符串类型 转成Number类型
+			document.write("<br />低价改为"+sum);
+			window.alert("欢迎继续出价啊!");
+		</script>
+	</body>
+</html>

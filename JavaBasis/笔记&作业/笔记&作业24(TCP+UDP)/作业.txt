@@ -1,0 +1,36 @@
+作业
+1.客户端向服务端发送图片 1 vs N
+	要求 1.图片不允许重名
+		ip+图片名(1).jpg
+		ip+图片名(2).jpg
+	     2.客户端并发上传 每次只能上传1个图片 多个客户端并发访问服务器 多线程
+
+	     3.拓展 每次可以1张图片 并判断图片大小不能超过20m 后缀名必须是.jpg /.png的 
+	     (要求使用命令行参数实现) main(String[] args)
+	     if(args.length!=1){
+		System.out.println("请选择一个图片 格式要求jpg/png");
+		return;
+	     }
+	     File file = new File(args(0));
+	     if(!(file.exists()&&file.isFile())){
+		System.out.println("文件存在问题 要么补充 要么不是文件");
+		return;
+	     }
+	     if(!(file.getName().endWith(".jpg"))){
+		System.out.println("图片格式错误");
+		return;
+	     }
+	     if(file.length()>1024*1024*5){
+		System.out.println("文件过大 没安好心");
+		return;
+	     }
+
+2.客户端并发登录
+	客户端通过键盘录入用户名 服务器对这个用户名进行校验
+	如果存在 服务端显示 xxx登录 客户端显示 xxx欢迎光临
+	如果不存在 服务端显示 xxx尝试登录 客户端显示 xxx用户名不存在
+	
+	最多尝试登录三次(超出就不许登录了)提示 "超过3次了"
+
+	分析 1.需要一个user.txt用户名列表 用来做输入用户名和数据之间的匹配
+	

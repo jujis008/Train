@@ -1,0 +1,21 @@
+1.写一个点击“大”、“中”、“小”三个超链，实现页面部分文字随之分别为：18，14，12号字体的切换效果。
+
+2.加入适当的css美化页面 如效果图所示
+	使用JavaScript为网页添加动态效果并实现与用户的交互功能
+<div id="txt">
+    <h5>JavaScript为网页添加动态效果并实现与用户交互的功能。</h5>
+    <p>111111111111111111111111111111111</p>
+    <p>222222222222222222222222222222222</p>
+    <p>333333333333333333333333333333333</p>
+</div>
+<form>
+    <!--当点击相应按钮，执行相应操作，为按钮添加相应事件-->
+    <input type="button" value="改变颜色" onClick="changecolor()" >
+    <input type="button" value="改变宽高" onClick="changewidth()">
+    <input type="button" value="隐藏内容" onClick="hidetext()">
+    <input type="button" value="显示内容" onClick="showtext()">
+    <input type="button" value="取消设置" onClick="queXiao()">
+</form>
+
+3.使用html+css+js技术编写一个完整的表格列表内容中 复选框的全选 反选效果
+见效果图

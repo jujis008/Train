@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>eval isNaN</title>
+	</head>
+	<body>
+		<!--NaN not a number
+			isNaN() 返回 true false 
+			is not a number 
+			如果不是个数 返回true
+			是个数 返回false
+		-->
+		<script>
+			document.write(isNaN(123));
+			document.write(isNaN(-1.23));
+			document.write(isNaN(5-2));
+			document.write(isNaN(0));
+			document.write(isNaN("hello"));
+			document.write(isNaN("2017/08/01"));
+			
+		</script>
+		<!--eval 计算表达式的值-->
+		<script>
+			var s = "1+2*3-4/5";
+			document.write(s+"<br />");
+			document.write(eval(s));
+		</script>
+		<!--弹出一个带有输入框的窗口 输入一串表达式 如果表达式为数字 就计算结果 否则就弹出 xxx不是数字-->
+		<script>
+			var str1 = prompt("请输入一个表达式,我会给你计算","1+1");
+		
+			var result = eval(str1);//表达式里的传入String必须是符合计算条件的
+			
+			document.write(result);
+			
+			var x = prompt("输入一些数据","0");
+			if(isNaN(x)){
+				alert(x+"不是一个数字");
+			}else{
+				alert(x+"是一个数字");
+			}
+			
+		</script>
+	</body>
+</html>
