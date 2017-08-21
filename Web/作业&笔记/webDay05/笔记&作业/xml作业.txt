@@ -1,0 +1,27 @@
+//XML文件
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<PhoneInfo>
+<Phone>
+
+<Brand>华为</Brand>
+<Typename>P9</Typename>
+<title>不只是世界五百强</title>
+
+</Phone>
+
+<Phone>
+
+<Brand>苹果</Brand>
+<Typename>10S</Typename>
+<title>苹果出到10 是否可以防水了</title>
+
+</Phone>
+</PhoneInfo>
+
+Dom4j解析XML（添加，删除，修改，保存）
+
+1.XML解析 数据保存到 Phone实体类中 并存储到集合 将数据输出到控制台
+1.在XML中添加一个 三星手机 X119 此手机是新款哦! (切记要保存 否则无效)
+2.修改 Brand --> 三星手机 为 炸弹手机
+3.删除 Brand -->炸弹手机

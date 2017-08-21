@@ -1,0 +1,335 @@
+一.数据库概述
+	什么是数据库:
+		DataBase DB 是指长期保存在计算机的存储设备上的,按照一定规则存储的数据集合
+		这个数据集合 可以让用户 或者 应用共享其中的数据
+	DBA 数据库管理员 BataBase Admin
+
+	数据库管理系统(DataBase Management System,DBMS)是一种操作和管理数据库的大型软件,
+	用于建立/使用和维护数据库 对数据库进行统一的管理和控制.以保证数据库的安全性和完整性,
+	用户通过数据库管理系统访问数据库中的数据,对其进行相对安全的操作.
+
+二.常用的数据库
+	Access office里的
+	oracle 收钱 很大
+	db2    ibm的
+	sql server 微软的
+	mysql 
+		LAMP(Linux Apache Mysql Php)
+三.SQL概述
+	SQL 结构化查询语言(Structure Query Language)
+	SQL 被国际化标准组织(ISO)采纳为关系型数据库语言的国际标准
+	各个数据库厂商都支持SQL标准 -->普通话
+	各个数据库厂商在标准的基础上做了自己的扩展-->方言
+四.SQL的分类
+	DDL**(Data Definition Language)数据定义语言 用来定义数据库对象:库,表,列等
+	DML**(Data Manipulation Language)数据操作语言,用来定义数据库记录(数据):增删改
+	DCL(Data Control Language)数据控制语言,用来定义访问权限和安全级别
+	DQL*****(Data Query Language)数据查询语言,用来查询记录(数据):查询
+
+	注意:
+		1.sql语句以; 英文分号作为结尾 所有的符号必须是英文的
+		2.sql大小写问题(表名 列名)
+			windows 不区分大小写
+			unix/linux下区分大小写
+	4.1 DDL 操作数据库/表/列等
+		数据定义语言 定义数据库/表/索引等对象 关键字 create / alter / drop
+		database 用来存放表的容器
+
+	对数据库的操作:
+		 4.1.1 创建
+
+			cmd 进入数据库 mysql -u root -p
+
+			create database 数据库名;
+			create database 数据库名 character set utf8;//设置数据库的字符集
+			
+		 4.1.2 查询
+			
+			查看当前数据库服务器中所有的数据库
+			show databases;
+
+			查看前面创建的数据库的定义信息
+			show create database 数据库名;
+
+		 4.1.3 删除
+			drop database 数据库名;
+		 4.1.4 修改
+			查询服务器中的数据库 并把编码集改成gbk
+			alter database dbcq character set gbk;
+		 4.1.5 其他
+			查看当前正在使用的数据库
+			select database();
+			切换数据库
+			use 数据库名;
+	对表的操作:
+		4.1.6 创建 create
+			create table 表名(
+				字段1 字段类型 约束条件,
+				字段2 字段类型 约束条件,
+				....
+				字段n 字段类型 约束条件
+			);
+			约束条件 可有可无
+
+		  mysql中常用的数据类型
+
+			int 整数
+			double 浮点 例如 double(5,2) 表示最多5位 其中必须有2位是小数 最大值 999.99
+			decimal 从mysql 5.1之后引入 浮点 
+				decimal(M,D) decimal(5,2) 最大值是9999.99
+			float占4个字节 double占8个字节 decimal(M,D)占M+2个字节
+				和金融类有关的 钱..用这个
+			char 固定长度的字符串类型 char(10) 'aaa       ' 占10位
+			varchar 可变长度的字符串类型 varchar(10) 'aaa'占3位
+			text 字符串类型 超长
+			blob 字节类型
+			date 日期类型 格式为 yyyy-MM-dd
+			time 时间类型 格式为 hh:mm:ss
+			timestamp 时间戳类型 yyyy-MM-dd hh:mm:ss 会自动赋值
+			datetime:日期时间类型 yyyy-MM-dd hh:mm:ss
+
+			create table stu(sid char(6),sname varchar(50),age int,gender varchar(50));
+			
+			查看数据库中的表
+				show tables;
+			查看表结构
+				desc 表名;
+			查看创建表的语句
+				show create table 表名;
+		 4.1.7 修改 alter
+
+			修改表的字符集为gbk
+				alter table stu character set gbk;
+			change 修改列名 用来给字段重命名 不能修改字段类型和约束条件
+				alter table stu change 旧字段名 新字段名 新的数据类型;
+			modify 修改列属性 不能用来给字段重命名 只能修改字段类型和约束条件
+				修改表中字段为stuname的列 让它的长度变为60
+				alter table 表名 modify 字段名 字段类型;
+				alter table stu modify stuname varchar(60);
+			新增字段
+			add
+				alter table 表名 add 新增的字段名 字段类型;
+				alter table stu add cname varchar(10);
+			删除字段 一次只能删除一列
+				alter table 表名 drop 字段名
+			修改表名
+				alter table 原表名 rename 新表名
+				rename table 原表名 to 新表名
+		4.1.8 删除表 drop
+			drop table 表名;
+
+	4.2 DML**(Data Manipulation Language)数据操作语言,用来定义数据库记录(数据):增删改
+		不要与DDL混淆了 增删改是对表中的数据进行的操作
+		insert(增加) update(修改) delete(删除)
+		注意:
+			在mysql中 字符串类型和日期类型 都要用单引号 或者 双引号引起来
+			空值 null
+
+		4.2.1 insert 增加操作(插入操作)
+			语法:
+				insert into 表名[(列名1,列名2....)] values(列值1,列值2....);
+				
+			注意: 列名 和 列值的类型/个数/顺序要一一对应
+			     []列名可不写方 但是存储的数据要和表结构完全一致
+			     可以将列名理解为java中的形参 把列值理解为实参
+			     如果插入空值 请使用null
+			     日期类型 可以使用 - , .分割 或者不分割都可以存入
+
+			     同时插入多条记录 (值1,值2...),(值1,值2...),(值1,值2...) 用逗号分隔
+
+		4.2.2 update 修改操作
+			语法:
+				update 表名 set 列名1=列值1,列名2=列值2... [where 列名=列值]
+
+				[where子句] 修改哪个符合条件的
+				可以不写 如果不写 就是修改当前表下所有记录
+			练习:
+				将所有员工薪水修改为5000元
+				将学生信息表中 性别为男的学生 成绩 在原有基础上+5分
+
+				update stu set score=score+5 where gender='male';
+
+		4.2.3 delete 删除操作
+			语法:
+				delete from 表名 [where 列名=值]
+			删除表中的所有记录
+				delete from 表名
+					删除表中的数据 表结构还在 删除后 数据可找回
+				truncate table 表名
+					删除是直接把表drop掉 然后创建一个同样的新表
+					删除的数据不能找回 执行速度比delete快
+				删除名字为zhangsan的学生信息
+				delete from stu where sname='zhangsan';
+				删除年龄小于20的学生
+				delete from stu where age<20;
+	4.3 DQL 数据查询语言(重要)
+		数据库执行DQL语句 不会对数据进行改变 而是让数据库发送结果集给客户端
+		查询返回的结果是一张虚拟表
+
+		关键字:select
+
+		语法 select 列名 from 表名 [where--> group by --> having --> order by --> limit]
+
+			* 是查询所有列 实际开发中尽量少使用* 查询所有列 只要获取想要的列就可以了
+
+		     select 列名 /*要查询的列名称*/
+		     from table_list /*要查询的表名称*/
+		     where condition /*行条件*/
+		     group by grouping_columms /*对结果分组*/
+		     having condition /*分组后的行条件*/
+		     order by sorting_columms /*对结果分组*/
+		     limit offiset_start,row_count /*结果限定*/
+
+		 基础查询
+			查询所有列 select * from 表名
+			查询指定列 select sid,sname from 表名
+		 条件查询
+			条件查询 是在查询时 给出where子句 在where子句中可以一些关键字来用作条件匹配
+			符合条件的查询出来
+
+		符号:
+			> < != <> = >= <= 
+			between...and... 包含边界 等同于 >= <=
+			in 在xxx范围中
+			is null 是空的
+			and 和
+			or 或者
+			not 不
+
+			/*条件查询*/
+				/*1 性别为 female 并且 年龄小于 50 岁*/ 
+				SELECT * FROM stu WHERE gender='female' AND age<50;
+				/*2 查询学号为 s_1001 或者 姓名为 chenEr*/
+				SELECT * FROM stu WHERE sid='s_1001' OR sname='chenEr';
+				/*3 查询学号为 s_1002,s_1005,s_1004的学生*/
+				SELECT * FROM stu WHERE sid IN ('s_1002','s_1004','s_1005');
+				SELECT * FROM stu WHERE sid NOT IN ('s_1002','s_1004','s_1005');
+				/*4.性别为null的记录*/
+				SELECT * FROM stu WHERE gender IS NULL;
+				/*5.年龄在 20 到 40 之间的所有学生*/
+				SELECT * FROM stu WHERE age>=20 AND age<=40;
+				SELECT * FROM stu WHERE age BETWEEN 20 AND 40;
+				/*注意 实际mysql between and 大于等于 小于等于的意思*/
+				/*6.查询性别非male的学生*/
+				SELECT * FROM stu WHERE gender!='male';
+				SELECT * FROM stu WHERE gender<>'male';
+				SELECT * FROM stu WHERE  NOT gender='male';
+				/*7.查询姓名不为null的学生记录*/
+				SELECT * FROM stu WHERE sid IS NOT NULL;
+				SELECT * FROM stu WHERE NOT sid IS NULL;
+
+			/*模糊查询*/
+				like
+				通配符:
+					_ 任意一个字母
+					% 任意0-n个字母
+
+				/*1.查询姓名由三个字组成的老师记录*/
+				SELECT * FROM teacher WHERE NAME LIKE '___';
+				/*2.查询 由四个字母组成 最后一个是i*/
+				SELECT * FROM stu WHERE sname LIKE '___i';
+				/*3.查询 姓名中以李开头的老师*/
+				SELECT * FROM teacher WHERE NAME LIKE '李%';
+				/*4.查询 姓名包含五的老师*/
+				SELECT * FROM teacher WHERE NAME LIKE '%五%';
+			/*字段控制查询*/
+				1.去除重复记录
+					distinct 去除两行以上记录中数据相同的部分
+					SELECT DISTINCT sal FROM emp;
+					/*1.查看emp表 月薪和奖金之和*/
+					SELECT *,sal+comm FROM emp;
+					/*在数据库里 任何东西与null相加 结果还是null 所以结果可能会出现null的情况
+					将null转换成0 IFNULL(列名,值) 如果列的值是null 就替换为0
+					*/
+					SELECT *,sal+IFNULL(comm,0) FROM emp;
+					/*给列添加别名  AS 给列起别名时 as 可省略 */
+					SELECT *,sal+IFNULL(comm,0) AS total FROM emp;
+
+			/*排序 order by... 根据xx来排序 默认排序是升序的*/
+				SELECT * FROM stu ORDER BY age DESC;
+				/*ASC 升序 DESC 降序*/
+
+				/*ASC 升序 DESC 降序*/
+				/*查询所有员工信息 按照月薪降序排序 如果月薪相同 按照编号升序排序*/
+				SELECT * FROM emp ORDER BY sal DESC,empno ASC;
+			/*聚合函数*/
+				sum avg max min count
+			用来做纵向运算的函数
+				count() 统计制定列不为null的记录行数
+				max() 计算指定列的最大值 如果指定列是字符串 那么使用字符串排序运算
+				min() 计算指定列的最小值
+				sum() 计算指定列的数值和
+				avg() 计算指定列的平均值
+			聚合函数不能放在where子句之后
+			聚合函数 是针对结果集进行的 where条件并不是在查询出结果之后运行的
+			所以放在where语句中 会出错
+
+			sql语句的执行过程
+				from-->where-->group by-->having-->select-->order by-->limit
+				select * from stu where....
+
+				/*count 查询表中记录数*/
+					SELECT COUNT(*) FROM emp;
+					/*1.查询emp 表中有奖金的人数 非null 的行数*/
+					SELECT COUNT(comm) FROM emp;
+					/*2.查询表中月薪大于2500的人数*/
+					SELECT COUNT(*) FROM emp WHERE sal>2500;
+					/*3.统计月薪与奖金之和大于2500的人数*/
+					SELECT COUNT(*) FROM emp WHERE sal+IFNULL(comm,0)>2500;
+					/*4.查询有奖金的人数 以及有领导的人数*/
+					SELECT COUNT(comm),COUNT(mgr) FROM emp;
+				/*sum 和 avg*/
+					/*1.查询所有员工的薪资和*/
+					SELECT SUM(sal) FROM emp;
+					/*max 和 min*/
+					/*1.查询最高工资 和 最低工资*/
+					SELECT MAX(sal),MIN(sal) FROM emp;
+			/*分组查询*/
+				group by 当需要分组查询的时候 使用group by 子句
+
+				/*分组 group by*/
+					/*1.查询每个部门的部门编号 和 每个部门的工资和*/
+					SELECT deptno,SUM(sal) FROM emp GROUP BY deptno;
+					SELECT * FROM stu GROUP BY gender;
+					/*2.查询每个部门的部门编号 以及每个部门的人数*/
+					SELECT deptno,COUNT(*) FROM emp GROUP BY deptno;
+					/*3.查询每个部门的部门编号 以及 每个部门工资大于1500的人数*/
+					SELECT deptno,COUNT(*) FROM emp WHERE sal>1500 GROUP BY deptno; 
+
+				where 先过滤 后分组
+				having 先分组 后过滤
+				/*having*/
+				/*4.查询工资总和大于9000的部门编号以及工资和*/
+				SELECT deptno,SUM(sal) FROM emp GROUP BY deptno HAVING SUM(sal)>9000;;
+			having与where的区别
+				1.having是在分组后对数据进行过滤
+				  where是在分组前对数据进行过滤
+				2.having后面可以使用聚合函数(分组函数 统计函数)
+				  where后面不可以
+			where 是对分组前记录的条件,如果某行记录没有满足where子句的条件,那么这行记录就不会参加分组
+			having 是对分组后数据的约束筛选
+
+			/*limit*/ 用来限定查询结果的起始行,以及总行数
+
+			/*1查询5行记录 [offset] 从第几行开始 起始行是0 0代表第一行 rows 取几行*/
+			SELECT * FROM emp LIMIT 0,5;
+			select * from emp 5;
+			/*2查询10行记录 其实行从第四行开始 */
+			SELECT * FROM emp LIMIT 3,10;
+
+			分页查询
+				如果一页记录为10条 希望查看第3页的记录应该怎么查呢?
+				先规定 每页显示条数 pageSize = 10;
+				所有的记录 count
+				共分几页?
+				   page = count%pageSize==0 ? count/pageSize : count/PageSize+1;
+				第一页的记录 起始行为 0 一共查询10行 0-9
+				第二页                               10-19
+				第三页                               20-29
+				每页的起始行 (页码-1)*pageSize
+					 
+	查询语句书写顺序:
+		select -- from -- where -- group by -- having -- order by -- limit
+
+	查询语句执行顺序:
+		from -- where -- group by -- having -- select -- order by -- limit

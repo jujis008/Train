@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>数组升序 降序</title>
+	</head>
+	<body>
+		<p>让数组升序 降序排列</p>
+		<p>升序输出:</p>
+		 <script>
+	        var array=[1,80,4,33,21,55];
+	        array.sort(function (x,y) {
+	            return x-y;
+	        });
+	        document.writeln(array);
+   		 </script>
+   		 <p>解释:<br/>
+   		 	x,y 表示数组中的任意两个元素 若 return大于0 则 y前x
+   		 	若return 小于 0 则x前y后
+   		 	简单来说 就是 x-y是按照从小到大排序 
+   		 	y-x 是按照从大到小排序
+   		 </p>
+		<p>降序输出:</p>
+		<script>
+			var array=[1,80,4,33,21,55];
+	        array.sort(function (x,y) {
+	            return y-x;
+	        });
+	        document.writeln(array);
+		</script>
+	</body>
+</html>

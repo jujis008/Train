@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teacher>
+     <teacherID>001</teacherID>
+     <name>sanny</name>
+     <subjects>computer</subjects>
+     
+<sex>female</sex></teacher>

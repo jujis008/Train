@@ -1,0 +1,187 @@
+XML
+	eXtensible Markup Language 可扩展标记语言
+		可扩展:所有的标签都是自定义的
+	功能:
+		数据存储(如果数据量不是很大 可以放在xml里)
+		配置文件 properties web.xml
+	html与xml的区别:
+		1.html 语法松散 (不区分大小写<div> <DIV>)  <hr/><br/>
+		  xml 语法严谨 严格区分大小写 并且标签都是成对出现
+		2.html 作用:页面展示
+		  xml 作用:存储数据用的
+		3.html标签都是预定义的
+		  xml 所有标签都是自定义的
+	语法
+		文档声明 必须写在xml文档的第一行
+		<?xml version="1.0" encoding="UTF-8" ?> 
+			version="1.0" 版本号 不可改
+			encoding="UTF-8" 指定文件的编码 默认 iso-8859-1
+		元素:xml文档中的标签
+			文档必须有且只能有一个根元素
+			元素需要正确闭合 (有开始标签 有结束标签)
+			元素需要正确嵌套
+			元素名称要遵守命名规则:
+				1.元素名称严格区分大小写
+				2.不能以数字开头
+		属性:属性值必须用引号引起来 单引号 / 双引号 都可以
+		注释:<!--你好-->
+		处理指令:现在已经基本不使用
+			<?xml-stylesheet type="text/css" href="1.css">
+XML约束
+	两种 dtd 和 schema
+	什么是XML约束呢
+		在XML技术里,可以编写一个文档来约束XML文档的书写规范,这称之为 XML约束
+		就是XML的书写规范
+	dtd是先出现的 现在基本用 schema
+
+DTD (Document Type Definition) 全称为 文档类型定义
+	内部dtd :在XML内部定义
+	外部dtd :在外部文件中定义dtd
+		然后引入到XML文件中 
+		<!DOCTYPE 文档根节点 SYSTEM "DTD文件的url">本地dtd/网络dtd
+ELEMENT:定义元素
+ATTLIST:定义属性
+		<!ELEMENT students (student*) > 
+			定义元素 元素名为students
+				在students 这个标签下 可以有 0个或者多个student标签
+				+ 一次或多次
+				? 0次或一次
+				* 0次或多次
+
+		<!ELEMENT student (name,age,sex)>
+			在student元素下 有 name age sex 三个元素
+
+		<!ELEMENT name (#PCDATA)>
+		<!ELEMENT age (#PCDATA)>
+		<!ELEMENT sex (#PCDATA)>
+			设置元素可以存放什么类型的数据
+			PCDATA 随便
+			CDATA  是字符串
+
+		<!ATTLIST student number ID #REQUIRED>
+			属性
+			定义student元素的属性
+			属性名叫 number
+			ID --> 主键 唯一性 不能重复 表示属性的设置值为一个唯一的值
+
+			#REQUIRED 必须设置该属性
+			#IMPLIED 可以设置也可以不设置
+			#FIXED 该属性的取值为一个固定的值 在XML文件中不能为该属性设置其他值
+				但是需要为该属性提供一个值
+Schema
+	xmlns="http://www.qianfeng.cn/xml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.qianfeng.cn/xml student.xsd"
+XML解析
+	DOM web开发
+	SAX web开发
+	PULL -->手机用 
+	Dom4j web开发 dom for java
+	Xpath web开发
+
+	解析XML可以做
+		1.如果XML做为配置文件: 读取
+		2.如果XML作为传输文件: 写 / 读
+	DOM(Document Object Model) -- 文档对象模型
+		DOM思想:
+			将整个XML加载内存中 形成文档对象 所有对XML的操作都是在额内存中文档对象进行操作
+			DOM 是官方的XML解析标准
+			所以DOM是所有开发语言都支持的 ---java javascript 都支持DOM
+	SAX(Simple API for XML) -- XML 简单的 API
+		SAX思想:
+			一边解析 一边处理 一边释放内存资源 不允许在内存中保留大规模的XML数据
+
+		区别:
+			1.
+			DOM适用于解析比较简单的XML文件 如果文件过大 会造成内存溢出
+				DOM是基于内存的 不管文件有多大 都会将所有内容预先装载到内存中
+				消耗大量的内存空间
+			SAX适用于解析比较复杂的XML文件
+				SAX是基于事件的 当某个事件被触发时,才会获取相应的XML部分数据
+				不管文件有多大 都只占用了少量的内存空间
+			2.
+			DOM可以读取XML文件 也可以像XML文件中插入数据
+			SAX只能读 而不能在文件中插入数据
+			3.
+			DOM可以对指定的元素进行随机访问
+			SAX不可以 SAX是从文档开始执行遍历的 并且只能遍历一次 也就是说不能随机访问XML文件
+			只能从头读到尾 当然可以中间截断
+	
+	SAX 逐行读取 基于事件驱动
+		优点: 不占内存 速度快
+		缺点: 只能读取 不能回写 只能解析 不能创建
+
+		javax.xml.parsers 
+		类 SAXParserFactory
+
+		定义工厂 API，使应用程序能够配置和获取基于 SAX 的解析器以解析 XML 文档。
+	DOM 将文档加载进内存 形成一棵dom树(document对象)
+		将文档的各个组成部分封装为一些独立的对象 解析
+
+		优点:因为在内存中会形成dom树 所以可以对dom树的节点进行增删改查
+		缺点:dom树非常占内存 解析速度慢 容易内存溢出
+
+		DocumentBuilderFactory	创建解析工厂
+		DocumentBuilder 创建解析器
+		Document parse(String uri) 指定需要解析的xml文件
+		Document 接口表示整个 HTML 或 XML 文档。从概念上讲，它是文档树的根，
+		区别
+		Node 对象 是整个DOM的主要数据类型 节点对象 代表文档树中的一个单独节点
+			节点可以是元素节点 属性节点 文本节点
+		Element 对象 表示XML文档中元素 元素可以包括属性 其他元素 或者是文本
+
+		XML树结构中只有 Node 和 Element 
+
+		元素是一个小范围的定义 ,必须包含有完整的信息 这样的节点才是一个元素
+		一个节点不一定是一个元素 而一个元素一定是一个节点
+		<student></student>
+
+		NodeList getElementsByTagName(String name) 
+	基本的DOM对象
+		Document
+		Node
+		NodeList
+		Element
+		Attr 属性
+
+		createAttribute(String) 创建一个 Attr对象 属性
+		createElement(String) 创建一个标签 一个Element
+		createTextNode(String) 创建一个Text对象
+		getElementByTagName(String) 返回NodeList
+		getDocumentElement() 返回一个代表这个DOM树的根节点的Element对象
+		appendChild(Node) 为这个节点 添加一个子节点 并放在所有节点的最后 如果这个子节点已存在 先删掉 在添加
+		getFirstChild() 返回DOM树中这个节点下的第一个子节点
+		getNodeName() 获取节点名称
+		getNodeValue() 节点的值
+		removeChild(Node) 删除给定的子节点对象
+		replaceChild(Node new,Node old) 用一个新的Node对象代替给定的子节点对象
+		item(int) 返回指定位置的Node对象
+		getLength()返回列表的长度
+
+
+		abstract  void transform(Source xmlSource, Result outputTarget) 
+ 
+ XML常用的解析器
+	DOM4J 民间方式 非常好 支持DOM
+	Xpath 专门用来查询
+	JAXP sun公司提供的解析 支持 dom和sax
+	JDOME 是一个开源的项目 基于树形结构 利用纯java技术对xml文档实现 解析 生成 序列化以及多种操作
+ 
+	DOM4J 民间方式 非常好 支持DOM
+		1.导入jar包
+		2.创建解析器
+		3.解析xml获得document对象
+
+	Xpath 专门用来查询
+		定义了一种规则
+		使用方法
+			selectSingleNode()
+			selectNodes()
+		使用步骤
+			1.导包 dom4j-1.6.1\lib\jaxen-1.1-beta-6.jar
+			2.创建解析器
+			3.解析xml 获得document对象
+
+			 List list = document.selectNodes( "//foo/bar" );
+			 Node node = document.selectSingleNode( "//foo/bar/author" );
+
