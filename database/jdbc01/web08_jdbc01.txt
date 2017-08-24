@@ -1,0 +1,115 @@
+jdbc
+
+一.简介
+
+	JDBC (java database connectivity) SUN公司推出的一套操作数据库的标准规范
+	JDBC与数据库驱动的关系:	接口与实现的关系
+
+二.开发步骤
+	0.搭建开发环境 
+		把数据库驱动jar包加入到项目中
+
+		java工程
+			
+			先在工程下创建lib文件件 将jar包拷入
+			 buildpath ...add jars
+		web工程
+			直接复制jar包到webRoot/WEB-INF/lib目录下
+	1.注册驱动
+	2.获取与数据库的连接
+	3.创建代表sql语句的对象
+	4.执行sql语句
+	5.如果是查询语句:返回结果集
+	6.释放资源
+
+	对数据库的基本操作
+	CRUD : Create Retrive Update Delete
+
+三.JDBC规范中常用的接口和类(四个核心对象)
+	DriverManager 类
+		管理一组 JDBC 驱动程序的基本服务。
+		static Connection getConnection(String url) 试图建立到给定数据库 URL 的连接。 
+	Connection 接口
+		java.sql 接口 Connection
+		与特定数据库的连接（会话）。在连接上下文中执行 SQL 语句并返回结果。 
+		
+		Statement createStatement() 创建一个 Statement 对象来将 SQL 语句发送到数据库。 
+
+	Statement 接口
+		PreparedStatement
+		用于执行静态 SQL 语句并返回它所生成结果的对象。 
+		ResultSet executeQuery(String sql)  执行给定的 SQL 语句，该语句返回单个 ResultSet 对象。
+		
+		int executeUpdate(String sql) 执行给定 SQL 语句，该语句可能为 INSERT、UPDATE 或 DELETE 语句，或者不返回任何内容的 SQL 语句（如 SQL DDL 语句）。 
+		
+		boolean execute(String sql) 执行给定的 SQL 语句，该语句可能返回多个结果。
+				//任何sql语句都能执行
+		
+		方法 executeQuery
+			用于产生单个结果集的语句 返回 ResultSet
+		方法 executeUpdate
+			执行 insert update delete DDL 返回 int 影响了几行
+		方法 execute
+			执行 查询操作 更新操作 DDL语句
+			
+			返回值类型是boolean
+		返回值为true时 表示执行的是查询语句 getResultSet()
+		返回值为false时 表示执行的是更新语句或DDL语句 getUpdateCount()
+			
+	ResultSet 接口
+		表示数据库结果集的数据表，通常通过执行查询数据库的语句生成。 
+		boolean next() 将光标从当前位置向前移一行。 
+		getXX()
+
+		java类型			数据库类型
+		int getInt()			int
+		String getString()		varchar char text
+		java.sql.Date getDate()		Date
+		double getDouble()		double
+		float getFloat()		float
+		short getShort()		smallint
+		long  getLong()			bigint
+
+
+		int getInt(int columnIndex) /*序号*/
+		int getInt(String columnLabel) /*数据库表中的列名*/
+		以 Java 编程语言中 int 的形式获取此 ResultSet 对象的当前行中指定列的值。
+
+		/*在获取数据库数据时 可以通过 列名调用 或者通过列的编号来调用 
+			 * getString() 可以获取任意数据类型 但是不推荐 
+			 * 数据库列是什么类型 就用getxxx()方法来调用
+			 * 在使用的时候 通过列名调用
+			 * */
+	JUnit 单元测试 以方法为单元 只要测试方法里面的内容是否通过就行了
+		语法:在声明方法的上一行 加入 @Test
+	注意:
+		把一个日期值写入数据库中 
+			方法1
+			//将 util Date 转成 sql Date
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());//getTime()获取毫秒 long型
+			System.out.println(utilDate);
+
+			//方法2
+			long lo = Calendar.getInstance().getTime().getTime();
+			java.sql.Timestamp ts = new java.sql.Timestamp(lo);
+
+
+//将 字符串 转换为 sql Date
+//		String s = "2017-08-22 09:8:10";
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		java.util.Date d1 = sdf.parse(s);
+//		java.sql.Date d2 = new java.sql.Date(d1.getTime());
+
+	获取数据库中时间的方式
+		1.getString()
+			尽量不要使用getString()来获取日期/时间类型的数据
+			jdbc在内部将日期/时间转换为String
+			但是这个字符串的格式 取决于 数据库
+			Oracle mysql ..时间格式可能不一样 所以不推荐使用getString()
+ 
+		2.获取到Date 然后用SimpleDateFormat来格式化
+			java.sql.Timestamp ts = //通过数据库访问获取到的数据
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String str = sdf.format(ts);
+			如果是 sql.Date / sql.Time 同上

@@ -1,0 +1,107 @@
+一函数
+	1.聚合函数
+		sum()
+		avg()
+		count()
+		min()
+		max()
+	2.数学函数
+		主要用于处理数字,包括整型,浮点型等
+		/*数学函数*/
+		SELECT FLOOR(1.5) /*返回小于或等于参数的最大整数*/
+		SELECT RAND()/*返回0>1的随机数*/
+		SELECT ROUND(RAND()*10)/*round(x) 返回离x最近的整数 小数点后四舍五入*/
+		SELECT ROUND(1.2345,3);/*保留x小数点后y位 但截取时要进行四舍五入*/
+	3.字符串函数
+		最常用的一类函数 主要用于处理表中的字符串
+		SELECT LOWER(ename) FROM emp;/*将字符串转换为小写*/
+			SELECT UPPER(ename) FROM emp;/*将字符串转换为大写*/
+			/*length(x) 返回字符串长度*/
+			/*获取表中 名字长度为5的所有员工*/
+			SELECT ename FROM emp WHERE LENGTH(ename)=5
+			/*将多个字符串 合并为一个字符串*/
+			SELECT CONCAT('ab','23');
+			/*替换 replace(str,search_str,replace_str)
+			在str中用 replace_str 替换 search_str
+			*/
+			/*
+			截取 substring(str,position[,length])
+			从str 的 position位置开始 取length个字符
+			*/
+			/*
+			出现的位置 instr(string,substring)
+			返回substring在string中出现的位置 没有返回0 默认索引从1开始
+			*/
+			/*
+			ltrim(string)
+			rtrim(string) 去除前端空格或者去除后端空格
+			*/
+	4.日期和时间函数
+		主要用于处理日期和时间的
+		/*日期和时间函数*/
+			SELECT CURDATE()/*返回当前日期*/
+			SELECT CURTIME()/*返回当前时间*/
+			SELECT NOW()/*返回当前日期和时间*/
+			SELECT MONTH("2011-05-02")/*获取指定时间中的 月的部分*/
+			SELECT YEAR(NOW())/*获取指定时间中 年的部分*/
+			/*返回日期当中的月份英文名*/
+			SELECT MONTHNAME(NOW())
+			/*返回日期是星期几 英文*/
+			SELECT DAYNAME(NOW())
+			/*返回一周的第几天 从星期日开始*/
+			SELECT DAYOFWEEK("2017-8-21")
+			SELECT WEEK(NOW())/*计算日期是本年的第几个星期 范围0-53*/
+			SELECT HOUR(NOW())/*时*/
+			SELECT MINUTE(NOW())/*分*/
+			SELECT SECOND(NOW())/*秒*/
+			SELECT ADDTIME('1:1:1','2:2:2')/*将时间相加*/
+			SELECT DATEDIFF('1981-1-17','1980-12-17');
+			/*获取今年2月份入职的员工列表*/
+			SELECT * FROM emp WHERE MONTH(biredate)=2 AND YEAR(NOW())=YEAR(biredate);
+			/*获取入职时间在30年以上的员工信息*/
+			SELECT * FROM emp WHERE (YEAR(NOW())-YEAR(biredate))>30
+			/*获取 7369 的年龄 */
+	5.条件判断函数
+		ifnull(x,y)
+		如果x的值不为null 则返回x 否则返回y
+		select ifnull(null,'hello word') -->hello word
+
+		if(expr,x,y)
+		如果表达式expr成立,返回结果x,否则,返回结果y
+		select if(1>0,'正确','错误') --> 正确
+	6.系统信息函数
+		ip地址互相转换
+
+		inet_aton(ip)将ip地址转换为数字表示 ip需要加引号
+		inet_ntoa(n)函数可以将数字n转换为ip地址
+	7.加密函数
+		mysql对数据进行加密的函数
+
+		1.password(str)
+			可以对字符串str进行加密,一般,用于给用户的密码加密的
+		2.md5(str)
+			md5(str)函数可以对字符串进行散列,可以用于一些普通的不需要解密的数据
+		SELECT PASSWORD('123')
+		SELECT MD5('123')
+		SELECT INET_ATON('127.0.0.1')
+		SELECT INET_NTOA(2130706433);
+	8.格式化函数
+二mysql数据库的备份与恢复
+
+	1.生成sql脚本 导出数据
+		cmd控制台下的命令
+			mysqldump -u 用户名 -p 数据库名 > 盘符:\脚本文件名.sql
+		mysqldump命令可以用来生成指定数据库的脚本文件
+		但要注意,脚本文件中只包含数据库的内容,而不包含创建数据库语句
+		所以在恢复数据时,需要自己手动创建数据库后才可以恢复
+
+		注意:mysqldump命令是直接在windows控制台上执行的 无需登录mysql!!!
+		演示命令:
+			mysqldump -u root -p dbcq > d:\mydbcq.sql
+
+	2.执行sql脚本 导入数据
+		1. mysql -u 用户名 -p 数据库名 < 盘符:\脚本文件名.sql
+			无需登录mysql
+		2.source 盘符:\脚本文件名.sql
+			需要登录mysql 必须先创建库 进入库 才可以执行sql脚本
+	

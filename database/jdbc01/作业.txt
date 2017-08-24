@@ -1,0 +1,66 @@
+1.登录
+	创建user表
+		id int 主键 自增
+		username varchar
+		password varchar
+	创建user_leaf 用户个人信息表
+		id int 主键 自增
+		name
+		age
+		sex
+		u_id 外键
+CREATE TABLE USER(
+id INT PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(50),
+PASSWORD VARCHAR(50) 
+);
+CREATE TABLE user_leaf(
+id INT PRIMARY KEY AUTO_INCREMENT,
+NAME VARCHAR(50) ,
+age INT ,
+sex VARCHAR(10) DEFAULT 'male',
+u_id INT,
+CONSTRAINT user_information FOREIGN KEY(u_id) REFERENCES USER(id)
+);
+
+		
+	控制台输入用户名 密码
+	连接数据库 判断和数据库里的是否一致
+	一致 显示 登录成功 不一致 显示登陆失败
+扩展 如登录成功
+	显示user个人信息表信息
+2.根据id查询指定的学生记录
+	创建学生信息表	创建方法 传入学生id 获取学生信息
+	student 表 
+	sid(int 主键 自增) 
+	sname(varchar 非空) 
+	sage(int 默认值为10) 
+	ssex(varchar) 
+	birthday(date) 
+	score(double 保留小数点后2位)
+
+CREATE TABLE student2(
+sid INT PRIMARY KEY AUTO_INCREMENT,
+sname VARCHAR(50) NOT NULL,
+sage INT DEFAULT 10,
+ssex VARCHAR(10) DEFAULT 'male',
+birthday DATE,
+score DOUBLE(5,2)
+);
+
+CREATE TABLE student2_score(
+id INT PRIMARY KEY AUTO_INCREMENT,
+sid INT NOT NULL,
+score DOUBLE(5,2) NOT NULL,
+CONSTRAINT students_score FOREIGN KEY(sid) REFERENCES student2(sid)
+);
+DROP TABLE student2_score;  
+INSERT INTO student2_score (sid,score) VALUES(2,15.6);
+
+扩展 1.将 score单独存储到student_s表中
+	一对多关系
+	将数据存储到合适的集合中 遍历结合获取数据
+     2.将集合中的数据 写出到student.txt文件中 以逗号分隔
+
+
+	
