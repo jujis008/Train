@@ -1,0 +1,70 @@
+Session
+
+为什么要学习HttpSession?
+	它也是一个域对象 Session Request ServletContext
+	同一个会话下 可以使一个应用的多个资源共享数据
+	cookie客户端技术 只能保存字符串
+	HttpSession服务端技术 它可以保存对象
+
+	cookie在客户端只允许存储4k的数据 实际上存了3k数据就已经满了
+	session存储的数据更大 更多
+	在B/S 交互中 需要存储大量数据时 这就是Session存在的重要原因
+
+
+	如果说cookie机制是通过检查客户身上的"通行证"来确定客户身份的
+	那么 session机制就是通过检查服务器上的"客户明细表"来确认客户身份
+	session相当于程序在服务器上建立了一份客户档案 客户来访问的时候只需要检查客户档案就可以了
+
+常用方法
+	void setAttribute(String name,Object value);
+	Object getAttribute(String name);
+	void removeAttribute(String name);
+	getId(); 获取Session id
+
+	setMaxInactivelnterval(int interval) 设置session的存活时间
+	invalidate() 使此会话无效
+案例1 用户登录 显示验证码 并进行判断
+	1.login.jsp 登录页面 
+	2.servlet 用户名 密码 验证码 进行验证
+			admin 123456 
+				验证码 如果验证码输入错误 返回到登录页 提示 验证码输入错误
+	3.如果登录成功 提示信息
+	  如果登录失败 提示信息
+案例2 购物车
+	需求分析:
+		1.获取到商品列表 (连接数据库 获取商品信息)
+		2.点击某一个商品 -->进入详细信息页面(连接数据库 获取某个商品的信息)
+			-->添加进购物车
+				session比cookie更适合存储数据 因为它可以存储对象
+				将数据存储入session中
+		3.查看购物车
+			查看session中的数据 确定购物车中的商品属于哪一个人 是根据session id来确定的
+	需要做的事
+		1.jar包 连接数据 配置文件 
+			查询所有商品 根据主键查询商品信息
+		2.servlet 显示全部商品
+	          servlet 显示某一个商品 -->加入到session中
+		  servlet查看购物车 -->查看session中的数据
+案例3 表单重复提交
+	如何避免表单重复提交
+		1.创建jsp页面 注册 用户名 密码 按钮
+		2.servlet 获取注册信息 将信息存入数据库
+	令牌 token
+		设置一个令牌 将令牌分别存储在session域和 表单里
+		当第一次提交数据 如果表单令牌和session域中的令牌 一致 就让它存储
+		存储结束之后 就将session中的令牌删除 
+		当刷新servlet session中的令牌已经没有了 无法匹配 就无法存储
+URL地址重写
+
+	客户端禁用cookie 
+		当浏览器拒绝存储cookie信息时,就会导致JSESSIONID的值不能正常到达客户端
+		那么客户端向服务器发送请求时,就无法将JSESSIONID的值带回到服务器中,
+		从而导致找不到自己会话的Session 
+	怎么解决: 我们可以使用URL地址重写的方法来解决
+
+	response.encodeURL("请求地址");
+	判断cookie是否被禁用 
+		如果未禁用 就保持原请求地址 不变
+		如果禁用 就修改请求地址 为请求地址添加JSESSIONID的值
+	response.sendRedirect(response.encodeRedirectURL("请求地址"))
+	

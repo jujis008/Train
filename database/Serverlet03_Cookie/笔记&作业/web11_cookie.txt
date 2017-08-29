@@ -1,0 +1,60 @@
+会话
+客户端技术cookie 
+服务器端技术session
+
+什么是会话?
+	简单理解为:用户打开一个浏览器,点击多个超链接,访问服务器多个web资源,然后关闭浏览器
+	整个过程称之为一次会话
+
+	提问 用户名 密码存储在 Request域 和 ServletContext域中行不行?
+		Request域太小
+		ServletContext域太大
+	举例 多用户点击超链接通过servlet各自购买了一个商品,服务器应该想办法把每个用户
+	     购买的商品保存在各自的地方,以便于这些用户点结账servlet时
+	     结账servlet可以得到用户各自购买的产品为用户结账
+Cookie
+	Cookie是客户端技术,服务器把每个用户的数据以cookie的形式写回给用户各自的浏览器
+	当用户使用浏览器再去访问服务器中的web资源时,就会带着各自的数据去,
+	这样,web资源处理的就是用户各自的数据了
+
+Session
+	Session是服务端技术,利用这个技术,服务器在运行时可以为每一个用户的浏览器创建一个独享的Session对象
+	由于Session为用户浏览器独享,所以用户在访问web资源时,可以把各自的数据存放在各自的session中
+	当用户再去访问服务器的其他web资源时,其他web资源再从用户各自的session中取出数据为用户服务
+
+会话过程要解决的问题是什么?
+	保持各个客户端自己的数据
+	例如:
+		登录 保存用户名和密码(登录成功后保存) 可以保存到cookie里
+		淘宝登录 显示在最上面的用户名 就是保存在session里
+
+Cookie
+特点:
+	1.一个Cookie拥有一个名称,一个值和一些可选属性 比如路径 存活时间等
+	2.Cookie只能存放servlet发送到web浏览器的少量信息
+	3.注意 Cookie只能存储字符串 数字不能存储数组,资源等多维数据
+		name value 属性...
+
+	name:名称 不能为宜确定一个cookie 路径可能不同
+	value:值
+	path:路径
+	maxAge:cookie的缓存时间 默认是-1 单位是秒
+		负数: cookie的数据存在浏览器缓存中,关闭浏览器就失效
+		0: 删除
+		正数:缓存(持久化到磁盘上)的时间
+获取emp表历史记录信息
+	1.创建实体类
+	2.导入jar包
+	3.创建配置文件
+	4.编写数据库工具类DBUtils
+	5.创建连接 查询全部员工信息 和 根据员工编号查询一条信息
+		DAO data access object 数据访问对象 通常都是写访问数据库代码
+		EmpDao
+			List<Emp> findAll()
+			Emp findById(int empno)
+	6.创建Servlet
+		创建ShowAllEmpServlet 获取EMP表信息
+		创建ShowByIdServlet 获取一条信息
+			把获取到的员工编号 存储到Cookie对象中 发送到客户端
+			客户端获取Cookie中的信息 根据员工编号 查询员工信息 显示在页面上
+

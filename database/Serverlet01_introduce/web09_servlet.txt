@@ -1,0 +1,25 @@
+Servlet
+
+一简介:
+
+	Servlet是SUN公司提供的一门用于开发动态web资源的技术
+	Servlet是运行在Web服务器中的小型Java程序(服务器端的小应用程序)
+	Servlet通过HTTP(超文本传输协议) 接收 和 响应 来自Web客户端的请求
+
+	Servlet :  Server + let 服务器端的一个应用程序
+	Applet : Application + let 客户端的一个应用程序
+	
+二第一个Servlet:
+	1.编写一个java类 实现Servlet 接口
+	2.把开发好的java类部署到Web服务器中
+
+
+	//1.写一个java类 继承 HttpServlet 重写 doGet 和 doPost方法
+	//2.在web.xml里进行配置 部署描述符
+
+	4xx 打头 是 客户端错误 就是地址写错了
+	5xx 打头 是 服务器错误 servlet 或 web.xml
+
+	注意:
+		修改了 web.xml / servlet 必须重启tomcat服务器
+		修改了 html / css / js 不用重启 刷新浏览器就可以了

@@ -1,0 +1,63 @@
+一什么是Tomcat
+	Apache公司 开源的 免费的 轻量级的服务器
+	Tomcat是一个Web应用服务器 在小型系统和并发访问用户不多的场合下被
+	普遍使用,是开发和调试jsp程序的首选
+
+	javaSE 语言基础
+	javaEE 部分
+		13种技术
+			Servlet / Jsp JDBC JNDI JTA...
+	javaME 移动端
+
+二Tomcat的安装和配置
+	官网: http://tomcat.apache.org
+	分为安装版和解压版
+		开发用解压版
+		运行还是安装版好 可以在服务器因为某种原因重启时能自动重启
+	注意:目录不要太深 目录不要有中文或空格
+	启动服务器
+		bin\startup.bat
+	关闭服务器
+		bin\shutdown.bat
+	启动服务器的前提
+		配置 JAVA_HOME : jdk的安装路径
+	如果端口被占用 解决方法 修改端口号
+		conf\server.xml
+		  <Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
+三Tomcat的目录结构
+	backup : 保存了一些配置文件 是在第一次运行tomcat服务器后产生的
+		 和conf文件夹下的内容几乎一样
+	bin: 可执行文件
+	conf: 配置文件
+	lib: tomcat运行时需要的jar文件
+	logs: tomcat运行产生的日志文件
+	temp: tomcat运行产生的临时文件
+	webapps: 存放我们编写的应用 
+	work: tomcat的工作目录
+
+	tomcat服务器的一些签证,运行,注意的信息
+
+	将web项目发布到tomcat的webapps目录下 才能通过浏览器访问
+	注意:webapps 目录下有几个目录 就代表有几个应用程序
+
+	1.Tomcat服务器与Eclipse 集成
+	2.创建web项目
+	3.将web项目发布到Tomcat服务器上
+	4.启动Tomcat
+URL:
+http://localhost:8080/servlet_01/index.html
+协议    主机(ip)端口号 / URI(当前应用的资源路径)
+
+URL: 统一资源定位符(Uniform Resource Locator)(网址)
+URI: 统一资源标识符(Uniform Resource Identifier)
+
+四javaWeb应用的目录结构
+
+	WebRoot
+		css
+		html
+		js
+		WEB-INF: 注意 固定写法 此目录下的文件不能被外部直接访问
+			classes: 我们编写的java代码的.class文件
+			lib: 应用需要的jar包
+			web.xml 应用的配置信息

@@ -1,0 +1,70 @@
+luojing0322@163com
+五 request对象 (域对象)
+	web服务器收到客户端的http请求 ,会针对每一次请求,分别创建一个request对象和一个response对象
+	代表 请求和响应
+
+1.请求 HttpServletRequest
+
+	1.请求行
+	2.请求头
+	3.请求正文
+
+		3.1 与获取表单数据相关的方法
+		3.2 BeanUtils
+		3.3 与请求转发相关的方法
+		3.4 与操作非表单数据相关的方法 
+		3.5 与请求编码相关的方法
+获取请求行中信息
+	常用方法
+		getMethod(); 获取请求方式
+		getRequestURL() 获取客户端发送请求时的完整URL
+		getRequestURI() 获取请求行中的资源名部分
+		getContextPath() 获取当前应用的虚拟目录
+		getQueryString() 获取请求行中的参数部分
+获取请求头中的信息
+	常用方法
+		String getHeader(String name) 根据头名称 得到头信息值
+		Enumeration getHeaderName() 得到所有头信息 name
+		Enumeration getHeaders(String name) 根据头名称 得到信息
+获取请求正文中的信息
+	3.1 与获取表单数据相关的方法
+	常用方法
+		String getParameter(String name) 根据表单中name属性名 获取表单项的value值
+		String[] getParameterValues(String name) 专为复选框取值提供的方法
+		Enumeration getParameterNames() 得到表单提交的所有name的方法
+		map<String,String[]> getParameterMap() 得到表单提交的所有值的方法
+		ServletInputStream getInputStream() 以字节流的方式得到所有表单数据
+
+	3.2 BeanUtils
+		由于前几种封装对象方法太麻烦,我们接下来使用BeanUtils来封装对象
+
+		注意:如果想自动封装对象,表单form中的元素name需要与javaBean中的属性一致
+
+		什么是BeanUtils?
+			Apache公司提供的 用来专门进行javaBean操作
+			在web层各种框架中被使用 例如 struts 使用beanUtils操作javabean
+		步骤
+			1.下载BeanUtils的jar包:
+				commons-beanutils-1.8.3.jar
+				commons-logging-1.1.1.jar
+
+				BeanUtils依赖Logging的jar包
+			2.web项目下lib目录 导包
+		常用方法:
+			BeanUtils.populate(Object bean,Map map)进行数据封装
+			因为需要map 因此需要通过 request getParameterMap()方法将表单的数据变成map
+
+			String-->java.util.Date 不支持 我们自定义转换器
+			自定义转换器
+				1.实现Converter接口
+				2.注册转换器
+					ConvertUtils.register(转换器,目标类型.class);
+			结论:
+				一般不需要自定义转换器 只有Date需要自定义转换器
+	3.3 与请求转发相关的方法
+			getRequestDispatcher("/demo_05").forward(req, resp);
+	3.4 与操作非表单数据相关的方法 
+	3.5 与请求编码相关的方法
+			//设置请求编码集
+			req.setCharacterEncoding("utf-8");
+	

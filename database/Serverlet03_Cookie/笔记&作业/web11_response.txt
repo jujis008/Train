@@ -1,0 +1,25 @@
+HttpServletResponse
+响应
+	1.响应行
+		setStatus(int sc) 设置响应状态码
+			200 ok
+	2.响应头
+		*****sendRedirect(String location) 请求重定向
+		setHeader(String name,String value)设置响应头信息
+	3.响应正文(主体)
+		*** getWrite() 字符输出流
+		    getOutputStream() 字节输出流
+		    setCharacterEncoding(String charset)告知服务器使用什么编码
+		*** setContentType(String type)
+转发和重定向的区别
+	Servlet 中页面跳转的两种方式 转发和重定向
+	1.转发是服务器行为,重定向是客户端的行为
+	2.转发是浏览器发送了一次请求, 重定向至少两次请求
+	3.转发的地址栏不会发生改变,重定向地址栏中地址发生改变
+	4.转发因为是一次请求,两次跳转之间传输信息不会丢失,而重定向两次跳转会丢失传输信息
+	5.转发只能将请求跳转到同一个web应用中的页面,冲顶先可以指向任何页面,包括同一个web应用中的页面
+		同一个站点中的页面,其他站点的页面
+	request.getRequestDispatcher("demo.jsp").forward(request,response);
+	response.sendRedirect("demo.jsp");
+
+	

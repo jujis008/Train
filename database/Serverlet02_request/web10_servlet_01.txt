@@ -1,0 +1,132 @@
+一 请求 和 响应
+	Http协议中 封装了请求和响应
+	请求部分
+		1.请求消息行
+			GET/POST 请求方式 浏览器默认请求方式GET 
+			URI:去掉协议 ip 端口 
+			协议/版本
+		2.请求消息头
+			Accept:浏览器可以接受的MIME类型 告诉服务器 客户端能接收什么类型的文件
+			Accept-Encoding:浏览器能够进行解码的数据编码方式 
+			Accept-Language:浏览器所希望的语言类型
+			Host:初始URL中的主机及端口
+			Referer:包含一个URL 用户从该URL代表的页面出发 访问当前请求的页面
+			Content-Type:内容类型
+			User-Agent:浏览器类型
+			Content-Length:表示请求消息正文的长度
+			Cookie:这是最重要的请求消息之一 
+			Date:请求时间
+		3.请求正文
+			当请求方式为POST方式时 才能看到消息正文
+	响应部分
+		1.响应消息行
+			HTTP/1.1 200 ok
+			协议版本 响应状态码 对响应码的描述(一切正常)
+			响应状态码
+				常用的就40多个
+				200正常
+				302/307 临时重定向
+				304 表示客户端缓存的版本是最新的 客户机可以继续使用 无需向服务端发送请求
+				404 资源找不到 服务器上不存在客户机锁清秋的资源
+					就是地址写错了
+				500 服务器内部错误 servlet代码错误 
+		2.响应消息头
+			Location:通常和302/307一起使用 完成请求重定向
+			Server: 显示服务器的类型
+			Content-Encoding:服务器发送的数据采用的编码类型
+			Content-Length 告诉浏览器正文的长度
+			Content-Language: 服务器发送的文本语言 zh-cn
+		3.响应正文
+			和网页右键"查看页面源代码" 看到的内容一样
+
+二 servlet创建方式和映射细节
+
+	Servlet创建方式 三种
+		1.实现Servlet接口
+		2.继承GenericServlet类
+		3.继承HttpServlet类
+
+		Servlet --> GenericServlet --> HttpServlet --> 继承HttpServlet的java类
+		曾祖父  -->  爷爷           --> 爸爸       --> 儿子
+	Servlet的生命周期
+		实例化(构造函数)-->初始化(init)-->服务(service)-->销毁(destroy)
+		出生: (实例化-->初始化) 第一次访问Servlet就出生
+		活着: (服务) 应用活着 Servlet就活着
+		死亡: (销毁) 应用卸载了 Servlet就销毁
+
+	映射细节
+		web.xml
+		一个servlet标签 可以对应多个servlet-mapping标签
+		优先级
+			从高到低
+			绝对匹配 --> /开头匹配 --> 扩展名方式匹配
+
+		url-pattern : *.do
+		url-pattern : /*
+		url-pattern : /action/*
+		通配符 * 代表任意字符串
+
+	Servlet线程安全问题
+		为了避免出现安全问题
+		在Servlet中 不要写全局变量 而写局部变量
+		
+三 ServletConfig的使用
+	作用1.获取Servlet配置信息
+	作用2.获取ServletCcontext对象
+
+	ServletConfig 代表当前Servlet在web.xml中配置的信息(用的不多)
+	在Servlet的配置文件中 可以使用一个或者多个<init-param>标签为Servlet设置一些初始化参数
+	当Servlet配置了初始化参数后,web容器在创建Servlet实例对象时,会自动将这些初始化参数封装到ServletConfig对象中
+	程序员通过ServletConfig对象就可以得到当前Servlet的初始化参数信息
+
+	好处:如果将数据库信息/编码方式等配置信息放在web.xml中
+	如果以后数据库的用户名/密码改变了,则直接修改web.xml就行了
+	避免了直接修改源代码的麻烦
+
+	//方式1 重写GenericServlet的init方法 初始化 等到ServletConfig对象 由此对象 获取配置文件中的值
+	//方式2 通过祖先 Servlet 的 getServletConfig方法 获得 ServletConfig 对象
+	//方式3 HttpServlet 已经实现了 ServletConfig接口
+
+四 ServletContext对象
+	域 作用域
+	Servlet四大域对象
+		1.ServletContext(整个web项目)
+		2.HttpSession(一次会话)
+		3.ServletRequest(一次请求)
+		4.PageContext(一个jsp页面)
+	ServletContext 代表的是整个应用程序,一个应用只有一个ServletContext对象
+	例如:
+		班级里的空调就是域对象
+
+	域对象:在一定范围内(当前应用) 使多个Servlet共享数据
+	常用方法:
+		//向ServletContext对象中添加数据
+		void setAttribute(String name,object value)
+		//从ServletContext对象中获取数据
+		Object getAttribute(String name)
+		//根据name 移除数据
+		void removeAttribute(String name)
+	获取资源路径
+		//根据资源名称 得到资源的绝对路径 
+		可以得到当前应用任何位置的任何资源
+		String getRealPath(String path)
+	
+	请求转发
+
+		我借钱 这叫请求 他向别人借 叫转发
+		前段页面向后台发送一个请求 然后利用方法将请求转发出去 跳转到另一个Servlet里
+	
+	//分开写
+		//application.getRequestDispatcher(String path); 请求分发  path web.xml配置的<url-pattern> 要加/
+		RequestDispatcher rd = application.getRequestDispatcher("/demo_05");
+		//forward(req, resp); 前进 就是将请求和响应 一起转发出去
+		rd.forward(req, resp);
+		
+	//一句话
+		//application.getRequestDispatcher("/demo_05").forward(req, resp);
+
+		特点:地址栏不发生改变 还是原来的地址
+
+
+
+	
