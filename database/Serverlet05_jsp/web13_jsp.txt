@@ -1,0 +1,235 @@
+一 jsp概述
+	JSP全程是 java Server Pages 它和servlet技术一样 都是SUN公司定义的一种用于开发动态web项目的技术
+	JSP实际上就是Servlet
+
+	JSP = HTML + CSS + JS + JAVA
+
+	html静态页面
+	Servlet:服务器端的小应用程序 适合编写java逻辑代码 如果编写网页内容 -->苦逼
+		1.获取表单数据 
+		2.处理业务逻辑
+		3.分发转向
+	jsp:适合编写输出动态内容 但是不适合编写java逻辑
+二.jsp原理
+	当浏览器访问一个web服务器上的jsp页面时
+	在服务器端会将jsp页面进行 -->翻译成.java文件-->编译成.class文件-->执行
+	
+	以jsp作为代码的显示模板 重点在于显示数据
+	以servlet作为控制器 重点在编写java代码逻辑上
+三.jsp的基本语法
+	1.jsp模板元素
+		网页静态内容 如html标签和文本
+	2.jsp的脚本
+		2.1 小脚本 <% java 代码 %>
+		2.2 表达式 <%=表达式 %> 等价于 <% out.print(); %>
+			注意: <%= 两者是紧挨着的 没有空格 结尾处 不要加 ; 号
+		2.3 声明 <%! %> 表示在类中定义全局成员和静态块 
+	3.jsp的注释
+		jsp注释 : <%--被注释的内容 特点 安全(查看页面源代码时 看不到) --%>
+		网页注释: <!-- 网页注释 特点 不安全(查看页面源代码时 能看到) -->
+四.jsp的3个指令
+	jsp指令是为jsp引擎而设计的
+	jsp2.0定义了三个指令
+		page
+		include
+		taglib
+	语法:
+		<%@ 指令名称 属性1="属性值1" 属性2="属性值2" ....%>
+		或者
+		<%@ 指令名称 属性1="属性值1"%>
+		<%@ 指令名称 属性2="属性值2"%>
+	1.page指令
+		作用:用于定义jsp页面的各种属性
+
+		<%@ page import="java.util.Date"%>
+		<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+		
+		1.1 import 和java代码中的import是一样的
+			<%@page import="java.util.Date,java.util.List"%> 以逗号分隔每个包
+		或者
+			<%@page import="java.util.Date"%>
+			<%@page import="java.util.List"%>
+		jsp会默认导入包
+			java.lang.*;
+			javax.servlet.*;
+			javax.servlet.http.*;
+			javax.servlet.jsp.*;
+		1.2 errorPage 如果页面中出现错误 则跳转到指定的资源
+			errorPage="error.jsp"
+		1.3 language="java" 
+		1.4 contentType="text/html; charset=utf-8"
+		1.5 pageEncoding="utf-8"
+		1.6 isELIgnored 是否支持EL表达式 默认是false
+			jsp 默认支持el表达式 平时不用设置
+			isELIgnored="false" 
+	2.include指令 
+		把其他资源包含到当前页面中
+		静态包含:
+			<%@ include file="header.jsp"%>
+		动态包含:
+			<jsp:include page="header.jsp"></jsp:include>
+		两者的区别:
+			翻译的时间段不同
+			前者:在翻译时就把两个文件合并
+			后者:不会合并文件,当代码执行到include时,才包含另一个文件的内容
+		原则:
+			能用静的 就不用动的
+	3.taglib指令
+		作用:在jsp页面中调入JSTL标签库 替换jsp中的java代码段
+		<%@ taglib uri="" prefix="" %>
+			uri 导入的包
+			prefix 标签的别名
+五.jsp的6个动作(很少用)
+	使用标签的形式来表示一段java代码 
+	
+	1.<jsp:include></jsp:include> 动态包含
+	2.<jsp:forward> 请求转发
+	3.<jsp:param> 设置请求参数
+	4.<jsp:useBean> 创建一个对象
+	5.<jsp:setProperty> 给指定的对象属性赋值
+	6.<jsp:getProperty> 取出指定对象的属性值
+
+	<!-- 创建对象 id:对象名-->
+	<jsp:useBean id="user2" class="com.qf.bean.User"></jsp:useBean>
+	<!-- 给对象属性赋值 name:对象名 property:属性名 value:属性值-->
+	<jsp:setProperty property="username" name="user2" value="tom"/>
+	<!-- 取出属性值 -->
+	<jsp:getProperty property="username" name="user2"/>
+	<jsp:getProperty property="age" name="user2"/>
+
+	<!-- 请求转发 并携带参数 -->
+	<jsp:forward page="demo.jsp">
+		<jsp:param value="jerry" name="thename"/>
+		<jsp:param value="100" name="theage"/>
+	</jsp:forward>
+	
+六.jsp的9个内置对象
+	在jsp的<%%> 和 <%= %>中能直接使用的对象
+
+	对象名		类型		
+	request		javax.servlet.http.HttpServletRequest
+	response	javax.servlet.http.HttpServletResponse
+	session		javax.servlet.http.HttpSession
+	application	javax.servlet.ServletContext
+	execption	java.lang.Throwable			由 ieErrorPage="true"开关
+	page		java.lang.Object当前对象this		当前servlet实例
+	config		javax.servlet.ServletConfig		读取配置文件
+	out		javax.servlet.jsp.jspWriter		字符输出流 相当于PrintWriter对象
+	pageContext	javax.servlet.jsp.PageContext
+
+	pageContext(重要 域对象)
+		pageContext 只在当前页面使用 所以 跨页面获取不到值 
+		本身就是一个域对象 它可以操作其他三个域对象(request,session,application)的数据
+	常用方法:
+		void setAttribute(String name,Object obj);
+		Object getAttribute(String name);
+		void removeAttribute(String name);
+
+		操作其他域对象的方法 指定某一个指定的域对象 操作数据
+		
+		void setAttribute(String name,Object obj, int Scope);
+		Object getAttribute(String name, int Scope);
+		void removeAttribute(String name, int Scope); 
+
+		//转发 可以获取到除了pageContext以外的其他域对象
+		//request.getRequestDispatcher("b.jsp").forward(request, response);
+		//重定向 只能获得session和application域对象
+		response.sendRedirect("b.jsp");
+	Scope:
+	 可以实现pageContext域 set 其他域的值
+		
+		PageContext.PAGE_SCOPE
+		PageContext.REQUEST_SCOPE
+		PageContext.SESSION_SCOPE
+		PageContext.APPLICATION_SCOPE
+
+	findAttribute(String name)自动从 page  request session application依次查找
+	找到了 就结束
+
+四大域对象:
+	实际开发中用哪一个
+PageContext:-->pageContext存放的数据在当前页面有效 开发用的很少
+ServletRequest:-->request存放的数据在一次请求(转发)内有效,使用非常多
+HttpSession:-->session存放的数据在一次会话中有效 例如 存储用户登录信息 购物车功能
+ServletContext:-->application 存放的数据在整个应用范围内 因为范围比较大 应用很少 
+
+七.el表达式
+	EL表达式: expression language 表达式语言
+	作用: 简化jsp中的java代码开发量
+	它不是一种开发语言 是jsp中获取数据的一种规范
+
+	主要作用:
+		1.获取数据
+			从各种类型的web域中检索java对象,获取数据
+			(javabean的属性/list集合/map集合/数组)
+		2.执行运算
+			利用EL表达式可以在jsp页面中执行一些基本的关系运算/逻辑运算和算数运算
+		3.获取web开发常用对象
+			EL表达式定义了一些隐式对象,利用隐式对象,可以得到其他常用对象从而获取对象中的数据
+		4.调用java方法
+			EL表达式允许用户开发自定义EL函数,可以在jsp页面中通过EL表达式调用java类的方法
+	注意:
+		如果页面EL表达式不起作用
+		<%@ page isELIgnored="false"%>
+
+	1.获取数据
+		重点:EL表达式只能获取存储在4个作用域中的数据
+
+		<!-- el表达式 -->
+		${u}<!-- 原理 pageContext.findAttribute("u") -->
+		<br/>
+		${u.username} <!-- 等同于 user.getUsername()-->
+
+		点(.)相当于调用了 getter方法 点后面跟的就是属性名 -->使用树形导航
+		EL表达式真正读取的时候,是在读取javaBean实例中get方法后面的字母
+
+		javaBean属性的有无或者属性的拼写是什么与EL表达式使用是没有关系的
+		EL只关心类中是否有相对应的getter方法
+
+		所以EL输出时 属性名称完全参照getter方法 
+		规则:
+		 1.保持与getter方法名 get三个字母后的内容一致的大小写,然后将首字母小写了
+		 2.当getter方法名开头出现了相连的两个大写字母时,EL属性名称就是完全抄写getter方法名
+			get三个字母后面的内容
+
+		<!-- []运算符 点能做的 它也能做 它能做的 点不一定能做 -->
+	2.运算
+		eq 相等
+		neq / ne 不相等
+		gt 大于
+		lt 小于
+		gte/ge 大于等于
+		lte/le 小于等于
+		not 非
+		empty 判断null 空字符串 和 没有元素的集合 都返回true/false
+
+		三目运算符
+	3.隐式对象 11个
+		pageContext
+		pageScope	pageContext范围中存放的数据
+		requestScope	请求范围的数据
+		sessionScope	会话范围的数据
+		applicationScope	应用范围的数据
+		param		一个请求参数
+		paramValues	重名请求参数
+		header		一个请求消息头信息
+		headerValues	重名的请求消息头
+		intParam	web.xml中全局参数
+		cookie		cookie对象的name值
+八.jstl标签
+	JSTL *****
+		JavaServerPage Standard Tag Library  -->JSP 标准标签库
+	作用:
+		使用JSTL实现JSP页面中逻辑处理 如判断 循环等
+	使用JSTL步骤
+		1.在jsp页面添加taglib指令
+		<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+			<!-- prefix 是前缀 -->
+		2.使用JSTL标签
+
+	JSTL常用标签
+		1.表达式控制标签 set out remove catch
+		2.流程控制标签 if choose when otherwise
+		3.循环标签 forEach forTokens
+		4.URL操作标签 import url redirect
+	

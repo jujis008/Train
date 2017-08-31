@@ -1,0 +1,49 @@
+三.DBUtils
+
+	Apache
+	什么是DBUtils
+		是java编程中的数据库操作实用工具 小巧简单实用
+		封装了JDBC的操作 简化了JDBC操作 可以少写代码
+CRUD
+	1.对于数据表的读操作 他可以把结果转换成 List Array Set 等集合 便于程序员操作
+	2.对于数据表的写操作 变得很简单(只需要sql语句就可以了)
+	3.可以使用数据源 使用JNDI 数据库连接池等技术来优化性能 
+		重用已经构建好的数据库连接对象
+DBUtils的三个核心对象
+	QueryRunner类
+	ResultSetHandler 接口
+	DBUtils 类
+
+	QueryRunner类
+		提供对sql语句操作的API
+		QueryRunner(DataSource ds) 将连接池给DBUtils框架
+			以后每一个操作都会从连接池中获取一个新的连接
+			每条sql一个单独的事务
+		它主要有三个方法
+			query() 用于执行select
+			update() 用于执行 insert update delete
+			batch() 用于批处理 可执行多条语句 批量
+	ResultSetHandler接口
+		用于定义select操作后 怎样封装结果集 返回的内容
+	DBUtils类
+		它就是一个工具类 定义了关闭资源与事务处理的方法
+DBUtils快速入门
+	步骤
+		1.导包jar
+		2.创建QueryRunner对象
+		3.使用query方法执行select语句
+		4.使用ResultSetHandler封装结果集
+		5.使用DBUtils类释放资源
+
+
+	ResultSetHandler接口下的所有结果处理器
+		1.BeanHandler 把每条记录封装成对象 适合取一条记录
+		2.BeanListHandler 把每条记录封装成对象 把对象存储到List集合中
+		3.ArrayHandler 适合取一条记录 把该记录的每一列值封装到一个数组中 Object[]
+		4.ArrayListHandler 适合取多条记录 把每条记录的每列封装到一个数组中Object[] 把数组封装到集合中
+		5.ColummListHandler 取某一列的数据 封装到List中
+		6.KeyedHandler 取多条记录 每条记录封装到Map中 再把这个Map封装到另一个Map中
+			key为指定字段值
+		7.MapHandler 适合取一条记录 把当前记录的列名和列值放到一个Map中
+		8.MapListHandler 适合取多条记录 把每条记录封装到一个Map中 再把Map封装到List
+		9.ScalarHandler 适合取单行单列数据

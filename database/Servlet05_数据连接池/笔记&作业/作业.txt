@@ -1,0 +1,10 @@
+基于book表完整 查询和删除一条 增加 和 修改
+
+要求:
+	1.MVC模式 
+		show.jsp 
+		BookManagerServlet 
+			查询/删除/增加和修改 都走这一个Servlet
+		BookService 实现类 --> 连接BookDao
+		BookDao --> 实现类 --> DBUtils
+		数据库连接池 C3P0/DBCP随意

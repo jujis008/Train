@@ -1,0 +1,41 @@
+JavaWeb开发模式
+
+	C/S 客户端(Client) 服务器(Server) -->胖客户端
+	B/S 浏览器(Browser)服务器(Server) -->瘦客户端
+
+	Servlet的三个功能:获取数据 处理逻辑 分发转向
+两种模式
+	1.Model1 JSP+JavaBean
+	2.Model2 JSP+Servlet+JavaBean
+
+	MVC开发模式
+
+		M : Model 模型 -->JavaBean
+		V : View  视图 -->jsp /html
+		C : Controller 控制器 --> Servlet
+	用一种业务逻辑/数据/界面显示分离的方法组织代码,将业务逻辑聚集到一个部件里面
+	在改进和个性化定制界面及用户交互的同时,不需要重新编写业务逻辑
+
+	分层的思想: 高内聚 低耦合
+
+	什么是接口??? 规范 约束 规则 
+	面向接口编程 就是将 规范 和 实现 相分离 (名实分离原则)
+
+	登录为例
+		1.数据库 创建 User表
+		2.调入jar包 数据库配置文件 连接数据库
+		3.javaBean -->User实体类
+		4.创建表示层
+			jsp页面+servlet
+		5.业务处理层
+			面向接口编程的思想
+			UserService 接口
+				login方法
+			UserServiceImpl 实现类 实现 UserService接口
+				重写 login方法
+					调用 findByUser()方法
+		6.数据库访问层 Dao
+			UserDao 接口
+				findByUser()
+			UserDaoImpl 实现类 实现 UserDao接口
+				重写 findByUser()方法

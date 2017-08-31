@@ -1,0 +1,83 @@
+一.数据库连接池
+	什么是连接池?
+		数据库连接池负责分配/管理和释放数据库连接.它允许应用程序重复使用一个现有的数据库连接
+		而不是再重新建立一个;释放空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据库连接遗漏
+		这项技术明显提高了对数据库的操作性能
+	例子:客服10086
+		每个客服都有一个编号 接完电话 排到最后 而且不会接一次 就开除
+	jdbc每次都要连接 关闭 但是连接池不用 申请一个连接 用完之后 不释放 再次回到线程池中
+
+	常用的数据源配置
+	1.DBCP
+		DBCP: Apache推出的Database Connection Pool
+		使用步骤:
+			1.添加jar包 dbcp pool
+			2.添加属性资源文件 dbcpconfig.properties
+
+		javax.sql 接口 DataSource
+
+		#<!-- 初始化连接 -->
+		initialSize=10
+
+		#最大连接数量
+		maxActive=50
+
+		#<!-- 最大空闲连接 -->
+		maxIdle=20
+
+		#<!-- 最小空闲连接 -->
+		minIdle=5
+
+		#<!-- 超时等待时间以毫秒为单位 60000毫秒/1000等于60秒 -->
+		maxWait=60000
+
+	2.C3P0
+		C3P0是一个开源的JDBC连接池 实现了数据源和JNDI绑定
+		JNDI(java naming and directory interface)
+		是SUN公司提供的一种标准的java命名系统接口 是一组在java应用中访问命名和目录服务的API
+		JNDI 是一种资源管理方式
+		C3P0 是数据源连接池的配置方式
+		使用JNDI管理数据库连接池 连接池可以使用C3P0 也可以使用DBCP...
+
+		实现步骤:
+		1.导入c3p0 jar 包
+		2.编写配置文件 c3p0-config.xml 放在src根目录下
+用JavaWeb服务器管理数据源:
+	Tomcat配置数据源
+	步骤:
+		1.拷贝数据库连接的jar(jdbc驱动)到tomcat/lib目录下
+		2.配置数据源xml文件
+			a:把配置信息写在 tomcat下的conf目录下的 context.xml中 那么所有应用都能使用
+			b:在MATA-INF中创建context.xml编写数据源,那么只有当前应用可以使用
+		context.xml中加入如下配置
+			<Resource 属性/>
+			属性:
+			name: jdbc/工程名
+			auth: 作者
+			type: 类型
+			maxActive: 最大连接
+			maxIdle: 最大空闲
+			maxWait: 最大等待时间 单位毫秒
+			username
+			password
+			driverClassName
+			url
+		<Resource name="jdbc/web_14" auth="Container" type="javax.sql.DataSource"
+			maxActive="100" maxIdle="30" maxWait="10000"
+			username="root" password="111111" 
+			driverClassName="com.mysql.jdbc.Driver"
+			url="jdbc:mysql://localhost:3306/dbcq"
+		/>
+
+		Context ctx = new InitialContext();
+		DataSource ds = (DataSource)ctx.lookup("java:/comp/env/jdbc/web_14");
+		out.print(ds);
+
+		"java:/comp/env/jdbc/web_14"
+
+		path:java:/comp/env/
+		name:jdbc/web_14
+
+		JNDI(java naming and directory interface)
+		JNDI就是一个容器 一个map
+		一个数据源 多个JNDI 根据名称的规范找到连接池

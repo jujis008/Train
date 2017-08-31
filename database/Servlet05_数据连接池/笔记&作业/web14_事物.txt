@@ -1,0 +1,78 @@
+二.事务
+	什么是事务?
+		事务是指逻辑上的一组操作,组成这组操作的各个单元,要么全部成功 要么全部不成功
+	案例:
+		有AB两个账户 账户的初始金额都是1000元 发生转账操作
+
+		转账: A账户向B账户转账100元
+			A money = money - 100; -->900
+			int i = 9/0;-->异常
+			出现异常 由于代码是一行一行执行的 那么下面的代码就不再执行 那么就出现了转账错误
+			B money = money + 100; -->1000
+		这两个语句全部完成是完成了一次转账的操作 属于一组操作
+		事务
+	Mysql中的事务
+		a:Mysql引擎是支持事务的
+		b:Mysql默认自动提交事务 每条语句都处在单独的事务中 如果不明显去写事务代码 
+			那么默认每一条sql 就是一个单独的事务
+		c:手动控制事务
+			开启事务 start transaction | begin
+			提交事务 commit
+			回滚事务 rollback
+	事务的特性(面试题) 
+		原子性:指事务是一个不可分割的工作单位,事务中的操作要么都发生,要么都不发生
+		一致性:事务必须使数据库从一个一致性状态变换到另一个一致性状态,转账前和转账后的总金额不变
+		隔离性:事务的隔离性是多个用户并发访问数据库时,
+			数据库为每一个用户开启的事务,不能被其他事务的操作数据所干扰.多个并发事务之间相互隔离
+		持久性:指一个事务一旦被提交,它对数据库中数据的改变就是永久性的,
+			接下来即使数据库发生故障也不应该对其有任何影响
+	事务的隔离级别
+		如果多线程并发 同时访问一张表 这时候会引起 数据不正确的问题
+		就类似于多线程并发操作统一数据不安全问题 多个用户之间会发生互相干扰的现象
+
+	隔离级别:			脏读(Dirty Read)	不可重复读(NonRepeatable Read)	虚读(幻读)(Phantom Read)
+
+	未提交读 Read uncommitted	可能			可能				可能
+	已提交读 Read committed		不可能			可能				可能
+	可重复读 repeatable read	不可能			不可能				可能
+	可串行化 Serializable		不可能			不可能				不可能
+
+		级别越高 数据越安全 但是 性能越低
+
+	脏读:指一个事务读取了另一个事务未提交的数据
+		例如:B开启了事务 还钱给A 执行了一条update money+100
+			然后 给A打电话 说 我还钱了
+		     A查询 发现多了100
+			然后 B回滚了 update语句不执行了
+	不可重复读:在一个事务内读取表中的某一行数据 多次读取结果不同 
+		一个事务读取到了另一个事务提交后的数据 (主要针对update语句)
+	虚读(幻读):主要针对insert语句
+
+	数据库通过设置事务的隔离级别防止以上情况发生:
+
+	1 Read uncommitted 脏读/不可重复读/虚读 都可以发生
+	2 Read committed 避免脏读......不可重复读/虚读都有可能发生 (oracle默认隔离级别)
+	4 repeatable read 避免脏读/不可重复读......虚度有可能发生(mysql默认隔离级别)
+	8 Serializable  避免 脏读/不可重复读/虚度 -->(序列化的)
+
+	实际工作中 默认用4号 级别越高 性能越低 数据越安全
+	如果数据量大 事务隔离级别越高 那么他的效率就会变得很低 
+	所以大数据量 可以允许出现点重复读和虚读的问题 都是可以解决的
+
+mysql中:
+	查看当前的事务隔离级别: select @@tx_isolation
+	更改当前的事务隔离级别: set transaction isolation level read uncommitted
+
+	begin 开启事务
+	commit; 提交事务
+	rollback;回滚
+jdbc控制事务的隔离级别
+
+	Connection接口
+	Connection.setTransactionIsolation(int level);
+	Connection.TRANSACTION_READ_UNCOMMITTED, 
+	Connection.TRANSACTION_READ_COMMITTED, 
+	Connection.TRANSACTION_REPEATABLE_READ,
+	Connection.TRANSACTION_SERIALIZABLE
+
+	设置隔离级别 必须在开启事务之前
