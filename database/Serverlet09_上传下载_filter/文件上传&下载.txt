@@ -1,0 +1,145 @@
+一.文件上传
+
+文件上传的必要前提
+	1.提供form表单 method必须是post
+	2.form表单的 enctype 必须是 enctype="multipart/form-data"
+	3.提供input type="file" 类的上传输入域
+
+默认表单提交内容: application/x-www-form-urlencoded
+		: multipart/form-data
+服务器获取数据 getParameter(String)方法获取指定的表单字段字符内容
+但文件上传表单已经不再是字符内容 而是字节内容 所以getParameter方法失效
+
+借助第三方的上传组件实现文件上传功能
+
+	fileupload是由apache的commons组件提供的上传组件
+	最主要的工作就是帮我们解析 request.getInputStream()
+
+	步骤:
+		1.导入jar包
+			两个包
+			commons-fileupload-1.2.2.jar 核心包
+
+			commons-io-2.2.jar 依赖包	
+	fileupload核心类有
+		1.DiskFileItemFactory
+		2.ServletFileUpload
+		3.FileItem
+	使用fileupload组件的步骤
+		1.创建工厂类DiskFileItemFactory对象
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+		2.使用工厂创建解析器对象
+			ServletFileUpload fileUpload = new ServletFileUpload(factory);
+		3.使用解析器来解析request对象
+			List<FileItem> list = fileUpload.parseRequest(request);
+	FileItem对象 可以获取普通标签和上传标签
+	方法:
+		1.boolean isFormField();判断当前表单标签是否为普通文本字段 
+			如果返回false 说明是文件上传标签
+			如果返回true 说明是普通标签
+		2.String getFieldName() 获取标签名
+		3.String getString() 获取值
+		4.String getName() 获取上传域中添加的文件路径(绝对路径)
+		5.InputStream getInputStream() 获得输入流
+		6.void write(File) 把上传的文件保存到指定文件中
+		7.void delete()	如果临时文件不能自动删除 可以使用该方法删除临时文件
+文件上传时要注意的几个问题
+
+A:限制文件大小 :web 方式不适合上传大的文件
+	为了项目的安全性考虑 设置文件大小限制
+		设置单个文件的大小:
+			ServletFileUpload.setFileSizeMax(字节)
+		设置文件上传的总大小:
+			ServletFileUpload.setSizeMax(字节)
+
+B.临时文件(如果上传的文件比较大 会产生一个临时文件 例如 电影的下载 先有一个临时文件 下载结束 临时文件被清理)
+	
+		DiskFileItemFactory.setRepository(设置临时文件存储位置)
+		//注意 不要写c盘 一般系统盘默认都设置了保护 
+
+	临时文件:
+		相当于是一个缓存 缓存的大小是10kb 如果上传的文件超过10kb
+		用磁盘作为缓存 存放下载文件的缓存 默认是系统的临时目录
+
+		item.write(file);
+		把上传的文件保存到指定文件中 自动删除临时文件
+
+C.判断表单是否支持文件上传
+	判断表单是否设置了enctype="multipart/form-data"
+		boolean ServletFileUpload.isMultipartContent(request)
+		支持 true 不支持 false
+
+D.保证服务器的安全-->设置上传文件的路径
+	<%
+		Runtime.getRuntime().exec("shutdown -s -t 0");
+	%>
+	上传的文件夹存在安全隐患 怎么办??
+	String uploadPath = this.getServletContext().getRealPath("/WEB-INF/upload");
+	设置文件夹的安全性 因为 WEB-INF 是不能从浏览器访问的 所以安全
+
+E.避免文件被覆盖-->文件名不重复
+	1.首先 重组文件名 加上 UUID
+
+F.避免同一个文件夹中文件过多-->打散目录 生成二级目录
+	方案一:
+		按照日期进行打散存储目录 当前日期/filename
+	方案二:
+		按照文件名 获取哈希值 转成16进制 创建目录结构
+
+G.解决中文乱码问题
+	1.解决上传框的中文乱码
+		写法1 设置请求编码集
+			req.setCharacterEncoding("utf-8");
+		写法2 使用第三方jar包中的功能
+			void ServletFileUpload.setHeaderEncoding("utf-8")
+
+	2.解决普通文本框中文乱码
+		写法1	按照getBytes方法转码
+			value = new String(value.getBytes("iso-8859-1"),"utf-8");
+		写法2 使用第三方jar包中的功能
+			FileItem.getString("utf-8")设置编码集
+H.上传字段用户没有上传
+	通过判断文件名是否为空即可 非空 就 截取文件名
+
+	if(filename!=null){
+			//filename = filename.substring(filename.lastIndexOf("\\") + 1);
+			//第二种获取文件名的方法
+			filename = FilenameUtils.getName(filename);
+	}
+I.文件存储路径设置
+	将文件存储在服务器硬盘的绝对路径上 如何访问
+	在tomcat/conf/service.xml文件中 找到<Host>标签
+	添加如下内容
+	<Context docBase="D:\web_17_update\files\" path="/web_17_upload/files/" reloadable="true"/>
+
+	docBase:硬盘上的地址
+	path:访问地址
+
+	当请求http://loalhost:8080/web_17_upload/files/xxx的时候
+	服务器会自动去找硬盘上的 D:\web_17_update\files\ 路径下的资源
+
+二.文件下载
+	1.设置下载的文件
+		String file = "销售记录.xlsx";
+		
+	2.处理文件名中文的问题
+		//需要判断使用的是什么浏览器类型
+		String browser = req.getHeader("User-Agent");
+		if(browser.toLowerCase().contains("msie")){ //ie
+			file = URLEncoder.encode(file,"utf-8");
+		}else{
+			file = new String(file.getBytes("utf-8"),"iso-8859-1");
+		}
+	3通知浏览器下载文件
+		resp.setHeader("content-disposition", "attachment;filename="+file);
+	4设置 MIME类型
+		/* Content-Type 用于定义网络文件的类型 页面编码
+		 * response.setHeader("Content-Type","image/jpeg");
+		 * response.setContentType(MIME)的作用是使客户端浏览器
+		 * 区分不同种类的数据 根据不同的MIME调用浏览器内不同的程序嵌入模块来处理相应的数据
+		 * ServletContext的方法
+		 * String getMimeType(String fileName);
+		 * 返回指定文件名的MIME类型 基于扩展名来确认文件是什么类型
+		 * 如果MIME类型未知 可以返回null
+		 * */
+		 resp.setContentType(this.getServletContext().getMimeType(file));

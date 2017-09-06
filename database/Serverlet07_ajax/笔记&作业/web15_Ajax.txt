@@ -1,0 +1,112 @@
+AJAX
+	什么是AJAX
+		Asynchronous 异步的
+		JavaScrpit
+		And
+		Xml
+	不是一种新的编程语言 而是一种用于创建更好更快以及交互性更强的web应用程序的技术
+	基于 javascript/xml/html/css 的新用法
+	一般 都返回文本 返回xml还得解析 所以很少用
+
+	java中交互方式分为同步和异步两种
+
+	同步交互:指发送一个请求,需要等待返回,然后才能够发送下一个请求 有一个等待过程
+		通常 同步传输是以数据块为传输单位
+	异步交互:指发送一个请求,不需要等待返回,随时可以再发送一个请求,即不需要等待
+		通常 异步传输是以字符为传输单位
+
+	区别:
+		同步需要等待 -->银行转账系统
+		异步不需要等待
+	举个例子 普通B/S模式(同步) AJAX技术(异步)
+
+	同步: 提交请求-->等待服务器处理-->处理完毕返回 这个期间客户端浏览器不能干任何事
+	异步: 请求通过事件触发-->服务器处理(这时浏览器仍然可以做其他事情)->处理完毕
+
+	同步 就是你叫我吃饭 我听到了就和你吃饭去 没听到 你就不停的叫 知道我告诉你一声 听到了 
+		才一起去吃饭
+	异步 就是你叫我吃饭 然后自己去吃饭了 我得到消息后可能立即走,也可能等到下班才去吃
+
+AJAX:
+	是与服务器交互数据并更新部分网页的艺术
+	刷新局部页面的技术 可以使网页实现异步更新
+	这意味着在不重新加载整个网页的情况下,对网页的某部分进行更新
+
+	传统网页(不使用ajax) 如果要更新内容 必须重新加载整个网页
+
+	google 百度 地图
+
+JavaScript中XMLHttpRequest 对象是整个Ajax技术的核心 它提供了异步发送请求的能力
+	构造方法:不同浏览器 甚至相同浏览器的不同版本 获取该对象的方式是不同的
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();
+		  }
+		else
+		  {// code for IE6, IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+向服务器发送请求
+
+		open(method,url,async) 	
+
+		规定请求的类型、URL 以及是否异步处理请求。
+
+		    method：请求的类型；GET 或 POST
+		    url：文件在服务器上的位置
+		    async：true（异步）或 false（同步）
+
+		send(string) 	
+
+		将请求发送到服务器。
+
+		    string：仅用于 POST 请求
+		setRequestHeader(header,value) 	
+
+		向请求添加 HTTP 头。
+
+		    header: 规定头的名称
+		    value: 规定头的值
+服务器响应
+		responseText 	获得字符串形式的响应数据。
+		responseXML 	获得 XML 形式的响应数据。
+onreadystatechange 事件
+
+		当请求被发送到服务器时，我们需要执行一些基于响应的任务。
+
+		每当 readyState 改变时，就会触发 onreadystatechange 事件。
+
+		readyState 属性存有 XMLHttpRequest 的状态信息。
+
+		下面是 XMLHttpRequest 对象的三个重要的属性：
+		属性 	描述
+		onreadystatechange 	存储函数（或函数名），每当 readyState 属性改变时，就会调用该函数。
+		readyState 	
+
+		存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。
+
+		    0: 请求未初始化
+		    1: 服务器连接已建立
+		    2: 请求已接收
+		    3: 请求处理中
+		    4: 请求已完成，且响应已就绪
+
+		status 	
+
+		200: "OK"
+
+		404: 未找到页面
+
+	注意:只有当状态是 4 并且 状态码是200的时候 才可以处理服务器数据
+
+案例:
+	使用Ajax验证用户名是否已存在
+
+	步骤:
+		1.使用文本框的 onBlur事件
+		2.使用Ajax技术实现异步交互
+			a:创建XMLHttpRequest对象
+			b:通过XMLHttpRequest对象设置请求信息
+			c:向服务器发送请求
+			d:创建回调函数,根据响应状态动态更新页面

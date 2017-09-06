@@ -1,0 +1,48 @@
+JSON简介:
+	JSON(javaScript Object Notation)是一种轻量级的数据交换格式
+	xml 解析: sax dom dom4j
+
+	JSON数据作为目前网络中主流的数据传输格式之一,应用十分广泛
+JSON格式:
+	JSON的数据书写格式:
+		名称/值对
+	名称:字符串 用双引号 后面加一个冒号 然后是值
+	例如:
+		"firstName":"John"
+		名 可以不加双引号 
+		等价于 
+		firstName=John-->javascript语句
+	JSON值可以是
+		数字(整数或者浮点型) 字符串(双引号中) 逻辑值(true/false) 
+		数组([]方括号中) 对象{} null
+
+		对象:对象表示为{}括起来的内容 数据结构为
+		{key:value,key2:value2...}的键值对结构
+		例如:
+		String json = "{name:'张三',age:20,tel:'12344'}"
+
+		数组:数组表示为中括号[]括起来的内容 数据结构为
+		[value1,value2,value3...]的单值结构
+		["背景","上海","广州"]
+
+		java 中 Student[] stu = new Student[3];
+
+		json格式
+			[
+			{name:"张三",age:23},
+			{name:"张三",age:23},
+			{name:"张三",age:23}
+			]
+JSON解析:
+	三种方式
+	1.JSON解析
+	2.GSON:谷歌
+	3.FASTJSON:阿里巴巴
+
+JSON解析步骤:
+	1.导入jar包
+	2.使用 JSONObject 方法 / JSONArray 方法 进行Json解析
+		分析方式 看第一个符号 
+			是{花括号 就是对象 
+			是[方括号 就是数组
+		使用getString()方法等获取json格式中的数据

@@ -1,0 +1,79 @@
+监听器
+	Listener
+	事件发生 事件源(产生这个事件的源头) 监听器(用于监听指定事件的对象)
+	注册监听器:要想让监听器可以监听到事件发生,必须对其进行注册
+
+	javaweb开发中的监听器 是用于监听web常见对象
+
+	HttpServletRequest HttpSession ServletContext
+
+	监听他们的创建 /销毁 属性变化 session绑定javaBean(活化/钝化)
+
+	Servlet中的监听器平时使用的比较少
+
+	监听器一共分八个 三类
+
+	第一类:
+		用来监听HttpServletRequest HttpSession ServletContext的创建和销毁
+
+			ServletContextListener
+			HttpSessionListener
+			ServletRequestListener
+
+			HttpSessionListener涉及到一个session活化和钝化的问题
+	第二类
+		用来监听HttpServletRequest HttpSession ServletContext的属性变化
+		(get/set方法)
+			ServletContextAttributeListener
+			HttpSessionAttributeListener
+			ServletRequestAttributeListener
+	第三类
+		javabean的状态变化
+			HttpSessionBindingListener bean被绑定/解除到session
+			HttPSessionActivationListener bean被钝化/活化
+
+注册监听器 前两种 都需要县创建一个实现接口然后在web.xml中注册监听器
+	<listener>
+		<listener-class>类全名</listener-class>
+	</listener>
+
+创建监听器的步骤
+	1.创建一个类 实现指定的监听器接口
+	2.重写接口中的方法
+	3.在web.xml中对监听器进行注册
+
+
+	/* 问题1 有几种方式可以销毁session?
+	 * 	1.默认超时 30分钟
+	 * 	2.关闭服务器
+	 * 	3.invalidate()方法
+	 * 	4.setMaxInactiveInterval(int interval) 设置超时时间
+	 * 问题2 直接访问一个jsp页面 是否会创建session对象?
+	 * 	session是jsp的内置对象 所以会创建
+	 * */
+javabean对象 可以活化或者钝化到session中
+	购物车 添加到购物车 关了浏览器 下次再登陆 商品还在购物车中
+
+	当关闭浏览器 将购物车钝化到硬盘上
+	再次登录成功 将硬盘上的数据 活化到购物车中
+
+	在tomcat中,服务器的正常关闭会存储一个文件在work目录下 其中存储了session的信息
+	但是不会包含类信息 如果想要钝化类信息 存储在session中的类需要实现Serializable接口
+	当服务器开启的时候 会找到之前存储 SESSIONS.ser文件从中恢复之前保存的session
+
+案例:定时销毁session
+
+	买票 12306 买到票了 有时间限制 在指定时间内付款 才能真的买到
+	不然就买不到
+	也就是说 定时销毁session
+
+	1.怎样可以将每个创建的session都保存起来?
+		我们可以做一个HttpSessionListener 当session对象创建时 就将这个session加入到一个集合中
+		将集合List<HttpSession> 保存到 ServletContext域中
+	2.怎样可以判断session过期?
+		在HttpSession中有一个方法叫 getLastAccessTime()
+		它可以得到session对象最后使用的时间
+		可以使用 invalidate方法销毁
+
+		例如 设置五分钟session销毁 得到当前时间 和 最后一次使用的时间 进行比较
+	

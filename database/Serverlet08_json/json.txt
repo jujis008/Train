@@ -1,0 +1,13 @@
+{name:'zhangsan',age:20}
+
+{person:{name:'zhangsan',age:20}}
+
+{name:'zhangsan',age:20,dept:{no:1,name:'android'}}
+Dept:no,name
+Emp:name,age,dept
+
+[{name:'zhangsan',age:20},{name:'lisi',age:21},{name:'wangwu',age:22}]
+
+{no:1,name:'android',employees:[{name:'zhangsan',age:20},{name:'lisi',age:21},{name:'wangwu',age:22}]}
+
+[{name:'张三',scores:{en:90,math:99,cn:89}},{name:'李四',scores:{en:80,math:90,cn:99}}]

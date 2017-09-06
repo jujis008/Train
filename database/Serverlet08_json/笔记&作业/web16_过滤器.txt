@@ -1,0 +1,46 @@
+过滤器
+
+	javaweb中的过滤器可以拦截所有访问web资源的请求或相应
+
+案例:
+	1.解决全局中文乱码问题 (全局编码过滤器)
+		Post
+		Get:	name = new String(name.getBytes("iso-8859-1","utf-8"))
+	2.管理员与普通用户登录(对登录用户进行判断 对其进行过滤)
+	3.自动登录
+开发步骤
+	1.创建一个类 实现Filter接口
+	2.重写接口中的方法 
+		doFilter 方法是真正过滤的
+	3.在web.xml中配置过滤器
+
+
+	FilterChain 是servlet容器为开发人员提供的对象 它提供了对某一资源的过滤请求链
+
+	1.怎样可以形成一个Filter链?
+		只要多个Filter对同一个资源进行过滤就可以形成Filter链
+	2.怎样确定Filter执行顺序?
+		由web.xml中 <filter-mapping>的配置顺序 来确定 执行顺序
+Servlet生命周期
+	实例化-->初始化-->服务-->销毁
+
+Filter生命周期
+	当服务器启动 会创建Filter对象 并调用init()方法 只调用一次
+	当访问资源时 路径与Filter的拦截路及鞥匹配,会执行Filter中的doFilter方法
+		这个方法是真正过滤操作的方法
+	当服务器关闭时 会调用Filter的destroy方法来进行销毁操作
+
+案例:
+	1.解决全局中文乱码问题 (全局编码过滤器)
+
+	怎样才可以做一个通用的 可以处理get/post请求的?
+
+	获取请求参数的方式
+		getParameter
+		getParameterValues
+		getParameterMap
+	在java 中怎样可以对一个方法进行功能增强?
+装饰设计模式
+	1.创建一个类让它与被装饰类实现同一个接口或者继承同一个父类
+	2.在装饰类中持有一个被装饰类的引用
+	3.重写要增强的方法
