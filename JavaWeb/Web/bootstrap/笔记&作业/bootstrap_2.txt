@@ -1,0 +1,25 @@
+bootstrap
+组件
+	1.图标 (250个小图标)
+		<span class="glyphicon glyphicon-grain" aria-hidden="true"></span>
+		可以把它们引用在按钮 | 工具条中的按钮 导航或者输入框等地方
+		注意分组概念 满足分组条件 可认为是一组标签
+		input-group
+		btn-group
+
+	2.下拉菜单
+		dropdown | dropup
+	3.按钮组工具栏
+		把一组btn-group组合进一个 btn-toolbar中 就可以做成更复杂的组件
+		设置按钮大小
+			btn-group-lg
+			btn-group-sm
+			btn-group-xs
+		横向按钮组btn-group 
+		竖向按钮组btn-group-vertical
+	4.输入框
+		在输入框的任意一侧添加额外元素或者按钮
+		.input-group-addon | .input-group-btn
+		大小
+		input-group-lg
+		input-group-sm

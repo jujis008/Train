@@ -1,0 +1,94 @@
+事件
+	页面载入
+		ready(fn) 
+			$(document).ready(function(){
+			
+			})
+			等效
+			jQuery(document).ready(function(){
+			
+			})
+	
+	事件
+		blur([[data],fn]) 失去焦点
+		change([[data],fn]) 改变(select)
+		click([[data],fn])  单击
+		dblclick([[data],fn]) 双击
+		error([[data],fn]) 页面异常
+		focus([[data],fn]) 获得焦点
+		focusin([data],fn) 获得焦点 js focus
+			和focus区别在于 他可以在父元素上检测子元素获取焦点的情况
+		focusout([data],fn) 失去焦点 js blur 
+			和blur区别在于 他可以在父元素上检测子元素失去焦点的情况
+		keydown([[data],fn]) 键盘按下
+		keypress([[data],fn]) 键盘按
+		keyup([[data],fn]) 键盘弹起
+		mousedown([[data],fn]) 鼠标按下
+
+		mouseenter([[data],fn]) 鼠标移入
+		//mouseenter:当鼠标在父元素和子元素之间穿越时 不会触发事件
+		mouseover([[data],fn]) 鼠标移入
+		//mouseover:当鼠标在父元素和子元素之间穿越时 也会触发事件
+
+		mouseleave([[data],fn]) 鼠标移出
+		mouseout([[data],fn]) 鼠标移出
+		
+		mousemove([[data],fn]) 鼠标移动
+
+		mouseup([[data],fn]) 鼠标弹起
+		resize([[data],fn]) 改变大小
+		scroll([[data],fn]) 滚动
+		select([[data],fn]) 选择
+		submit([[data],fn]) 提交
+		unload([[data],fn]) 页面卸载
+
+事件绑定
+	事件处理
+		on(eve,[sel],[data],fn)1.7+ 提供绑定事件处理程序所需要的所有功能
+			完成3个方法功能 bind() delegate() 和 live()
+		off(eve,[sel],[fn])1.7+ 解绑
+
+		bind(type,[data],fn)  给当前对象绑定一个事件 例如 A.bind("click",fn)
+				A.click(fn)
+		one(type,[data],fn) 给当前对象绑定一次事件
+		unbind(t,[d|f]) 解绑bind绑定
+
+		trigger(type,[data]) 在每一个匹配的元素上触发某件事件
+			A.trigger("submit") 类似 A.submit()
+		triggerHandler(type, [data]) 在每一个匹配的元素上触发某件事件 但不会执行浏览器默认动作
+			也不会产生事件冒泡
+		
+	事件委派
+		live(type,[data],fn) 绑定事件 之后动态添加同样的成员 也具有同样的事件
+		die(type,[fn]) 解绑事件
+		delegate(s,[t],[d],fn) 
+		undelegate([s,[t],fn])1.6* 
+	事件切换
+		hover([over,]out) 简化版 鼠标移入和溢出
+			A.mouseover(fn).mouseout(fn)
+			A.hover(fn,fn)
+		toggle(fn, fn2, [fn3, fn4, ...]) 执行click事件 每点击一次执行一个fn
+效果
+	基本
+		show([s,[e],[fn]]) 显示
+			参数1 是 speed 速度 单位是毫秒
+				固定字符创 slow / normal / fast
+			参数2 是 fn回调函数
+		hide([s,[e],[fn]]) 隐藏
+		toggle([s],[e],[fn]) 切换
+	滑动
+		slideDown([s],[e],[fn]) 显示
+		slideUp([s,[e],[fn]]) 隐藏
+		slideToggle([s],[e],[fn]) 切换
+	淡入淡出
+		fadeIn([s],[e],[fn]) 显示
+		fadeOut([s],[e],[fn]) 隐藏
+		fadeTo([[s],o,[e],[fn]]) 指透明度
+		fadeToggle([s,[e],[fn]]) 切换
+	自定义
+		animate(p,[s],[e],[fn])1.8* 
+		stop([c],[j])1.7* 
+		delay(d,[q]) 
+	设置
+		jQuery.fx.off 
+		jQuery.fx.interval 

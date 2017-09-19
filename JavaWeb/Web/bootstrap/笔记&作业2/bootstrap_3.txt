@@ -1,0 +1,52 @@
+四 组件
+	4.6导航效果
+		4.6.1导航(nav)
+			选项卡导航 nav-tabs
+			胶囊式选项卡导航 nav-pills
+			堆叠式导航 nav-pills nav-stacked
+			自适应导航 nav-justified
+			禁用 disabled
+			分隔符 nav-divider
+			二级导航
+		4.6.2导航条(navbar)
+			在bootstrap中只有两种导航条样式 default|inverse
+			基础导航
+				navbar-header 导航头信息
+				navbar-brand 字体样式 醒目
+				navbar-nav ul导航项样式
+			导航条中的表单
+			导航条中的文本|链接|按钮
+				navbar-text
+				navbar-link
+				navbar-btn
+			顶部固定和底部固定
+				navbar-fixed-top navbar-fixed-bottom
+				navbar-static-top
+			反色导航条 navbar-inverse
+			响应式导航条
+			
+		4.6.3面包屑导航|分页导航
+			面包屑导航 breadcrumb
+			分页导航 pagination 
+			分页导航 设置大小 pagination-lg pagination-sm
+			上下页 pager
+	4.7 标签|徽章|大屏展播|页面标题
+		标签 .lable
+		徽章 .badge
+		大屏展播 jumbotron
+		页面标题 page-header
+	4.8 缩略图和警告框
+		缩略图: .thumbnail
+		警告框: alert alert-success
+	4.9 进度条和媒体对象
+		进度条propress
+			基本 propress-bar
+			彩色 propress-bar-success
+			条纹 propress-bar-striped
+			条纹动态 propress-bar-striped active
+
+		媒体对象media
+			居左 media-left 
+			居右 media-right (写在media-body右侧)
+			水平居中 media-middle 
+			底部 media-bottom 

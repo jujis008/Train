@@ -1,0 +1,5 @@
+1. 在bootstrap官网 javascript插件中 找到 Accordion example 部分
+	效果 替换 今天课上讲的网站后台左侧边栏效果
+2. 在bootstrap官网 http://v3.bootcss.com/examples/carousel/
+	反色导航条 上有下拉
+	下面是一个banner动图

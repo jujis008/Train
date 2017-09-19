@@ -1,0 +1,144 @@
+Bootstrap
+一简介
+	Bootstrap是目前最受欢迎的html/css和js框架
+	用于开发响应式布局/移动设备 web项目
+	由 Twitter于2011年8月 在GitHub上发布的开源产品
+	移动设备优先(自适应台式机/平板/手机设备等)
+
+	作用:
+		将常见的css布局小组件和javascript插件进行了完整的封装
+		能让没有经验的前端工程师和后端开发人员迅速掌握和使用 大大的提高开发效率
+		规范了前端团队编写css和javascript的规范
+	 官网: www.getbootstrap.com
+	 中文网http://www.bootcss.com/
+	 目录: css-->css样式表 
+	       js -->js文件
+	     fonts(图标 以字体的形式存储图标 不同文字在不同字体下显示不同的符号)
+	 如果不下载可以使用CDN去获取bootstrap 但是要保证电脑联网状态
+	基本模板
+		1.HTML5文档结构
+		2.移动设备优先
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+		3.Bootstrap css引入
+		4.jquery引入
+		5.Bootstrap js引入
+		
+二栅格化布局
+	1.栅格系统简介
+		bootstrap围绕响应式模式来实现的
+		页面的设计与开发根据用户行为以及设备环境进行相应的响应和调整
+		具体的实现方式由多方案决定 包括弹性网络布局
+	  响应式设计就是以一个网站能够兼容多个终端,而不是为每一个终端特定一个版本
+
+	  栅格:就是将整个页面平均横向分成12个格子 根据分辨率不同 每个格子宽度不同
+		我们定义div 宽度 只要定义他占据12个格子中的几个格子 任何设备都能保证一样的大小
+
+		<!--container 样式是水平居中 两边有空白 如果分辨率小 就横向全屏了-->
+		container-fluid 横向全屏
+	  列组合:
+	       .col-md-*
+	       列从小到大会自动适应
+	  列偏移:
+	       .col-md-offset-列
+	       在12个各自范围内 左侧空几个格
+	  列嵌套:
+	       12格子 某一个格子12等分(row)
+	  列排序:
+		.col-md-push-*向右推N个格
+		.col-md-pull-*向左拉N个格
+三布局和CSS
+	排版前基础
+		HTML5
+		移动设备优先
+		响应式
+		排版与链接
+
+		响应式图片:.img-responsive
+	1.标题
+		h1~h6 
+		<small>小字体 占据h1~-h3之间 -->65%
+		              占据h4~h6之间 -->75%
+	2.页面主题
+		body / p 全局样式 对齐方式
+		body: 字体大小14px 行高约20
+		p标签 class="lead"
+		对齐方式 text-left text-right text-center
+	3.列表
+	      去点: .list-unstyled
+	      内联列表:水平排列 list-inline
+	      dl列表 水平列表 dl-horizontal
+
+	      <code>显示单行内联代码
+	      <kbd>显示用户输入代码
+	      <pre>多行代码块
+	      <var>变量
+	      <samp>程序结果
+	
+	 4.表格样式
+		基础样式 .table 自适应
+		带背条纹表格 .table-striped
+		带边框 .table-bordered
+		悬停 .table-hover
+		紧凑 .table-condensed 文字和边框的间距不一样
+		响应式表格 .table-responsive
+		<div class="table-responsive">
+		行样式
+			.active 灰色
+			.success 绿色
+			.info 蓝色
+			.warning 黄色
+			.danger 红色
+	5.表单样式
+		基础表单 全局样式 | .form-control | .form-group
+			form-control -->表单项样式 宽度设置为百分之百 占满整个容器
+			form-group -->设置这个组件和下个组件之间的距离是15px
+		内联表单
+			form-inline <form class="form-inline">
+			sr-only 不显示 <label class="control-label sr-only">用户名</label>
+		横向表单
+			在form上应用.form-horizontal 依赖于 使用栅格系统
+		表单控件 input | select | textarea | checkbox&radio | 静态控件
+			只要type对应的类型 就可以
+			checkbox-inline
+		控件状态 焦点状态(变蓝) | 禁用状态 | 只读状态 | 校验状态 辅助文本
+			has-error
+			has-warning
+			has-success
+			辅助文本 .help-block
+		添加额外的图标
+			针对校验状态为输入框添加额外的图标 .has-feedback
+		控件大小 
+			.input-lg .input-sm为控件设置高度
+			.col-lg-* 为控件设置宽度
+		按钮
+			为<a> <button>或者<input>元素添加 button class
+			样式 7种
+			大小 btn-xs btn-sm btn-lg
+			拉伸块级元素大小
+			     btn-block
+			     可以将其拉伸到父元素的宽度
+	6.图片与辅助类
+		响应式图片 .ing-responsive
+		图片形状 img-rounded 圆角 | img-circle 圆形 | img-thumbnail 带空边
+		辅助类
+		文本样式
+			柔和灰 text-muted
+			主要蓝 text-primary
+			成功绿 text-success
+			信息蓝 text-info
+			警告黄 text-warning
+			危险红 text-danger
+		文本背景样式
+			主要蓝 bg
+			成功绿
+			信息蓝
+			警告黄
+			危险红
+		关闭按钮
+			x
+			<button type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		三角符号
+			倒三角
+			<span class="caret"></span>

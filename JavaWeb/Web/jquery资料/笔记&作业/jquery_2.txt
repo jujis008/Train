@@ -1,0 +1,97 @@
+文档处理
+	删除
+		empty() 清空标签体
+			var $hello = $(".hello").remove();
+			var $hello = $(".hello").detach();
+		//如果使用remove删除, 事件及绑定的数据被清除
+		//如果使用detach删除, 事件以及绑定的数据还可以使用
+		绑定数据
+			data(name)获得
+			data(name,value)设置
+	复制
+		clone([Even[,deepEven]]) 
+			克隆
+			even:指事件处理函数是否被复制 
+
+	替换
+		A.replaceWith(B) 使用B将A替换掉
+		A.replaceAll(B)  使用A将B替换掉
+	包裹
+		A.wrap(B) 使用B将每一个A进行包裹(多个B)
+			<B><A></A></B>
+			<B><A></A></B>
+		A.unwrap() 将A的父元素删除 自己保留
+		A.wrapall(B) 使用B将所有A进行包裹(一个B)
+			<B>
+			   <A></A>
+				
+			   <A></A>
+			</B>
+		A.wrapInner(B) 使用B将每一个A的标签体包裹
+			 <A><B>..</B></A>
+			 <A><B>..</B></A>
+
+筛选
+	过滤
+		eq(index|-index) 
+			index 正数 从头开始获得指定索引的元素 从0开始 0表示第一个
+			-index 负数 从尾开始获得指定索引的元素 从1算起 -1表示最后一个
+		first() 第一个 :first
+		last()  最后一个 :last
+		hasClass(class) 判断是否是指定class <xxx class="my">
+			其实就是 is("."+class)
+		filter(expr|obj|ele|fn) 筛选出与指定表达式匹配的元素集合
+		is(expr|obj|ele|fn)1.6*  判断
+		map(callback) jquery对象 拆分成 jquery对象数组
+		has(expr|ele) 子元素是否有
+		not(expr|ele|fn) 将指定内容删除
+		slice(start,[end]) 截取 [2,4)-->2,3
+	查找
+		<A>
+			<B>
+				<C></C>
+				<D></D>
+				<E></E>
+				<F></F>
+			</B>
+		</A>
+
+		B.children([expr]) 获得所有的子元素  --> CDEF
+		
+		A.find(D)1.6* 从指定的区域查询指定元素 -->D
+		D.next([expr]) 下一个兄弟 -->E
+		D.nextall([expr]) 后面所有的兄弟 -->EF
+		C.nextUntil(E)1.6* 获得后面所有兄弟 直到指定条件位置 -->DE
+		F.prevUntil(D)1.6* 获得前面所有兄弟 直到指定条件位置 -->DE 
+		
+		E.prev([expr]) 上一个兄弟 -->D 
+		E.prevall([expr]) 前面所有的兄弟-->CD 
+		E.siblings([expr]) 所有的兄弟 -->CDF
+
+		
+		E.parent([expr]) 父元素 -->B 
+		E.closest(A)1.6* 向上获得指定的父元素 (含自己) 
+			如果获得返回一个对象 如果没有就没有对象
+
+		E.parents([expr]) 获得所有的父元素 -->AB
+		
+		parentsUntil([e|e][,f])1.6* 
+		
+		offsetParent() 
+		
+		
+	串联: 将多条语句 改成一条
+
+		add(e|e|h|o[,c]) 
+			A.add(B) 将A和B组合一个对象 $("A,B")
+		andSelf() 将之前对象添加到操作集合中
+			A.children().andSelf()
+			A   孩子      孩子和A
+		end() 回到最近的一个"破坏性"操作之前
+			A.children().children().end().end()
+			A   孩子       孙子     孩子   A
+		contents() 获得所有的子节点(子元素 和 文本)
+		
+
+
+事件

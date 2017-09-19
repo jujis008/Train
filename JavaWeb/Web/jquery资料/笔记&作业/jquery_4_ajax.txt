@@ -1,0 +1,53 @@
+jQuery Ajax (掌握)
+
+	ajax:异步请求 浏览器地址栏不改变 进行局部刷新
+
+
+ajax 请求
+	$.ajax(url,[settings]) 最底层 ajax请求 编写最复杂 完成功能最安全 最全的
+
+	load(url,[data],[callback]) 
+	$.get(url,[data],[fn],[type]) 
+	$.post(url,[data],[fn],[type]) 
+				
+	$.getJSON(url,[data],[fn]) 可以完成js 跨域请求
+		域名: 域名+端口+项目 js默认是不能跨域请求
+	$.getScript(url,[callback]) 动态加载js文件 
+		之前用<script src="">加载页面时 一并加载js文件
+
+
+$.ajax()
+	格式 jQuery.ajax([settings])
+		参数settings 设置所有的参数
+
+		url:发送请求的地址
+		data:发送奥服务器的数据 请求参数
+		type:请求方式 (post/get)
+		success:成功的回调函数 success(data,textStatus)
+		error:请求失败时调用此函数
+
+		dataType:预期服务器返回的数据类型
+			"xml" 返回xml文档 可用jquery处理
+			"html" 返回纯文本html信息 
+			"script" 返回纯文本javascript
+			"json" 返回json数据
+			"jsonp" JSONP格式 
+			"text" 返回纯文本字符串
+	
+ajax 事件
+	ajaxComplete(callback) 
+	ajaxError(callback) 
+	ajaxSend(callback) 
+	ajaxStart(callback) 
+	ajaxStop(callback) 
+	ajaxSuccess(callback) 
+其它
+	$.ajaxSetup([options]) 
+	serialize() 将表单中的所有选中项拼接成一个字符串 类似get请求参数
+		username=jack&password=123...
+	serializearray() 将表单中的所有选中项拼凑成一个json数组
+	[
+		{name:'firstname',value:'tom'},
+		{name:'lastname',value:'world'}
+	]
+
