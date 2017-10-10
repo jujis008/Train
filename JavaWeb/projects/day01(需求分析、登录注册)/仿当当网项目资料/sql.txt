@@ -1,0 +1,11 @@
+﻿//添加商品类型
+insert into tb_goods_type values(0,"图书",1,0);
+insert into tb_goods_type values(0,"小说",2,1);
+insert into tb_goods_type values(0,"青春",2,1);
+insert into tb_goods_type values(0,"历史",2,1);
+insert into tb_goods_type values(0,"保健",2,1);
+insert into tb_goods_type values(0,"少儿",2,1);
+insert into tb_goods_type values(0,"旅游",2,1);
+insert into tb_goods_type values(0,"期刊",2,1);
+//添加管理员
+insert into tb_user(username,password,email,gender,flag,role,code) values('管理员',md5('admin'),'admin','男',1,0,null);

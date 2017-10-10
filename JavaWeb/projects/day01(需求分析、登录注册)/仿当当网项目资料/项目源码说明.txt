@@ -1,0 +1,107 @@
+﻿项目主要采用三层架构实现
+entity-dao-service-web
+
+使用到的技术：
+HTML+CSS+JS+jQuery+JSP+Servlet+Filter+Listener+Cookie+Session+Ajax+C3P0+MySQL
+
+源码说明：
+src:java源代码
+内部包说明：
+	1、org.qf.entity:实体层
+	该包一般都是数据库表的映射类，也有新增的类
+		User:用户类---对应的数据库表：tb_user
+		Address:地址类---对应的数据库表：tb_address
+		Goods:商品类---对应的数据库表：tb_goods
+		PageBean:分页类---主要为分页准备
+		
+	2、org.qf.dao:操作SQL的接口层
+	该包主要定义一些操作数据库表的抽象方法
+		UserDao：接口：操作tb_user表：新增、修改、查询
+		GoodsDao：接口：操作tb_goods表：新增、修改、查询
+		AddressDao：接口：操作tb_address表和tb_site表：新增、查询(可以查询tb_site)
+	
+	3、org.qf.dao.impl:操作SQL的接口层的实现层
+	该包纯粹就是对dao层接口的实现，SQL语句所在地
+	
+	4、org.qf.service:业务逻辑的接口层----------------承上启下
+	该包就是提供操作对应dao层的接口方法，为显示层提供数据源
+		UserService:接口：操作UserDao
+		GoodsService:接口：操作GoodsDao
+		AddressService:接口：操作AddressDao
+	
+	
+	5、org.qf.service.impl:业务逻辑的接口层的实现层---承上启下
+	该包纯粹就是对service层接口的实现，通过dao层的实现类对象实现方法
+	
+	6、org.qf.web.listener:web层的监听器
+	该包就是实现当前项中的监听器
+		ApplicationListener:监听Application的创建和销毁：主要是在创建的时候获取商品类型
+	
+	7、org.qf.web.filter:web层的过滤器
+	该包就是实现的当前项目中的过滤器
+		AutoFilter：自动登录的过滤器
+		Encoding：响应内容的编码格式设置
+		
+	8、org.qf.web.servlet:web层的Servlet
+	该包就是实现jsp或html页面的一些功能
+		用户功能：
+			AddUser：注册用户，允许自动登录
+			EmailSend：发送激活邮件
+			ActivateUser：激活用户
+			LoginUser：登录
+		地址功能：
+			GetProvince:获取省份
+			GetCity：获取市
+			GetCounty：获取县或区
+			AddAddressServlet：添加地址
+			GetAddress:获取收货地址
+		商品功能：
+			GetGoods：获取分页商品、模糊查询
+			GetGoodsById：商品详情
+			
+			
+		购物车功能：
+		
+		订单功能：
+		
+		后台功能：
+			GetUserAll:获取所有的用户--用户列表
+			AddGoods：添加商品
+			UpdateGoods：修改商品
+			GetGoodsAdmin：获取商品根据条件进行查询
+			
+	9、org.qf.utils:工具类
+	该包主要是提供一些工具类
+		Base64Utils：主要对邮件内容进行
+		EmailUtils：发送邮件
+		FileUtils：文件工具类，负责文件的上传的目录和文件名的创建
+		MD5Utils：MD5加密，---密码
+		RandomUtils：随机数工具类：主要生成激活码、订单编号等
+	
+		
+		
+	
+config:项目的配置文件
+	C3P0数据库连接池的配置文件
+webContent:前端页面
+	1、admin:后台
+		addP:添加商品
+		editP:修改商品
+		listP:商品列表
+		listu:用户列表
+		login:登录
+		main:主页
+		orderlist:订单列表
+		orderdetail:订单详细
+		error:错误页面
+	2、
+	login:登录
+	register:注册
+	product:商品列表
+	productdetail:商品详细
+	address:收货地址
+	cart:购物车
+	orderlist:订单列表
+	order:订单详情
+	
+	

@@ -1,0 +1,92 @@
+第一阶段：
+第一周：环境变量，JRE,JVM,JDK(1.8)  数据类型  运算  变量  常量  分支语句 循环语句
+	方法，数组，二分，冒泡，选择，Arrays工具类
+
+
+第二周：抽象，封装，
+	继承:类与类之间的关系  has a 整体与部分的关系    is  a  继承 
+
+	多态：父类对象指向子类的实现   前提：继承和实现
+
+	抽象类、抽象方法
+
+	接口 (方法/属性)
+
+第三周：四中内部类  枚举  异常Throable  
+	集合：Collection 
+			List :ArrayList  LinkedList  Vector  Stack    
+			Set :HashSet	LinkedHashSet	TreeSet
+		Map:
+			HashMap
+			TreeMap
+			Hashtable
+			Properties 配置文件类
+
+第四周：线程:实现线程的三种方式  线程安全问题  枷锁：同步代码块  同步方法
+	生产者消费者  线程之间的通讯
+
+	IO流:File类  字节流  字符流  缓冲流  转换流  对象流 内存流 打印流  标准输入输出流...
+
+
+第五周：网络编程 UDP数据包   TCP三次握手  
+	BS/CS
+	正则表达式  反射
+	
+	单例设计模式  工厂   模板  装饰者   代理模式、动态代理模式（JDK:Proxy）
+
+第二阶段：
+
+第六周 html  css js(用的非常多  对表单数据校验 事件、DOM编程  全选  省市二级联动)
+
+
+第七周 Mysql:DCL,DDL(create drop alter),DML(insert into 、update、delete),DQL(select)
+	多表查询：
+		笛卡尔积
+		内连接：
+			显式内连接  inner join  on条件
+			隐式内连接  where
+
+		外链接：
+			左外连接：left outer join  on
+			右外链接：right outer join  on
+		
+		自连接：
+
+	JDBC 增删改查
+
+第八周：
+	xml解析 DOM4J
+	
+	Tomcat服务器 软件  配置端口号   虚拟网站  虚拟域名  虚拟的站点
+
+	Http协议：请求行  请求头  响应头  实体内容
+
+	Servlet编程：
+		HttpServletRequest
+		HttpServletResponse
+		ServletContext:1.获取全局的配置参数2.域对象 3.获得真实路径  项目名
+		ServletConfig
+
+	cookie session
+
+
+	jsp:三大指令  九大内置对象  四个域对象  EL表达式  JSTL核心c标签
+
+
+
+第九周：
+	连接池：DBCP/C3P0连接池
+	DBUtils工具
+	BeanUtils工具
+	事务
+	jdbc处理事务  Dbutils处理事务
+
+	JQ AJAX  $.ajax({})
+
+	java解析JSON   JSONlib   Gson（谷歌）  FastJson(阿里巴巴开源)
+
+	监听器过滤器  分页（普通的分页  Ajax无刷新的分页）
+
+
+
+
