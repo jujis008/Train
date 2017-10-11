@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+	
+	
+	
+	<hibernate-configuration>
+	
+	<!-- 数据源  一个数据库对应一个session-factory -->
+	<session-factory>
+	<!-- 
+	必须的配置：
+		#hibernate.connection.driver_class com.mysql.jdbc.Driver
+		#hibernate.connection.url jdbc:mysql:///test
+		#hibernate.connection.username gavin
+		#hibernate.connection.password
+		
+		#hibernate.dialect org.hibernate.dialect.MySQLDialect
+		#hibernate.dialect org.hibernate.dialect.MySQLInnoDBDialect
+		#hibernate.dialect org.hibernate.dialect.MySQLMyISAMDialect
+		
+		hibernate是一个应用层的框架，会给你生成sql语句，但是你要告诉我你使用什么数据库，
+		通过方言来告诉我你使用什么数据库
+		数据库方言：
+		
+		非必须的选项：
+		#hibernate.show_sql true 在控制台上显示生成的sql语句
+		hibernate.format_sql true  打印好看的sql语句
+		
+		根据映射文件生成DDL建表语句
+		#hibernate.hbm2ddl.auto create-drop 先删除表在创建表在删除表
+		#hibernate.hbm2ddl.auto create  先删除表后创建表
+		#hibernate.hbm2ddl.auto update  有表不创建  更新表     没表我给你创建表  注意：如果已经有了表，update不会更改原来表的字段名或者其他信息，只会给你添加字段
+		#hibernate.hbm2ddl.auto validate  校验  比较严格
+	
+	 -->
+	
+	<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+	<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate</property>
+	<property name="hibernate.connection.username">root</property>
+	<property name="hibernate.connection.password">root</property>
+	<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+	
+	
+	<!-- 非必须的配置项 -->
+	<property name="hibernate.show_sql">true</property>
+	<property name="hibernate.format_sql">true</property>
+	<property name="hibernate.hbm2ddl.auto">update</property>
+	
+	
+	<property name="hibernate.current_session_context_class">thread</property>
+	
+	<!-- 把映射文件引进来 -->
+ 	<mapping resource="com/qf/onetomany/pojo/Order.hbm.xml"/>
+ 	<mapping resource="com/qf/onetomany/pojo/User.hbm.xml"/>
+ 
+	</session-factory>
+	</hibernate-configuration>
+	
+	

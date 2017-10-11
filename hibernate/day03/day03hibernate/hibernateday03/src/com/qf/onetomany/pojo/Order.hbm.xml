@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+    <hibernate-mapping>
+    <!-- 配置javabean和数据库表的映射
+    	class
+    		name:表示类的全限定名（包名+类型）
+    		table:表名
+    		dynamic-insert="true" 
+     -->
+    <class name="com.qf.onetomany.pojo.Order" table="tb_uorder" dynamic-insert="true" dynamic-update="true">
+    	<!-- 配置主键
+    		id 
+    			name:javabean的属性名
+    			column:数据库的字段名
+    	 -->
+    	<id name="oid" column="oid">
+    	<!-- 主键生成策略  
+    		 native:采取本地数据库的一个主键生成策略  mysql:自增长    oracle:序列   
+			 increment:自增长  先去查询数据库表中的id的最大值 select max(id)  最大值加1当做主键
+			 identity: 自增长  auto_increment
+			 uuid:产生一个32位的uuid随机数当做主键   varchar()
+			 assigned:主键不让hibernate管理，自己赋值
+			 sequence:oracle数据库支持的序列
+			 
+    	
+    	
+    	
+    	-->
+    		<generator class="native"></generator>
+    	</id>
+    	<!-- 配置普通属性 -->
+    	<property name="oname"></property>
+    	<property name="oprice"></property>
+    	
+    	<!-- 
+    	many-to-one
+    		name:写多方中的一方的属性名
+    		column:外键名
+    		class：	写多方中的一方的类的全限定名
+    		
+    		inverse:表示对外键的维护   外键所在方  不能放弃对外键的维护
+    	 -->
+    	
+    	<many-to-one cascade="delete"  name="user" column="user_order_id" class="com.qf.onetomany.pojo.User"></many-to-one>
+    	
+ 
+    
+    </class>
+    </hibernate-mapping>
