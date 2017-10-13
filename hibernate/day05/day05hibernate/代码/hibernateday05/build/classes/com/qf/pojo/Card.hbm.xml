@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <!-- hql语句会自动导包  -->
+    <hibernate-mapping auto-import="true">
+   
+    <class name="com.qf.pojo.Card" table="tb_card">
+    	<!-- 配置主键
+    		id 
+    			name:javabean的属性名
+    			column:数据库的字段名
+    	 -->
+    	<id name="cid" column="cid">
+    
+    		<generator class="native"></generator>
+    	</id>
+    	
+    	
+    	<!-- 配置普通属性 -->
+    	<property name="cname"></property>
+    	
+    	<!-- 外键  唯一 -->
+    <many-to-one cascade="save-update" name="person" column="pid" class="com.qf.pojo.Person" unique="true"></many-to-one>
+    	
+    	
+    </class>
+  
+    </hibernate-mapping>

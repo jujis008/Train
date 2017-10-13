@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <!-- hql语句会自动导包  -->
+    <hibernate-mapping auto-import="true">
+    <!-- 配置javabean和数据库表的映射
+    	class
+    		name:表示类的全限定名（包名+类型）
+    		table:表名
+    		dynamic-insert="true" 
+    		lazy="true"懒加载
+    		lazy="false" 立即检索
+     -->
+    <class name="com.qf.pojo.User" table="tb_user" lazy="false"  dynamic-insert="true" dynamic-update="true">
+    	<!-- 配置主键
+    		id 
+    			name:javabean的属性名
+    			column:数据库的字段名
+    	 -->
+    	<id name="uid" column="uid">
+    	<!-- 主键生成策略  
+    		 native:采取本地数据库的一个主键生成策略  mysql:自增长    oracle:序列   
+			 increment:自增长  先去查询数据库表中的id的最大值 select max(id)  最大值加1当做主键
+			 identity: 自增长  auto_increment
+			 uuid:产生一个32位的uuid随机数当做主键   varchar()
+			 assigned:主键不让hibernate管理，自己赋值
+			 sequence:oracle数据库支持的序列
+			 
+    	
+    	
+    	
+    	-->
+    		<generator class="native"></generator>
+    	</id>
+    	<!-- 配置普通属性 -->
+    	<property name="uname"></property>
+    	<property name="ugender"></property>
+    	
+    	<!-- 在一方中配置set集合 
+    	set 
+    		name:就是写一方中的多方集合的属性名
+    	inverse="false" inverse是把维护外键的交给对方处理      维护外键
+    	-->
+    	<!-- 
+    	类上的了lazy： true  false
+    	set标签上有
+    		lazy: 当你查询该对象的时候 我是否懒加载该对象下的集合数据
+    			true：懒加载   （默认懒加载）
+    			false：（立即查询集合数据）
+    			extra：比较聪明的懒加载  及其懒惰的懒加载   当你查询用户的时候 不会立即加载集合数据
+    				当你真正使用集合数据的时候 才会去查询集合数据      当你调用集合数据的size()方法的时候
+    				当你只是使用集合的长度的时候，并不是真正的使用数据，只会发送 select count(*) ,并不会去查询集合数据
+    		
+    		
+    		fetch: 以某种sql语句  去查询集合数据  查询集合数据sql语句的种类
+    			select：(默认值是select)普通的select查询语句
+    			join： 使用表连接语句 去查询集合数据
+    			subselect： 使用子查询语句去加载集合数据
+    			
+    			lazy		fetch		结果
+    			
+    			true		select   不会立即加载集合数据，当真正使用集合数据的时候 会发送普通的select语句去查询集合数据
+    			true		join	立即去查询集合数据  使用表连接语句  lazy失效了
+    			true		subselect  不会立即加载集合数据  当用到集合数据的时候  会发送一条子查询语句
+    			
+    			
+    			false		select	立即加载集合数据	使用普通select查询语句
+    			false		join	 立即去查询集合数据  使用表连接语句  lazy失效了
+    			false		subselect 立即加载集合数据  使用子查询语句
+    			
+    			extra		select   不会立即加载集合数据 当真正使用集合数据的时候 会发送普通的select语句去查询集合数据 并且当你调用size()方法的时候，只会发送一条select count(*)
+    			extra		join    立即去查询集合数据  使用表连接语句  lazy失效了
+    			extra		sublect   不会立即加载集合数据 当真正使用集合数据的时候 会发送子查询语句去查询集合数据 并且当你调用size()方法的时候，只会发送一条select count(*)
+    			  
+    	
+    	
+    	 -->
+    	
+    	<set name="orderSet" lazy="extra" fetch="select" >
+    	<!-- key 配置多方中的外键名
+    	
+    			column：外键名 -->
+    	<key column="user_order_id"/>
+    	<!-- 写一方中set集合里面的类的全限定名 -->
+    	<one-to-many class="com.qf.pojo.Order"/>
+    	
+    	</set>
+    	
+ 
+    <query name="xxx"><![CDATA[from User]]></query>
+    </class>
+  
+    </hibernate-mapping>
