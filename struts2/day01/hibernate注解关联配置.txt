@@ -1,0 +1,32 @@
+hibernate 注解关联关系配置
+
+一. 一对多
+	@OneToMany(mappedBy="把关联关系维护权交给多的一方")
+
+二. 多对一
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinColumn(name="外键")//关联的外键
+	//外键在哪个表中,该表对应的类加@JoinColumn
+
+三.多对多(一般通过建立中间表来实现)
+	两方的配置一致
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="把关联关系维护权交给多的一方")
+	@JoinTable(name="中间表",joinColumns=@JoinColumn(name="该表关联中间表的外键"),
+				inverseJoinColumns=@JoinColumn(name="中间表关联另一张表的外键"))
+
+四,一对一
+	1.主键的一对一关联
+		双方都使用
+		@OneToOne(mappedBy="可以由某一方来维护关联关系")
+		@PrimaryKeyJoinColumn
+
+	2.外键的一对一关联
+		主动一方使用@OneToOne(mappedBy="必须把关联关系交给多的一方")
+
+		另一方可以使用
+		@ManyToOne
+		@JoinColumn(name="外键")
+
+		另一方也可以使用
+		@OneToOne
+		@JoinColumn(name="外键")

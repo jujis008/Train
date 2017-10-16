@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+<constant name="struts.devMode" value="true"></constant>
+<!-- struts.action.extension=action,,   -->
+<!-- <constant name="struts.action.extension" value="abc"></constant> -->
+
+  <!-- package表示包，name值随意起，不要重复
+  		namespace：
+  			"/"   localhost:8080/struts1/hello
+  			"aaa"   localhost:8080/struts1/aaa/hello	
+  			
+  		extends="struts-default"  
+  
+   -->
+    <package name="default" namespace="/aaa" extends="struts-default">
+    
+    <!-- name值是访问的url路径   class是action的全限定名     method：访问的方法名-->
+    <!-- <action name="hello" class="com.action.HelloAction" method="sayHello">
+    
+    <result name="success">/success.jsp</result> -->
+   <!--  <result type=""></result> -->
+    
+    <!-- </action> -->
+
+        <!-- method="execute" 会有一个默认值  如果不写的话  会默认访问ececute方法 -->
+        <action name="hello1" class="com.action.HelloAction"  >
+        <result name="success">/success.jsp</result>
+        </action>
+        
+        
+        
+         <action name="hello2" class="com.action.DemoAction1" >
+        	<result name="success">/success.jsp</result>
+        </action>
+        
+           <action name="hello3" class="com.action.DemoAction2" method="sayHello">
+        	<result name="success">/success.jsp</result>
+        </action>
+    </package>
+
+
+</struts>
