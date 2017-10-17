@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<!-- struts.enable.DynamicMethodInvocation = false -->
+<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+<constant name="struts.devMode" value="true"></constant>
+
+    <package name="default" namespace="/aaa" extends="struts-default">
+    <!-- 传统：一个请求对应一个action -->
+    	<!-- <action name="add" class="com.qf.action.HelloAction" method="add">
+    	
+    	</action>
+    	<action name="delete" class="com.qf.action.HelloAction" method="delete">
+    	
+    	</action>
+    	<action name="update" class="com.qf.action.HelloAction" method="update">
+    	
+    	</action> -->
+    	
+    	<!-- 通配符的访问方式  ，多个请求对应一个action
+    			add
+    			delete
+    			update
+    	 -->
+    	<!-- 推荐 -->
+    	 <action name="hello_*" class="com.qf.action.HelloAction" method="{1}">
+	    	<result name="add" type="chain">hello_update</result>
+	    	<result name="update">/update.jsp</result>
+	    	<result name="delete">/success.jsp</result>   		
+    	</action> 
+    	
+    	
+    	
+    	
+    	<!--  <action name="*" class="com.qf.action.HelloAction" method="{1}">
+	    	<result name="add">/add.jsp</result>
+	    	<result name="update">/update.jsp</result>
+	    	<result name="delete">/success.jsp</result>   		
+    	</action> -->
+    	<!--  多个action对应一个action标签-->
+    	<!--  <action name="*_*" class="com.qf.action.{1}Action" method="{2}">
+	    	<result name="add">/{1}_{2}.jsp</result>
+	    	<result name="update">/update.jsp</result>
+	    	<result name="delete">/success.jsp</result>   	
+	    	</action> -->
+	    	
+	    	
+	    	<!-- 动态方法访问的方式
+	    		一个action处理多个请求
+	    	
+	    	 -->
+	    	
+	    <!-- 	<action name="hello!*" class="com.qf.action.HelloAction" method="{1}">
+	    	
+	    	
+	    	</action> -->
+	    	
+	    	<!-- <action name="*!*" class="com.qf.action.{1}Action" method="{2}">
+	    	
+	    	
+	    	</action> -->
+	    		
+    	<action name="admin_*" class="com.qf.action.AdminAction" method="{1}">
+    		<result name="add">/success.jsp</result>
+    		<result name="delete">/success.jsp</result>
+    	
+    	</action>
+    	
+   
+    </package>
+<!-- <include file="struts-admin.xml"></include> -->
+
+</struts>

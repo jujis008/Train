@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<!-- struts.enable.DynamicMethodInvocation = false -->
+<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+<constant name="struts.devMode" value="true"></constant>
+
+    <package name="admin" namespace="/" extends="struts-default">
+    
+	    	
+	    <!-- 	<action name="admin_*" class="com.qf.action.AdminAction" method="{1}"> -->
+	    	<!-- 
+	    	dispatcher是转发到页面
+	    	chain:转发到action 
+	    			转发到当前包下action:<result name="add" type="chain">delete</result>
+	    			转发到其他包下的action,需要把namespace名和actionname带过来
+	    			<result name="add" type="chain">
+				    	<param name="namespace">/user</param>
+				    	<param name="actionname">userAdd</param>
+	    			</result>
+	    			
+	    	
+	    	redirect:重定向到jsp页面
+	    	redirectAction:重定向到action
+	    	
+	    	
+	    	 -->
+<!-- 	    	<result name="success" type="redirect">/success.jsp</result>
+ -->	    	<!-- <result name="add" type="chain">/admin_update</result>
+    			<result name="update" type="redirect">/success.jsp</result> -->
+	    	
+	    	
+	    	
+	    	
+	    	<!-- </action> -->
+	    	
+	    	<!-- 
+	    	dispatcher是转发到页面
+	    	chain:转发到action好使
+	    	redirect:重定向到jsp页面
+	    	
+	    	
+	    	chain:admin的add方法转发到user的add
+	    	
+	    	
+	    	 -->
+	    	<action name="add" class="com.qf.action.AdminAction" method="add">
+	    	<!-- <result name="add" type="chain">delete</result> -->
+	    	
+	    	<result name="add" type="chain">
+		    	<param name="namespace">/user</param>
+		    	<param name="actionname">userAdd</param>
+	    	</result>
+	    	
+	    	</action>
+	    	<!-- 访问delete 重定向到user delete -->
+	    	<action name="delete" class="com.qf.action.AdminAction" method="delete">
+	    		<result name="delete" type="redirectAction">
+	    			<param name="namespace">/user</param>  
+	    			<param name="actionname">/userDelete</param>
+	    		
+	    		</result>
+	    	</action>
+	    	<action name="update" class="com.qf.action.AdminAction" method="update">
+	    	</action>
+	    		
+    	
+    	
+   
+    </package>
+    
+
+    <package name="xxx" namespace="/user" extends="struts-default">
+    
+    	
+    	<action name="userAdd" class="com.qf.action.UserAction" method="add">
+	    	<result name="add">/success.jsp</result>
+	    	</action>
+	    	<action name="userDelete" class="com.qf.action.UserAction" method="delete">
+	    	<result name="delete" type="redirect">/success.jsp</result>
+	    	</action>
+	    	<action name="userUpdate" class="com.qf.action.UserAction" method="update">
+	    	</action>
+    </package>
+
+</struts>

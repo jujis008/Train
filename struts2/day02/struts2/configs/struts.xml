@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<!-- struts.enable.DynamicMethodInvocation = false -->
+<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+<constant name="struts.devMode" value="true"></constant>
+
+    <package name="default" namespace="/" extends="struts-default">
+    
+   
+    <interceptors>
+    <!-- name:自己给你定义的拦截器起个名字 class：自定义拦截器的全限定名  -->
+     <!-- 声明一个拦截器 -->
+    	<interceptor name="MyInterceptor1" class="com.qf.interceptors.MyInterceptor"></interceptor>
+    	<interceptor name="MyInterceptor2" class="com.qf.interceptors.MyInterceptor2"></interceptor>
+    	<interceptor name="MethodInterceptor" class="com.qf.interceptors.MethodInterceptor"></interceptor>
+    
+    <!-- 声明一个拦截器栈 -->
+    	<interceptor-stack name="myStack">
+    		<interceptor-ref name="defaultStack"></interceptor-ref>
+    		<interceptor-ref name="MyInterceptor1"></interceptor-ref>
+    		<interceptor-ref name="MyInterceptor2"></interceptor-ref>
+    		<interceptor-ref name="MethodInterceptor">
+    			<!-- 配置哪些方法不过滤 -->
+    			  <param name="excludeMethods">login,register</param>
+    		</interceptor-ref>
+    		
+    	
+    	</interceptor-stack>
+    
+    
+    </interceptors>
+    
+    
+    
+    <!-- 配置全局的result -->
+    <global-results>
+    <!-- 如果配置全局的  还配置单个的    按照单个算   -->
+    <result name="login">/login.jsp</result>
+    <result name="success">/success.jsp</result>
+    </global-results>
+    
+    
+    
+     <action name="user_*" class="com.qf.action.UserAction" method="{1}" >
+     <!-- 配置拦截器的第一种方式 -->
+   <!--   <interceptor-ref name="defaultStack"></interceptor-ref> -->
+     		
+     	<!-- 引入自定义的拦截器   当你引入自定义拦截器之后，
+     	defaultStack里面的拦截器就不会执行了，一定要引入一次-->
+     	<!-- <interceptor-ref name="MyInterceptor1"></interceptor-ref>
+     	<interceptor-ref name="MyInterceptor2"></interceptor-ref> -->
+     	
+     	
+     	<!-- 配置拦截器的第二种方式 -->
+     	<interceptor-ref name="myStack"></interceptor-ref>
+     
+     
+    		<result name="add">/success.jsp</result>
+    		<result name="delete">/success.jsp</result>
+    		<result name="update">/success.jsp</result>
+    	
+    	</action>
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 传统：一个请求对应一个action -->
+    	<!-- <action name="add" class="com.qf.action.HelloAction" method="add">
+    	
+    	</action>
+    	<action name="delete" class="com.qf.action.HelloAction" method="delete">
+    	
+    	</action>
+    	<action name="update" class="com.qf.action.HelloAction" method="update">
+    	
+    	</action> -->
+    	
+    	<!-- 通配符的访问方式  ，多个请求对应一个action
+    			add
+    			delete
+    			update
+    	 -->
+    	<!-- 推荐 -->
+    	 <action name="hello_*" class="com.qf.action.HelloAction" method="{1}">
+	    	<result name="add" type="chain">hello_update</result>
+	    	<result name="update">/update.jsp</result>
+	    	<result name="delete">/success.jsp</result>   		
+    	</action> 
+    	
+    	
+    	
+    	
+    	<!--  <action name="*" class="com.qf.action.HelloAction" method="{1}">
+	    	<result name="add">/add.jsp</result>
+	    	<result name="update">/update.jsp</result>
+	    	<result name="delete">/success.jsp</result>   		
+    	</action> -->
+    	<!--  多个action对应一个action标签-->
+    	<!--  <action name="*_*" class="com.qf.action.{1}Action" method="{2}">
+	    	<result name="add">/{1}_{2}.jsp</result>
+	    	<result name="update">/update.jsp</result>
+	    	<result name="delete">/success.jsp</result>   	
+	    	</action> -->
+	    	
+	    	
+	    	<!-- 动态方法访问的方式
+	    		一个action处理多个请求
+	    	
+	    	 -->
+	    	
+	    <!-- 	<action name="hello!*" class="com.qf.action.HelloAction" method="{1}">
+	    	
+	    	
+	    	</action> -->
+	    	
+	    	<!-- <action name="*!*" class="com.qf.action.{1}Action" method="{2}">
+	    	
+	    	
+	    	</action> -->
+	    		
+    	<action name="admin_*" class="com.qf.action.AdminAction" method="{1}">
+    		<result name="add">/success.jsp</result>
+    		<result name="delete">/success.jsp</result>
+    	
+    	</action>
+    	
+    	
+   <action name="register1" class="com.qf.action.RegisterAction" >
+    		<result name="success">/success.jsp</result>
+    		
+    	
+    	</action>
+    	
+    	
+    	 <action name="register2" class="com.qf.action.RegisterAction2" >
+    		<result name="success">/success.jsp</result>
+    		
+    	
+    	</action>
+    	
+    	 <action name="register3" class="com.qf.action.RegisterAction3" >
+    		<result name="success">/success.jsp</result>
+    		
+    	
+    	</action>
+    	
+    	 <action name="register4" class="com.qf.action.RegisterAction4" >
+    		<result name="success">/success.jsp</result>
+    		
+    	
+    	</action>
+    	
+    	 <action name="register5" class="com.qf.action.RegisterAction5" >
+    		<result name="success">/success.jsp</result>
+    		
+    	
+    	</action>
+    	
+    	
+    	
+    	
+    </package>
+<!-- <include file="struts-admin.xml"></include> -->
+
+</struts>

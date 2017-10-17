@@ -1,0 +1,8 @@
+
+JDK,JRE，TOMCAT,Eclipse安装目录都不要有中文。
+JDK第一种配置：
+在path下加jdk的bin的目录。
+
+第二种：
+	JAVA_HOME:jdk的根目录D:\java_all\jdk1.8
+	在path下引用JAVA_HOME： %JAVA_HOME%\bin;
