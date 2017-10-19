@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<!-- 修改上传文件的最大值    默认是2M
+struts.multipart.maxSize=2097152-->
+<constant name="struts.multipart.maxSize" value="20097152"></constant>
+<constant name="struts.devMode" value="true"></constant>
+
+    <package name="default" namespace="/" extends="struts-default">
+   
+    
+    <global-results>
+    
+    	<result name="register">/register.jsp</result>
+    	<result name="success">/success.jsp</result>
+    	<result name="input">/error.jsp</result>
+    </global-results>
+    
+    <action name="user_*" class="com.qf.action.UserAction" method="{1}">
+    <result name="input">/error.jsp</result>
+    <result name="error">/error.jsp</result>
+    
+    </action> 
+        
+        <!-- 文件上传的action -->
+          <action name="upload" class="com.qf.action.UploadAction" method="upload">
+    		<interceptor-ref name="defaultStack">
+    		<!-- 注入文件的类型做个限制 -->
+    		<!-- 文件的扩展名 -->
+    			<param name="fileUpload.allowedExtensions">jpg,jpeg,png</param>
+    			<!-- 文件的MIME类型  setAllowedTypes -->
+    			<param name="fileUpload.allowedTypes">image/jpg,image/jpeg,image/png</param>
+    			
+    		</interceptor-ref>
+    	<result name="success">/error.jsp</result>
+    
+    
+    </action> 
+      
+    </package>
+
+
+</struts>
