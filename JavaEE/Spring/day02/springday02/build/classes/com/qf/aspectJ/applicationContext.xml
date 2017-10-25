@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:p="http://www.springframework.org/schema/p"
+     xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop 
+         http://www.springframework.org/schema/aop/spring-aop.xsd">
+         
+         
+         <!-- AOP编程：1导入aop的4个包 2.引入命名空间 -->
+         <bean id="userService" class="com.qf.aspectJ.UserServiceImpl"></bean>
+        	<!-- 声明切面类 -->
+        	<bean id="myAspect" class="com.qf.aspectJ.MyAspect"></bean> 
+		
+		
+		<!-- aspectJ的aop编程 -->
+		
+		
+		<aop:config>
+		<!-- 把切面类声明称 切面 
+			<aop:aspect ref="myAspect"> 
+				ref：引入切面类，可以用切面类里面的方法了
+		
+		-->
+				<aop:aspect ref="myAspect">
+				<!-- 声明一个切入点 -->
+					<aop:pointcut expression="execution(* com.qf..*.*(..))" id="myPointCut"/>
+					<!-- 配置前置通知 -->
+					<!-- <aop:before method="myBefore" pointcut-ref="myPointCut" /> -->
+					
+					<!-- returning="obj"配置方法的返回值的参数名 -->
+				<!-- 	<aop:after-returning method="myReturning" pointcut-ref="myPointCut" returning="obj"/> -->
+					
+					
+				<!-- 	<aop:around method="myAround" pointcut-ref="myPointCut" /> -->
+					
+					<!-- 异常 throwing="e"配置形参名-->
+					<!-- <aop:after-throwing method="myThrowing" pointcut-ref="myPointCut" throwing="e"/> -->
+					<aop:after method="myAfter" pointcut-ref="myPointCut"/>
+					
+				</aop:aspect>
+				
+		
+		
+		
+		
+		
+		
+		</aop:config>
+		
+		
+  
+</beans>

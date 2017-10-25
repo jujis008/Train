@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!-- 实例工厂 
+  class:工厂的权限定名
+  factory-method：获得bean的方法
+  
+  -->
+  <!-- 先配置实例工厂 获得个实例 -->
+ <bean id="factory"  class="com.qf.c_static_factory.UserServiceFactory" ></bean>
+ 
+ <!-- 
+ factory-bean：工厂的引用
+ factory-method:获得实例的方法getUserService
+  -->
+ <bean id="userService" factory-bean="factory" factory-method="getUserService"></bean>
+
+</beans>

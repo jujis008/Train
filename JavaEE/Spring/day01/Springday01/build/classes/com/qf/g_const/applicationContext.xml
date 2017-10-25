@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+		<!-- 在创建user实例的时候  把 cid和cname 注入  通过构造函数 
+			<constructor-arg name="cname" value="高富帅卡"></constructor-arg>
+			name:属性名
+			value:简单类型
+			ref:对象类型
+		<bean id="card" class="com.qf.g_const.Card">
+  		<constructor-arg name="cname" value="高富帅卡"></constructor-arg>
+  		<constructor-arg name="cid" value="1"></constructor-arg>
+  	</bean>
+	第二种写法：
+			
+			<bean id="card" class="com.qf.g_const.Card">
+  		<constructor-arg index="0" type="java.lang.Long"><value>1</value></constructor-arg>
+  		<constructor-arg index="1" type="java.lang.String"><value>高富帅卡</value></constructor-arg>
+  	
+  	</bean>
+  	index:下标 从0开始
+  	type:下标对应的java类型
+  	value:简单类型
+	ref:对象类型
+		
+		-->
+  <!-- 	<bean id="card" class="com.qf.g_const.Card">
+  		<constructor-arg name="cname" value="高富帅卡"></constructor-arg>
+  		<constructor-arg name="cid" value="1"></constructor-arg>
+  	</bean> -->
+  	
+  	<bean id="card" class="com.qf.g_const.Card">
+  		<constructor-arg index="0" type="java.lang.Long"><value>1</value></constructor-arg>
+  		<constructor-arg index="1" type="java.lang.String"><value>高富帅卡</value></constructor-arg>
+  	
+  	</bean>
+  	
+  	
+  	<bean id="user" class="com.qf.g_const.User">
+  		<constructor-arg name="card" ref="card"></constructor-arg>
+  		<constructor-arg name="uid" value="1"></constructor-arg>
+  		<constructor-arg name="uname" value="嫐"></constructor-arg>
+  		<constructor-arg name="upwd" value="nao"></constructor-arg>
+  	
+  	</bean>
+
+</beans>

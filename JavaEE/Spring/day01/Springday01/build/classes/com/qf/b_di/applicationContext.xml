@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   <!-- 要把UserServiceImpl交给spring的bean工厂来管理 
+   class:权限定名
+   id:是唯一的，通过该id值来获取spring给我们实例化的对象
+   
+   -->
+   
+   <bean id="userService" class="com.qf.b_di.UserServiceImpl" scope="singleton">
+   	<!-- 创建UserServiceImpl实例的时候，需要依赖一个UserDaoImpl -->
+   	<property name="userDao" ref="userDao"></property>
+   
+   </bean>
+   
+   
+   
+  <!-- 配置 UserDaoImpl -->
+  <bean id="userDao" class="com.qf.b_di.UserDaoImpl"></bean>
+
+</beans>

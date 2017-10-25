@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+  	
+  	<bean id="card" class="com.qf.h_setter.Card">
+  			<property name="cid" value="666" ></property>
+  			<property name="cname" value="好人卡" ></property>
+  	
+  	</bean>
+  	
+  	
+  	<bean id="user" class="com.qf.h_setter.User">
+  		<property name="card" ref="card"></property>
+  		<property name="uid" value="666"></property>
+  		<property name="uname" value="jack"></property>
+  		<property name="upwd" value="jack123"></property>
+  	
+  	
+  	</bean>
+
+</beans>

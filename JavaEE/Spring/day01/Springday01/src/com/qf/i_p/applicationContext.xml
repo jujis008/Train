@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+  	<!-- 加入p标签的命名空间 -->
+  	<!-- 省略了property标签： 不管是简单类型还是引用类型  
+  			简单类型：p:属性名=""
+  			对象类型：p:属性名-ref=""
+  	
+  	
+  	 -->
+  	<bean id="card" class="com.qf.i_p.Card" p:cid="666" p:cname="好人卡" >
+  	</bean>
+  	
+  	
+  	<bean id="user" class="com.qf.i_p.User" p:card-ref="card" p:uid="666" p:uname="jack" p:upwd="jack123">
+  		
+  	
+  	</bean>
+
+</beans>

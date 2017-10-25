@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:p="http://www.springframework.org/schema/p"
+     xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop 
+         http://www.springframework.org/schema/aop/spring-aop.xsd">
+         
+         
+         <!-- AOP编程：1导入aop的4个包 2.引入命名空间 -->
+         <bean id="userService" class="com.qf.aop.UserServiceImpl"></bean>
+        	<!-- 声明切面类 -->
+        	<bean id="myAspect" class="com.qf.aop.MyAspect"></bean> 
+		
+		<!-- AOP编程 
+			<aop:config> aop的配置
+				proxy-target-class="true" 强制cglib生成代理类对象
+		
+		-->
+		
+		<aop:config proxy-target-class="true">
+			<!--
+			配置切入点pointcut
+				<aop:pointcut expression="" id=""/>
+				id:给切点起个名字
+				expression：切入点表达式  切点指方法  配置的就是需要被拦截的连接点（方法）
+				
+				com.qf.aop.UserServiceImpl  public void add() 
+				
+				* 					com.qf.aop.UserServiceImpl.*(..)
+				方法的任意返回值		com.qf.*.*.*(..)   			com.qf..*.*(..)
+				
+			
+			  -->
+			<aop:pointcut expression="execution(* com.qf.aop.UserServiceImpl.add*(..))" id="myPointCut"/>
+			<aop:pointcut expression="execution(* com.qf.aop.UserServiceImpl.delte*(..))" id="myPointCut1"/>
+			<aop:pointcut expression="execution(* com.qf.aop.UserServiceImpl.update*(..))" id="myPointCut2"/>
+			<!-- 
+				配置切面
+				<aop:advisor advice-ref="" pointcut-ref=""  pointcut=""/>
+					advice-ref：通知的引用
+					pointcut:引入切点   该切点只能我自己用
+					pointcut-ref：引入切点  共享切点
+			 -->
+			<aop:advisor advice-ref="myAspect" pointcut-ref="myPointCut" />
+			<aop:advisor advice-ref="myAspect" pointcut-ref="myPointCut1" />
+			<aop:advisor advice-ref="myAspect" pointcut="execution(* com.qf.aop.UserServiceImpl.delte*(..))" />
+		
+		
+		</aop:config>
+			
+		
+		
+  
+</beans>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        
+        <!-- 
+        集合注入：<property name="listData"></property>
+			
+		List:<list><value></value> <ref bean=""></list>
+		Set:<set><value></value> <ref bean=""></set>
+		数组：<array><value></value> <ref bean=""></array>
+		map:<map> <entry key="" value=""/> <entry key-ref="" value-ref=""/>  </map>  
+		props:<props><prop key="">值</prop></props>
+			
+         -->
+
+	<bean id="user" class="com.qf.k_collections.User">
+		<property name="listData">
+			<list>
+				<value>哈哈哈</value>
+				<value>嘿嘿嘿</value>
+				<value>呵呵呵</value>
+				<value>嗷嗷嗷</value>
+				<value>嘤嘤嘤</value>
+			</list>	
+		</property>
+	
+	<property name="setData">
+	
+		 <set>
+			<value>李二狗</value>
+			<value>王大锤</value>
+			<value>王保长</value>
+			<value>王小国</value>
+		</set>
+	</property>
+	
+	<property name="arrayData">
+		<array>
+			<value>钢铁是怎么炼成的</value>
+			<value>金瓶梅</value>
+			<value>三国演义</value>
+			<value>水浒传</value>
+			<value>少年阿宾</value>
+		</array>	
+	</property>
+	
+	<property name="mapData">
+		<map>
+			<entry key="齐天大圣" value="孙行者"></entry>
+			<entry key="天蓬元帅" value="猪无能"></entry>
+			<entry key="卷帘大将" value="沙悟净"></entry>
+			<entry key="金蝉子" value="秃头"></entry>
+		</map>
+	</property>
+	
+	<property name="props">
+		<props>
+			<prop key="高富帅">嫐</prop>
+			<prop key="白富美">嬲</prop>
+			<prop key="男屌丝">拤</prop>
+		</props>	
+	</property>
+	
+	</bean>
+
+
+</beans>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+<!-- spel表达式  value="#{表达式}"-->
+  	<bean id="card" class="com.qf.j_spel.Card">
+  		<property name="cid" value="#{888}"></property>
+  		<property name="cname" value="#{'坏人卡'}"></property>
+  		<property name="pi" value="#{T(java.lang.Math).PI}"></property>
+  	</bean>
+  	
+  	
+  	<bean id="user" class="com.qf.j_spel.User">
+  		<property name="card" value="#{card}"></property>
+  		<property name="uid" value="#{card.cid}"></property>
+  		<!-- <property name="uname" value="#{card.cid.toString()+'发发发'}"></property> -->
+  		<!-- ==null的时候就注入null,不调用toString方法，当不等null的时候，再去调用toString方法
+  			?.就表示不等于null的时候再去调用toString方法
+  		 -->
+  		<property name="uname" value="#{card.pi?.toString()+'哈哈哈'}"></property>
+  		<property name="upwd" value="#{'发发发'}"></property>
+  		
+  	
+  	</bean>
+
+</beans>
