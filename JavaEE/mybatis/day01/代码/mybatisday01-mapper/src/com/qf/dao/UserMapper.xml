@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- sql映射   namespace:用来隔离sql的 -->
+<mapper  namespace="com.qf.dao.UserMapper">
+
+	<!-- 根据用户id查找用户 -->
+	<!-- select * from user where uid=1 -->
+	<!-- parameterType:指定输入映射参数类型
+		 resultType：指定输出映射的类型
+		#{变量名}  :当输入映射的类型是简单类型的时候，变量名可以随便取 byte short int long String boolean...
+	 -->
+	<select id="findUserById" parameterType="java.lang.Long" resultType="User"  >
+	<!-- #{变量名}表示占位符 -->
+		select * from user where uid=#{uid}
+	
+	</select>
+	
+	
+	<!-- 根据用户名来模糊查询用户信息 
+			like后面一般用拼接符${}
+			=好后面用占位符#{}
+	
+	-->
+	<!-- 不管是查询到一个还是多个用户   resultType都写pojo类型-->
+	<select id="findUserByName" parameterType="java.lang.String" resultType="user">
+	
+<!-- 		select * from user where uname like #{uname}
+ -->		
+ 			<!-- 占位符：可以防止sql注入 -->
+ 			select * from user where uname like "%"#{uname}"%"
+ 			
+ 			<!-- 字符串拼接符：${value}  如果输入映射的类型是简单类型的时候，变量名只能是value,不能防止sql注入-->
+ 			<!-- select * from user where uname like '%${value}%' -->
+	</select>
+	
+	
+	<!-- 添加一个用户 -->
+		<insert id="insertUser" parameterType="com.qf.pojo.User" >
+		<!-- 如果是pojo类型：#{} 占位符里面的变量名要写user类里面对应的属性名， -->
+			insert into user(uname,upwd,sex,birthday) values(#{uname},#{upwd},#{sex},#{birthday});
+		
+		</insert>
+		
+		<insert id="insertUser1" parameterType="com.qf.pojo.User" >
+		<!-- 如果是pojo类型：#{} 占位符里面的变量名要写user类里面对应的属性名， -->
+			<!-- 
+			selectKey:查询主键
+				keyColumn：表的主键字段名
+				keyProperty：要把查询到的主键放到pojo的哪个属性里面 
+				order:相对于insert 语句执行的顺序
+				
+			
+			 -->
+			<selectKey keyColumn="uid" keyProperty="uid" order="AFTER" resultType="long">
+				select LAST_INSERT_ID()
+			
+			</selectKey>
+		
+			insert into user(uname,upwd,sex,birthday) values(#{uname},#{upwd},#{sex},#{birthday});
+		
+		</insert>
+	
+	
+	
+	<!-- 插入一条记录，主键是字符串 uuid -->
+	
+	<insert id="insertAdmin" parameterType="com.qf.pojo.Admin">
+		<!-- 助兴insert into语句之前获得uuid()随机字符串    把生成的uuid放到对象的aid属性中-->
+		<selectKey keyProperty="aid" order="BEFORE" resultType="string">
+		
+		select REPLACE(uuid(),'-','')
+		</selectKey>
+	
+		insert into admin(aid,aname,apwd,sex) values(#{aid},#{aname},#{apwd},#{sex});
+	
+	</insert>
+
+
+<!-- 删除一条记录   根据主键进行删除 -->
+	<delete id="deleteUserById" parameterType="java.lang.Long">
+		
+		delete from user where uid=#{uid};
+	
+	</delete>
+	
+	
+	<!-- 修改用户案例 ：根据主键进行修改用户信息-->
+	
+		<update id="updateUser" parameterType="com.qf.pojo.User" >
+		<!--  -->
+			update user set 
+			
+				uname=#{uname},
+				upwd=#{upwd},
+				sex=#{sex},
+				birthday=#{birthday}
+			where uid=#{uid}
+		
+		</update>
+	
+	
+
+
+
+</mapper>

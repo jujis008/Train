@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+	
+	
+	
+	<hibernate-configuration>
+	
+	<!-- 数据源  一个数据库对应一个session-factory -->
+	<session-factory>
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		
+	<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+	<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate</property>
+	<property name="hibernate.connection.username">root</property>
+	<property name="hibernate.connection.password">root</property>
+	<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+	
+	
+	<!-- 非必须的配置项 -->
+	<property name="hibernate.show_sql">true</property>
+	<property name="hibernate.format_sql">true</property>
+	<property name="hibernate.hbm2ddl.auto">update</property>
+	
+	
+	<property name="hibernate.current_session_context_class">thread</property>
+
+
+	<!-- 把映射文件引进来 -->
+ 	<!-- <mapping resource="com/qf/pojo/Order.hbm.xml"/>
+ 	<mapping resource="com/qf/pojo/User.hbm.xml"/> -->
+ 	
+ 	<!-- 注解的方式 -->
+ 	
+ 	<mapping class="com.qf.pojo.User"/>
+ 	<mapping class="com.qf.pojo.Order"/>
+ 
+	</session-factory>
+	</hibernate-configuration>
+	
+	
