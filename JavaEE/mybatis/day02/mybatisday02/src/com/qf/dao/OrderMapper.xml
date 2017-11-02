@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- sql映射   namespace:用来隔离sql的 -->
+<mapper  namespace="com.qf.dao.OrderMapper">
+
+<!-- 查询order 去关联查询出来user -->
+
+<!-- 定义一个resultmap -->
+<resultMap type="order" id="myOrder">
+	<id column="oid" property="oid"/>
+	<result column="oprice" property="oprice"/>
+	<result column="createtime" property="createtime"/>
+	<result column="flag" property="flag"/>
+	
+	<!-- 一对一 
+	
+		property:订单中的用户属性名
+	-->
+	<association property="user" javaType="user">
+		<id column="uid" property="uid"/>
+		<id column="uname_" property="uname"/>
+		<id column="upwd_" property="upwd"/>
+		<id column="sex" property="sex"/>
+		<id column="birthday" property="birthday"/>
+	</association>
+	
+
+
+</resultMap>
+
+
+
+<select id="selectOneToOne" parameterType="order" resultMap="myOrder" >
+	select * from orders as o,users as u 
+	
+	<where>
+	 	and o.uid=u.uid 
+		<if test="oid!=null"> and o.oid=#{oid} </if>
+	
+	</where>
+	
+  
+  
+  
+
+	
+
+</select>
+
+
+
+</mapper>

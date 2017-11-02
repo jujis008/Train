@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xmlns:p="http://www.springframework.org/schema/p"
+	    xmlns:context="http://www.springframework.org/schema/context"
+	    xmlns:aop="http://www.springframework.org/schema/aop"
+	    xmlns:tx="http://www.springframework.org/schema/tx"
+	    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       
+       <!-- 开启组件扫描 -->
+       <context:component-scan base-package="com.qf"></context:component-scan>
+       
+       <!-- mvc的注解驱动 -->
+       <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+       
+       
+       <!-- 自定义转换器 -->
+       <bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+			<property name="converters">
+				<!-- 自定义转换器 -->
+				
+			<list>
+				<bean class="com.qf.conversion.MyDateConvert"></bean>
+			
+			</list>
+			</property>
+       
+       </bean>
+         
+         <!-- 视图解析器 -->
+         <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+         <!-- 前缀后缀 -->
+          <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+			<property name="prefix" value="/WEB-INF/jsp/"/>
+			<property name="suffix" value=".jsp"/>
+
+		</bean>
+		<!-- 静态资源映射 -->
+		<mvc:resources location="/images/" mapping="/images/**"/>
+		<!-- <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/> -->
+		<!-- <mvc:resources location="/js/" mapping="/js/**"/>
+		<mvc:resources location="/css/" mapping="/css/**"/> -->
+         
+         
+         
+         <!-- 配置一个全局的异常处理器 -->
+         
+         <bean class="com.qf.exceptions.MyExceptionHandler"></bean>
+         
+        
+</beans> 

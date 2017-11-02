@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- sql映射   namespace:用来隔离sql的 -->
+<mapper  namespace="com.qf.dao.UserMapper">
+
+<!-- sql片段 -->
+<sql id="select_users">
+select uid,uname_,upwd_,sex,birthday from users
+
+</sql>
+
+
+<!-- 定义一个resultmap 
+	type:最终映射的类型
+	id:通过该id来引用该resultmap
+
+-->
+<resultMap type="user" id="myMap">
+	<!-- 
+	
+	如果表的字段名和pojo的属性名不一样哟自己映射：
+		自己映射 
+			id:映射主键 
+				column：表的字段
+				property：字段要映射到pojo的哪个属性
+	-->
+	<!-- <id column="uid"  property="uid"  /> -->
+	
+	<result column="uname_" property="uname"/>
+	<result column="upwd_" property="upwd"/>
+<!-- 	<result column="sex" property="sex"/>
+	<result column="birthday" property="birthday"/>
+	 -->
+
+
+
+</resultMap>
+
+
+<!-- 按照queryVo来查询 -->
+
+	<select id="selectUserQueryVo" parameterType="QueryVo" resultType="user">
+		<!-- ognl表达式 -->
+		select * from users where uname_ like  "%"#{user.uname}"%"
+	
+	</select>
+	
+	<!-- parameterType是map的查询 -->
+	<select id="selectUserMap" parameterType="map" resultMap="myMap">
+	
+		select * from users where uname_ like '%${uname}%'
+	
+	</select>
+	
+	<!-- 输出映射  输出简单类型 -->
+	
+	<select id="selectCount" resultType="int">
+		select count(uid) from users
+		
+	</select>
+	
+	<!-- 动态sql :if -->
+	
+	<select id="selectByNameIf" parameterType="user" resultMap="myMap">
+	<!-- 查询用户名要判断空   uname=null  uname=''  不查询的 -->
+	<!-- 用户名没有查询所有 -->
+		select * from users where 1=1
+		
+		<if test="uname!=null and uname!=''">
+		 	and uname_=#{uname} 
+		</if>
+	</select>
+	
+	<select id="selectByNameIf1" parameterType="user" resultMap="myMap">
+	<!-- 查询用户名要判断空   uname=null  uname=''  不查询的 -->
+	<!-- 用户名没有查询所有 -->
+		select * from users 
+		
+		<!-- where可以去掉第一个前 and或者or -->
+		 <where> 
+		
+		<!-- if可以对查询条件进行判断 -->
+		<if test="uname!=null and uname!=''">
+		 	and  uname_=#{uname} 
+		</if>
+		<if test="upwd!=null and upwd!=''">
+			and  upwd_=#{upwd} 
+		</if>	
+		</where>
+	</select>
+	
+	<!-- 动态sql  foreach -->
+	<select id="selectUserFor" parameterType="queryvo" resultMap="myMap">
+		select * from users <!-- where uid in --><!-- (1,2,3) -->
+		<where>
+			<if test="ids!=null and ids.size>0">
+				
+				<!-- 
+				collection:要遍历的集合
+				open:遍历开始的字符串
+				close:遍历的结束字符串
+				separator：便利的分隔符
+				item：每次遍历的值都会放到item变量里
+				
+				 -->
+				
+				<foreach collection="ids" close=")" item="id" open="uid in(" separator=",">
+				
+					#{id}
+				</foreach>			
+			</if>
+		</where>
+		
+	
+	</select>
+	
+	<!-- 动态sql:choose  when  when otherwize -->
+	
+	<select id="selectUserChoose" parameterType="user" resultMap="myMap" >
+		<!-- 通过include标签引入sql片段 -->
+		<include refid="select_users"/>
+		  where 
+		<choose>
+		
+			<when test="uid!=null">uid=#{uid}</when>
+			<when test="uname!=null and uname!=''">uname_=#{uname}</when>
+			<otherwise>uid=10</otherwise>
+		
+		</choose>
+	
+	
+	</select>
+	
+	<!-- 动态sql:set -->
+	
+	<update id="selectUserSet" parameterType="user">
+		<!-- update  users set uname_='jcak' where uid=1 -->
+		
+		update  users
+		<!-- 会去掉最后一个, -->
+		<set>
+			<!-- 修改的时候要判空 -->
+			<if test="uname!=null and uname!=''">uname_=#{uname},</if>
+			<if test="upwd!=null and upwd!=''">upwd_=#{upwd},</if>
+			<if test="sex!=null and sex!=''">sex=#{sex},</if>
+			<if test="birthday!=null and birthday!=''">birthday=#{birthday},</if>
+		
+		</set>
+		where uid=#{uid}
+	
+	
+	</update>
+	
+<!-- 动态sql trim代替where -->
+
+	<select id="selectUserTrim" parameterType="user" resultMap="myMap">
+		<include refid="select_users"/>
+		<!-- 
+			prefix:在前面加东西
+			prefixOverrides：去掉前面的 and |or
+			suffix:在后面加 
+			suffixOverrides：在后面去掉  ,
+		
+		 -->
+		<trim prefix="where" prefixOverrides="and|or">
+			<!-- if可以对查询条件进行判断 -->
+		<if test="uname!=null and uname!=''">
+		 	and  uname_=#{uname} 
+		</if>
+		<if test="upwd!=null and upwd!=''">
+			and  upwd_=#{upwd} 
+		</if>	
+		</trim>
+	</select>
+	
+	
+	<!-- 动态sql:trim代替 set -->
+	
+	<update id="updateUserTrim" parameterType="user">
+		update users 
+		<trim prefix="set" suffixOverrides="," suffix="where uid=#{uid}">
+			<!-- 修改的时候要判空 -->
+			<if test="uname!=null and uname!=''">uname_=#{uname},</if>
+			<if test="upwd!=null and upwd!=''">upwd_=#{upwd},</if>
+			<if test="sex!=null and sex!=''">sex=#{sex},</if>
+			<if test="birthday!=null and birthday!=''">birthday=#{birthday},</if>
+			
+		
+		</trim>
+	
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<resultMap type="user" id="userMap">
+		<id column="uid" property="uid"/>
+		<id column="uname_" property="uname"/>
+		<id column="upwd_" property="upwd"/>
+		<id column="sex" property="sex"/>
+		<id column="birthday" property="birthday"/>
+		
+		<collection property="orderList" javaType="order">
+		<!-- 手动吧order的字段和属性映射一下 -->
+			<id column="oid" property="oid"/>
+			<result column="oprice" property="oprice"/>
+			<result column="createtime" property="createtime"/>
+			<result column="flag" property="flag"/>
+		
+		
+		</collection>
+	
+	</resultMap>
+	
+	
+	
+	
+	<!-- 一对多 -->
+	
+	<select id="selectOneToMany" parameterType="user" resultMap="userMap">
+	
+		select * from users u,orders o  where u.uid=o.uid  and u.uid=#{uid} 
+		
+	
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+</mapper>
