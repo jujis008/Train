@@ -1,0 +1,37 @@
+@RequestMapping()
+@RequestParam() 基本类型的时候  
+@ModelAttribute("pojo")  
+@PathVarible    localhost:8080/user/1    @RequestMapping("/user/{xx}")
+
+
+Controller的返回值：
+ModelAndView  
+mav.setViewName()  自动加前缀和后缀
+
+String
+return "user";  也会自动加前缀和后缀  转发
+
+return "redirect: user"; 重定向  不能重定向到WEB-INF下的路径   重定向到action     不会自动加前缀和后缀
+
+return "forward:user";转发 ：转发到jsp,还可以转发到controller     不会自动前缀和后缀,:
+
+
+void
+原生态servlet
+转发：request： 不回加前缀和后缀
+重定向：response:不回家前缀和后缀
+
+SpringMVC默认支持的参数绑定
+HttpServletRequest
+HttpServletResponse
+HttpSession
+Model/ModelMap
+
+基本类型数据绑定
+名字要一致  不一致用@RequestParam()
+pojo类型：自动调用setter方法
+包装对象 vo：user.name
+数组、集合：批量操作
+自定义的转换器：
+
+

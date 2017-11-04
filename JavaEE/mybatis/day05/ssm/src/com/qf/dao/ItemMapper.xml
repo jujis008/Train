@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- sql映射   namespace:用来隔离sql的 -->
+<mapper  namespace="com.qf.dao.ItemMapper">
+
+
+	
+	<!-- 输出映射  输出简单类型 -->
+	
+	<select id="selectItems" resultType="items">
+		select * from items
+	</select>
+
+<!-- 根据id查询 -->
+<select id="selectItemById" parameterType="integer" resultType="items">
+	select * from items  where id =#{id}
+
+</select>
+
+<select id="selectByPrice" parameterType="queryvo" resultType="items" >
+	<![CDATA[
+			select * from items 
+			
+			
+			
+			price > #{minprice}  and price < #{maxprice}
+			
+		
+	
+	]]>
+
+</select>
+
+<delete id="deletByIds" parameterType="integer">
+	<if test="ids!=null and ids.length>0">
+	
+	delete from items  where id in
+	<foreach collection="ids"  item="id" close=")" open="(" separator="," >
+		#{id}
+	</foreach>
+	</if>
+
+</delete>
+
+</mapper>
