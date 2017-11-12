@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.qf.mm</groupId>
+    <artifactId>m-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.qf.mm</groupId>
+  <artifactId>m-manger</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <description>用来聚合web,service,dao,pojo的</description>
+  <modules>
+  	<module>m-web</module>
+  	<module>m-service</module>
+  	<module>m-dao</module>
+  	<module>m-pojo</module>
+  </modules>
+</project>

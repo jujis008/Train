@@ -1,0 +1,113 @@
+protected void addProductToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, FileUploadException {
+			//获取商品pid
+		String pid = request.getParameter("pid");
+		//获取购买数量
+		int buyNum=Integer.parseInt(request.getParameter("buyNum"));
+		
+		//根据pid去查找商品对象
+		Product p = productDao.findById(pid);
+		
+		
+		//从Session里面取出购物车
+		HttpSession session = request.getSession();
+		//购物车  有可能等于null
+		Cart cart = (Cart) session.getAttribute("cart");
+		
+		/**
+		 * 如果购物车==null   new Cart();
+		 */
+		if(cart==null){
+			cart=new Cart();
+		}
+		
+		//把购物项放到购物车里
+		Map<String, CartItem> map = cart.getItems();//获得购物项容器
+		
+		
+		/**
+		 * 创建购物项对象
+		 */
+		CartItem item=new CartItem();//准备空的购物项
+		
+		
+		/**
+		 * 如果不是第一次购买该商品
+		 */
+		
+		if(map.containsKey(pid)){
+			//从购物车里取出key值是pid的购物项
+			item = map.get(pid);//购物项
+			//数量+buyNym
+			item.setBuyNum(item.getBuyNum()+buyNum);
+			
+			item.setSubTotal(item.getSubTotal()+p.getShop_price()*buyNum);
+			//map.put(pid,item);
+
+		}else{
+			
+			
+			item.setBuyNum(buyNum);//购买数量
+			item.setProduct(p);//商品
+			item.setSubTotal(buyNum*p.getShop_price());//小计
+			/**
+			 * 第一个购买该商品
+			 */
+			
+			
+			//cart.setItems(map);
+			
+			
+		}
+		
+		map.put(pid,item);
+	
+		/**
+		 * 总计
+		 */
+		cart.setTotal(cart.getTotal()+buyNum*p.getShop_price());//变多~~~
+		
+		
+		/**
+		 * 把购物车放到session里
+		 */
+		session.setAttribute("cart", cart);
+		
+
+		
+		//重定向到cart.jsp
+		response.sendRedirect("cart.jsp");
+	
+	}
+	/**
+	删除某个购物项
+	 */
+	protected void deleteProductFromCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, FileUploadException {
+
+		//获得pid
+		String pid = request.getParameter("pid");
+		
+		//取出购物车
+		HttpSession session = request.getSession();
+		Cart cart = (Cart) session.getAttribute("cart");
+		
+		if(cart!=null){
+			//取出map
+			Map<String, CartItem> map = cart.getItems();
+			if(map.containsKey(pid)){
+				CartItem cartItem = map.get(pid);
+				map.remove(pid);//根据key把这个购物项对象删除
+				
+					//重新计算总计
+			cart.setTotal(cart.getTotal()-cartItem.getSubTotal());
+				
+			}
+			
+			
+			
+		}
+		session.setAttribute("cart", cart);
+		
+		//重定向到购物车界面
+		response.sendRedirect("cart.jsp");
+		
+	}
